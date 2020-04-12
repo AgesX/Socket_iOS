@@ -89,7 +89,7 @@
 //  Because we didn't pass a name, it automatically uses the name of the device.
         
         
-        
+         
         // Configure Service
         [self.service setDelegate:self];
  
