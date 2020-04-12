@@ -66,7 +66,7 @@
  
     if (self.socket == socket) {
         self.socket.delegate = nil;
-        [self setSocket:nil];
+        self.socket = nil;
     }
  
     // Notify Delegate
