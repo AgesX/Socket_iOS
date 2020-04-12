@@ -37,6 +37,7 @@
 
 - (void)setupView {
     // Create Cancel Button
+    self.view.backgroundColor = UIColor.yellowColor;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
 }
 
@@ -46,11 +47,30 @@
 
 - (void)cancel:(id)sender {
     // Cancel Hosting Game
-    // TODO
- 
+    [self.delegate controllerDidCancelHosting:self];
+    
+    // End Broadcast
+    [self endBroadcast];
+    
     // Dismiss View Controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
+
+- (void)dealloc {
+    if (_delegate) {
+        _delegate = nil;
+    }
+ 
+    if (_socket) {
+        [_socket setDelegate:nil delegateQueue:NULL];
+        _socket = nil;
+    }
+}
+
+
 
 
 
@@ -63,7 +83,7 @@
     // 端口 0
     if ([self.socket acceptOnPort:0 error:&error]) {
         // Initialize Service
-        self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_fourinarow._tcp." name:@"" port:[self.socket localPort]];
+        self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"deng._tcp." name:@"" port:[self.socket localPort]];
  
         
 //  Because we didn't pass a name, it automatically uses the name of the device.
@@ -125,103 +145,38 @@
 
 
 - (void)socket:(GCDAsyncSocket *)socket didAcceptNewSocket:(GCDAsyncSocket *)newSocket {
-    NSLog(@"Accepted New Socket from %@:%hu", newSocket.connectedHost, newSocket.connectedPort);
+      NSLog(@"Accepted New Socket from %@:%hu", [newSocket connectedHost], [newSocket connectedPort]);
     
-    // Socket
-    self.socket = newSocket;
-    // Read Data from Socket
-    [newSocket readDataToLength:sizeof(uint64_t) withTimeout:-1.0 tag:0];
+       // Notify Delegate
+       [self.delegate controller:self didHostGameOnSocket:newSocket];
     
+    // 转移代理对象，转移引用后，
     
-    // Create Packet
-       NSString *message = @"This is a proof of concept. 邓: 第一个包，来了";
-       PacketH *packet = [[PacketH alloc] initWithData:message type:0 action:0];
+    // 解除自己的引用
     
     
+       // End Broadcast
+       [self endBroadcast];
     
-    // 发包，很简洁
-    
-       // Send Packet
-       [self sendPacket: packet];
+       // Dismiss View Controller
+       [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
-
-/*
- When a connection is established, the application instance hosting the game is notified of this by the invocation of the socket:didAcceptNewSocket: delegate method of the GCDAsyncSocketDelegate protocol.
- 
- 
- We implemented this method in the previous article. Take a look at its implementation below to refresh your memory.
-
-
- The last line of its implementation should now be clear.
-
- We tell the new socket to start reading data and we pass a tag, an integer, as the last parameter.
- 
- 
- 不清楚，什么时间
- We don't set a timeout (-1)
- because we don't know when we can expect the first packet to arrive.
- 
- */
-
-
-
-
-- (void)sendPacket:(PacketH *)packet {
-    
-
-    NSError * error;
-    NSData * encoded = [NSKeyedArchiver archivedDataWithRootObject:packet requiringSecureCoding:NO error: &error];
-    NSLog(@"error: %@", error);
-    
-    
-    // Initialize Buffer
-    NSMutableData *buffer = [[NSMutableData alloc] init];
- 
-    
-    
-    // buffer = header + packet
-    
-    // Fill Buffer
-    uint64_t headerLength = encoded.length;
-    [buffer appendBytes:&headerLength length:sizeof(uint64_t)];
-    [buffer appendBytes: encoded.bytes length: headerLength];
- 
-    // Write Buffer
-    [self.socket writeData:buffer withTimeout:-1.0 tag:0];
-}
-
-/*
- 
- As I wrote earlier, we can only send binary data through a TCP connection.
- 
- 
- We then create another NSMutableData instance, which will be the data object that we will pass to the socket a bit later. The data object, however, does not only hold the encoded MTPacket instance. It also needs to include the header that precedes the encoded packet. We store the length of the encoded packet in a variable named headerLength which is of type uint64_t. We then append the header to the NSMutableData buffer.
- 
- 
- Did you spot the & symbol preceding headerLength?
-
- The appendBytes:length: method expects a buffer of bytes, not the value of the headerLength value. Finally, we append the contents of packetData to the buffer. The buffer is then passed to writeData:withTimeout:tag:. The CocoaAsyncSocket library takes care of the nitty gritty details of sending the data.
- 
- 
- 
- */
-
-
-
-
-
-
-// 出错啦
-- (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)error {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
- 
-    if (self.socket == socket) {
-        [self.socket setDelegate:nil];
+- (void)endBroadcast {
+    if (self.socket) {
+        [self.socket setDelegate:nil delegateQueue:NULL];
         [self setSocket:nil];
     }
+ 
+    if (self.service) {
+        [self.service setDelegate:nil];
+        [self setService:nil];
+    }
 }
+
+
+
+
 
 @end
 

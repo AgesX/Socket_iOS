@@ -10,7 +10,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JoinListController : UITableViewController
+
+@class GCDAsyncSocket;
+@protocol JoinGameViewControllerDelegate;
+ 
+@interface JoinListController: UITableViewController
+ 
+@property (weak, nonatomic) id<JoinGameViewControllerDelegate> delegate;
+ 
+@end
+ 
+@protocol JoinGameViewControllerDelegate
+
+
+- (void)controller:(JoinListController *)controller didJoinGameOnSocket:(GCDAsyncSocket *)socket;
+- (void)controllerDidCancelJoining:(JoinListController *)controller;
+
 
 @end
 

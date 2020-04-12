@@ -12,15 +12,11 @@ NSString * const MTPacketKeyData = @"data";
 NSString * const MTPacketKeyType = @"type";
 NSString * const MTPacketKeyAction = @"action";
 
-
-
-
 @implementation PacketH
-
 
 #pragma mark -
 #pragma mark Initialization
-- (instancetype)initWithData:(id)data type: (MTPacketType)type action: (MTPacketAction)action {
+- (instancetype)initWithData:(id)data type: (PacketType)type action: (PacketAction)action {
     self = [super init];
  
     if (self) {
@@ -58,6 +54,8 @@ NSString * const MTPacketKeyAction = @"action";
 + (BOOL)supportsSecureCoding {
    return YES;
 }
+
+
 
 
 @end

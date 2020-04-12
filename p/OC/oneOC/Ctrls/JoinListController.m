@@ -48,13 +48,34 @@ static NSString *ServiceCell = @"ServiceCell";
 
 
 - (void)cancel:(id)sender {
-    // Stop Browsing Services
-    [self stopBrowsing];
- 
-    // Dismiss View Controller
-    [self dismissViewControllerAnimated:YES completion:nil];
+       // Notify Delegate
+       [self.delegate controllerDidCancelJoining:self];
+    
+       // Stop Browsing Services
+       [self stopBrowsing];
+    
+       // Dismiss View Controller
+       [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+
+
+- (void)dealloc {
+    if (_delegate) {
+        _delegate = nil;
+    }
+
+}
+
+/*
+    In the dealloc method of the MTJoinGameViewController class, we clean everything up. However, because this socket is managed by the game controller, we shouldn't set the delegate to nil and neither should we set the delegate queue to NULL. The game controller is instantiated before the dealloc method is invoked, which means that the delegate of the game controller's socket is (re)set to nil when the join game view controller is deallocated.
+ 
+ 
+ In other words, even though the game controller has a reference to the socket, the socket's delegate is set to nil and this renders the socket unusable to us. The solution is as simple as removing the last few lines of the dealloc method in which we set the socket's delegate to nil and the socket's delegate queue to NULL. Run the application one more time to see if we have successfully fixed that nasty bug.
+ 
+ 
+ */
 
 
 - (void)startBrowsing {
@@ -69,7 +90,7 @@ static NSString *ServiceCell = @"ServiceCell";
  
     // Configure Service Browser
     self.serviceBrowser.delegate = self;
-    [self.serviceBrowser searchForServicesOfType:@"_fourinarow._tcp." inDomain:@"local."];
+    [self.serviceBrowser searchForServicesOfType:@"deng._tcp." inDomain:@"local."];
 }
 
 
@@ -221,10 +242,16 @@ static NSString *ServiceCell = @"ServiceCell";
 
 // 读数据
 - (void)socket:(GCDAsyncSocket *)socket didConnectToHost:(NSString *)host port:(UInt16)port {
-    NSLog(@"Socket Did Connect to Host: %@ Port: %hu", host, port);
- 
-    // Start Reading
-    [socket readDataToLength:sizeof(uint64_t) withTimeout:-1.0 tag:0];
+       NSLog(@"Socket Did Connect to Host: %@ Port: %hu", host, port);
+    
+       // Notify Delegate
+       [self.delegate controller:self didJoinGameOnSocket:socket];
+    
+       // Stop Browsing
+       [self stopBrowsing];
+    
+       // Dismiss View Controller
+       [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -249,74 +276,6 @@ static NSString *ServiceCell = @"ServiceCell";
  */
 
 
-
-
-- (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data withTag:(long)tag {
-    if (tag == 0) {
-        NSLog(@"来 1");
-        uint64_t bodyLength = [self parseHeader:data];
-        [socket readDataToLength:bodyLength withTimeout:-1.0 tag:1];
-        
- 
-    } else if (tag == 1) {
-        NSLog(@"来 2");
-        [self parseBody:data];
-        [socket readDataToLength:sizeof(uint64_t) withTimeout:30.0 tag:0];
-        
-    }
-}
-
-
-
-/*
- Before we look at the implementation of parseHeader:,
- 
- let's first continue our exploration of socket:didReadData:withTag:.
- 
- 
- If tag is equal to 1, we know that we have read the complete encoded packet. We parse the packet and repeat the cycle by telling the socket to watch out for the header of the next packet that arrives.
- 
- 
- 
- 不知道，下一个包，什么时候来
- 
- 
- It is important that we pass -1 for timeout (no timeout) as we don't know when the next packet will arrive.
- 
- */
-
-- (uint64_t)parseHeader:(NSData *)data {
-    uint64_t headerLength = 0;
-    memcpy(&headerLength, [data bytes], sizeof(uint64_t));
- 
-    return headerLength;
-}
-
-
-
-
-- (void)parseBody:(NSData *)data {
- 
-
-    NSError * error;
-    NSSet *classes = [NSSet setWithObjects: NSDictionary.class, PacketH.class, nil];
-    PacketH *packet = [NSKeyedUnarchiver unarchivedObjectOfClasses: classes fromData: data error: &error];
-    
-    NSLog(@"Packet Data > %@", packet.data);
-    
-    NSLog(@"Packet Type > %i", packet.type);
-    NSLog(@"Packet Action > %i", packet.action);
-}
-
-
-
-
-- (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)error {
-    NSLog(@"Socket Did Disconnect with Error %@ with User Info %@.", error, [error userInfo]);
- 
-    [socket setDelegate:nil];
-    [self setSocket:nil];
-}
 
 
 

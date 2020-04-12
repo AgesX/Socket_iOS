@@ -19,6 +19,8 @@
 		2615718124347C5800A1C6C6 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615717F24347C5800A1C6C6 /* GCDAsyncSocket.m */; };
 		2615718524348CF300A1C6C6 /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615718424348CF300A1C6C6 /* HostViewController.m */; };
 		2615718B243493C200A1C6C6 /* JoinListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2615718A243493C200A1C6C6 /* JoinListController.m */; };
+		267CE99A243A412900AE5B5D /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 267CE999243A412900AE5B5D /* GameManager.m */; };
+		2689418A243B0C3B00EAE582 /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26894189243B0C3B00EAE582 /* BoardCell.m */; };
 		26E62BF42436D9FE0042CC1F /* PacketH.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E62BF32436D9FE0042CC1F /* PacketH.m */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,11 @@
 		2615718424348CF300A1C6C6 /* HostViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HostViewController.m; sourceTree = "<group>"; };
 		26157189243493C200A1C6C6 /* JoinListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoinListController.h; sourceTree = "<group>"; };
 		2615718A243493C200A1C6C6 /* JoinListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoinListController.m; sourceTree = "<group>"; };
+		267CE998243A412900AE5B5D /* GameManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
+		267CE999243A412900AE5B5D /* GameManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameManager.m; sourceTree = "<group>"; };
+		26894188243B0C3B00EAE582 /* BoardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
+		26894189243B0C3B00EAE582 /* BoardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BoardCell.m; sourceTree = "<group>"; };
+		2689418B243B150C00EAE582 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		26E62BF22436D9FE0042CC1F /* PacketH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PacketH.h; sourceTree = "<group>"; };
 		26E62BF32436D9FE0042CC1F /* PacketH.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PacketH.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,20 +123,22 @@
 		2615714824347C2200A1C6C6 /* oneOC */ = {
 			isa = PBXGroup;
 			children = (
-				26E62BF12436D9EF0042CC1F /* Model */,
-				2615718224348CDA00A1C6C6 /* Ctrls */,
-				2615717E24347C5800A1C6C6 /* TCP */,
 				2615714924347C2200A1C6C6 /* AppDelegate.h */,
 				2615714A24347C2200A1C6C6 /* AppDelegate.m */,
+				2615715524347C2700A1C6C6 /* Assets.xcassets */,
+				2615718224348CDA00A1C6C6 /* Ctrls */,
+				2615715A24347C2700A1C6C6 /* Info.plist */,
+				2615715724347C2700A1C6C6 /* LaunchScreen.storyboard */,
+				2615715B24347C2700A1C6C6 /* main.m */,
+				2615715224347C2200A1C6C6 /* Main.storyboard */,
+				267CE997243A411500AE5B5D /* manager */,
+				26E62BF12436D9EF0042CC1F /* Model */,
 				2615714C24347C2200A1C6C6 /* SceneDelegate.h */,
 				2615714D24347C2200A1C6C6 /* SceneDelegate.m */,
+				2615717E24347C5800A1C6C6 /* TCP */,
+				26894187243B0C1600EAE582 /* View */,
 				2615714F24347C2200A1C6C6 /* ViewController.h */,
 				2615715024347C2200A1C6C6 /* ViewController.m */,
-				2615715224347C2200A1C6C6 /* Main.storyboard */,
-				2615715524347C2700A1C6C6 /* Assets.xcassets */,
-				2615715724347C2700A1C6C6 /* LaunchScreen.storyboard */,
-				2615715A24347C2700A1C6C6 /* Info.plist */,
-				2615715B24347C2700A1C6C6 /* main.m */,
 			);
 			path = oneOC;
 			sourceTree = "<group>";
@@ -172,11 +181,30 @@
 			path = Ctrls;
 			sourceTree = "<group>";
 		};
+		267CE997243A411500AE5B5D /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				267CE998243A412900AE5B5D /* GameManager.h */,
+				267CE999243A412900AE5B5D /* GameManager.m */,
+			);
+			path = manager;
+			sourceTree = "<group>";
+		};
+		26894187243B0C1600EAE582 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				26894188243B0C3B00EAE582 /* BoardCell.h */,
+				26894189243B0C3B00EAE582 /* BoardCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		26E62BF12436D9EF0042CC1F /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				26E62BF22436D9FE0042CC1F /* PacketH.h */,
 				26E62BF32436D9FE0042CC1F /* PacketH.m */,
+				2689418B243B150C00EAE582 /* Constants.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,6 +343,8 @@
 				2615715124347C2200A1C6C6 /* ViewController.m in Sources */,
 				2615718124347C5800A1C6C6 /* GCDAsyncSocket.m in Sources */,
 				2615714B24347C2200A1C6C6 /* AppDelegate.m in Sources */,
+				2689418A243B0C3B00EAE582 /* BoardCell.m in Sources */,
+				267CE99A243A412900AE5B5D /* GameManager.m in Sources */,
 				26E62BF42436D9FE0042CC1F /* PacketH.m in Sources */,
 				2615715C24347C2700A1C6C6 /* main.m in Sources */,
 				2615714E24347C2200A1C6C6 /* SceneDelegate.m in Sources */,

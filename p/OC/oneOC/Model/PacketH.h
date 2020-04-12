@@ -17,33 +17,34 @@ extern NSString * const MTPacketKeyType;
 extern NSString * const MTPacketKeyAction;
  
 
-typedef NS_ENUM(NSInteger, MTPacketType){
-    MTPacketTypeUnknown = -1
+typedef NS_ENUM(NSInteger, PacketType){
+    PacketTypeUnknown = -1,
+    PacketTypeDidAddDisc,
+    PacketTypeStartNewGame
 };
 
  
 
-typedef NS_ENUM(NSInteger, MTPacketAction){
-    MTPacketActionUnknown = -1
+typedef NS_ENUM(NSInteger, PacketAction){
+    PacketActionUnknown = -1
 };
-
 
 
 
 //  jiangzhoudeng@163.com
 
-@interface PacketH : NSObject<NSSecureCoding>
+@interface PacketH: NSObject<NSCoding,NSSecureCoding>
 
 
 
 @property (strong, nonatomic) id data;
-@property (assign, nonatomic) MTPacketType type;
-@property (assign, nonatomic) MTPacketAction action;
+@property (assign, nonatomic) PacketType type;
+@property (assign, nonatomic) PacketAction action;
  
 #pragma mark -
 #pragma mark Initialization
+- (instancetype)initWithData: (id)data type:(PacketType)type action:(PacketAction)action;
 
-- (instancetype)initWithData: (id)data type:(MTPacketType)type action:(MTPacketAction)action;
 
 
 
