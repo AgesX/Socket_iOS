@@ -90,7 +90,7 @@ static NSString *ServiceCell = @"ServiceCell";
  
     // Configure Service Browser
     self.serviceBrowser.delegate = self;
-    [self.serviceBrowser searchForServicesOfType:@"deng._tcp." inDomain:@"local."];
+    [self.serviceBrowser searchForServicesOfType:@"_deng._tcp." inDomain:@"local."];
 }
 
 

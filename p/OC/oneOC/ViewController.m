@@ -46,7 +46,7 @@
 
 
 // 数据，未更改
-@property (strong, nonatomic) NSArray<NSMutableArray * > * board;
+@property (strong, nonatomic) NSArray<NSArray * > * board;
 
 
 // 数据，已经更改
@@ -397,7 +397,7 @@
             [column addObject:cell];
         }
  
-        [buffer addObject:column];
+        [buffer addObject: column.copy];
     }
  
     // Initialize Board
