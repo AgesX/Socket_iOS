@@ -944,18 +944,15 @@ enum GCDAsyncSocketConfig
     NSTimeInterval alternateAddressDelay;
 }
 
-- (instancetype)init
-{
+- (instancetype)init{
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:NULL];
 }
 
-- (instancetype)initWithSocketQueue:(dispatch_queue_t)sq
-{
+- (instancetype)initWithSocketQueue:(dispatch_queue_t)sq{
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:sq];
 }
 
-- (instancetype)initWithDelegate:(id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq
-{
+- (instancetype)initWithDelegate:(id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq{
 	return [self initWithDelegate:aDelegate delegateQueue:dq socketQueue:NULL];
 }
 
@@ -1025,20 +1022,17 @@ enum GCDAsyncSocketConfig
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	LogInfo(@"%@ - %@ (start)", THIS_METHOD, self);
 	
 	// Set dealloc flag.
 	// This is used by closeWithError to ensure we don't accidentally retain ourself.
 	flags |= kDealloc;
 	
-	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
-	{
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey)){
 		[self closeWithError:nil];
 	}
-	else
-	{
+	else{
 		dispatch_sync(socketQueue, ^{
 			[self closeWithError:nil];
 		});
