@@ -959,10 +959,8 @@ enum GCDAsyncSocketConfig
 	return [self initWithDelegate:aDelegate delegateQueue:dq socketQueue:NULL];
 }
 
-- (instancetype)initWithDelegate:(id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
-{
-	if((self = [super init]))
-	{
+- (instancetype)initWithDelegate:(id<GCDAsyncSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq{
+	if((self = [super init])){
 		delegate = aDelegate;
 		delegateQueue = dq;
 		
@@ -976,8 +974,7 @@ enum GCDAsyncSocketConfig
 		socketUrl = nil;
 		stateIndex = 0;
 		
-		if (sq)
-		{
+		if (sq){
 			NSAssert(sq != dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0),
 			         @"The given socketQueue parameter must not be a concurrent queue.");
 			NSAssert(sq != dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0),
@@ -990,8 +987,7 @@ enum GCDAsyncSocketConfig
 			dispatch_retain(sq);
 			#endif
 		}
-		else
-		{
+		else{
 			socketQueue = dispatch_queue_create([GCDAsyncSocketQueueName UTF8String], NULL);
 		}
 		
@@ -1014,7 +1010,7 @@ enum GCDAsyncSocketConfig
 		
 		IsOnSocketQueueOrTargetQueueKey = &IsOnSocketQueueOrTargetQueueKey;
 		
-		void *nonNullUnusedPointer = (__bridge void *)self;
+		void * nonNullUnusedPointer = (__bridge void *)self;
 		dispatch_queue_set_specific(socketQueue, IsOnSocketQueueOrTargetQueueKey, nonNullUnusedPointer, NULL);
 		
 		readQueue = [[NSMutableArray alloc] initWithCapacity:5];
@@ -1023,7 +1019,7 @@ enum GCDAsyncSocketConfig
 		writeQueue = [[NSMutableArray alloc] initWithCapacity:5];
 		currentWrite = nil;
 		
-		preBuffer = [[GCDAsyncSocketPreBuffer alloc] initWithCapacity:(1024 * 4)];
+		preBuffer = [[GCDAsyncSocketPreBuffer alloc] initWithCapacity: (1024 * 4)];
         alternateAddressDelay = 0.3;
 	}
 	return self;
