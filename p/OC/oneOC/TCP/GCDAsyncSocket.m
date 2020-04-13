@@ -129,8 +129,7 @@ NSString *const GCDAsyncSocketSSLCipherSuites = @"GCDAsyncSocketSSLCipherSuites"
 NSString *const GCDAsyncSocketSSLDiffieHellmanParameters = @"GCDAsyncSocketSSLDiffieHellmanParameters";
 #endif
 
-enum GCDAsyncSocketFlags
-{
+enum GCDAsyncSocketFlags{
 	kSocketStarted                 = 1 <<  0,  // If set, socket has been started (accepting/connecting)
 	kConnected                     = 1 <<  1,  // If set, the socket is connected
 	kForbidReadsWrites             = 1 <<  2,  // If set, no new reads or writes are allowed
@@ -155,8 +154,7 @@ enum GCDAsyncSocketFlags
 #endif
 };
 
-enum GCDAsyncSocketConfig
-{
+enum GCDAsyncSocketConfig{
 	kIPv4Disabled              = 1 << 0,  // If set, IPv4 is disabled
 	kIPv6Disabled              = 1 << 1,  // If set, IPv6 is disabled
 	kPreferIPv6                = 1 << 2,  // If set, IPv6 is preferred over IPv4
@@ -193,8 +191,7 @@ enum GCDAsyncSocketConfig
  * The current design is very simple and straight-forward, while also keeping memory requirements lower.
 **/
 
-@interface GCDAsyncSocketPreBuffer : NSObject
-{
+@interface GCDAsyncSocketPreBuffer : NSObject{
 	uint8_t *preBuffer;
 	size_t preBufferSize;
 	
@@ -232,10 +229,8 @@ enum GCDAsyncSocketConfig
 	return nil;
 }
 
-- (instancetype)initWithCapacity:(size_t)numBytes
-{
-	if ((self = [super init]))
-	{
+- (instancetype)initWithCapacity:(size_t)numBytes{
+	if ((self = [super init])){
 		preBufferSize = numBytes;
 		preBuffer = malloc(preBufferSize);
 		
@@ -245,18 +240,15 @@ enum GCDAsyncSocketConfig
 	return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc{
 	if (preBuffer)
 		free(preBuffer);
 }
 
-- (void)ensureCapacityForWrite:(size_t)numBytes
-{
+- (void)ensureCapacityForWrite:(size_t)numBytes{
 	size_t availableSpace = [self availableSpace];
 	
-	if (numBytes > availableSpace)
-	{
+	if (numBytes > availableSpace){
 		size_t additionalBytes = numBytes - availableSpace;
 		
 		size_t newPreBufferSize = preBufferSize + additionalBytes;
@@ -273,57 +265,47 @@ enum GCDAsyncSocketConfig
 	}
 }
 
-- (size_t)availableBytes
-{
+- (size_t)availableBytes{
 	return writePointer - readPointer;
 }
 
-- (uint8_t *)readBuffer
-{
+- (uint8_t *)readBuffer{
 	return readPointer;
 }
 
-- (void)getReadBuffer:(uint8_t **)bufferPtr availableBytes:(size_t *)availableBytesPtr
-{
+- (void)getReadBuffer:(uint8_t **)bufferPtr availableBytes:(size_t *)availableBytesPtr{
 	if (bufferPtr) *bufferPtr = readPointer;
 	if (availableBytesPtr) *availableBytesPtr = [self availableBytes];
 }
 
-- (void)didRead:(size_t)bytesRead
-{
+- (void)didRead:(size_t)bytesRead{
 	readPointer += bytesRead;
 	
-	if (readPointer == writePointer)
-	{
+	if (readPointer == writePointer){
 		// The prebuffer has been drained. Reset pointers.
 		readPointer  = preBuffer;
 		writePointer = preBuffer;
 	}
 }
 
-- (size_t)availableSpace
-{
+- (size_t)availableSpace{
 	return preBufferSize - (writePointer - preBuffer);
 }
 
-- (uint8_t *)writeBuffer
-{
+- (uint8_t *)writeBuffer{
 	return writePointer;
 }
 
-- (void)getWriteBuffer:(uint8_t **)bufferPtr availableSpace:(size_t *)availableSpacePtr
-{
+- (void)getWriteBuffer:(uint8_t **)bufferPtr availableSpace:(size_t *)availableSpacePtr{
 	if (bufferPtr) *bufferPtr = writePointer;
 	if (availableSpacePtr) *availableSpacePtr = [self availableSpace];
 }
 
-- (void)didWrite:(size_t)bytesWritten
-{
+- (void)didWrite:(size_t)bytesWritten{
 	writePointer += bytesWritten;
 }
 
-- (void)reset
-{
+- (void)reset{
 	readPointer  = preBuffer;
 	writePointer = preBuffer;
 }
@@ -341,8 +323,7 @@ enum GCDAsyncSocketConfig
  *  - reading to a certain separator
  *  - or simply reading the first chunk of available data
 **/
-@interface GCDAsyncReadPacket : NSObject
-{
+@interface GCDAsyncReadPacket : NSObject{
   @public
 	NSMutableData *buffer;
 	NSUInteger startOffset;
@@ -355,6 +336,7 @@ enum GCDAsyncSocketConfig
 	NSUInteger originalBufferLength;
 	long tag;
 }
+
 - (instancetype)initWithData:(NSMutableData *)d
                  startOffset:(NSUInteger)s
                    maxLength:(NSUInteger)m
@@ -390,10 +372,8 @@ enum GCDAsyncSocketConfig
                      timeout:(NSTimeInterval)t
                   readLength:(NSUInteger)l
                   terminator:(NSData *)e
-                         tag:(long)i
-{
-	if((self = [super init]))
-	{
+                         tag:(long)i{
+	if((self = [super init])){
 		bytesDone = 0;
 		maxLength = m;
 		timeout = t;
@@ -401,20 +381,19 @@ enum GCDAsyncSocketConfig
 		term = [e copy];
 		tag = i;
 		
-		if (d)
-		{
+		if (d){
 			buffer = d;
 			startOffset = s;
 			bufferOwner = NO;
 			originalBufferLength = [d length];
 		}
-		else
-		{
-			if (readLength > 0)
+		else{
+            if (readLength > 0){
 				buffer = [[NSMutableData alloc] initWithLength:readLength];
-			else
+            }
+            else{
 				buffer = [[NSMutableData alloc] initWithLength:0];
-			
+            }
 			startOffset = 0;
 			bufferOwner = YES;
 			originalBufferLength = 0;
@@ -433,8 +412,7 @@ enum GCDAsyncSocketConfig
 	
 	NSUInteger buffSpace = buffSize - buffUsed;
 	
-	if (bytesToRead > buffSpace)
-	{
+	if (bytesToRead > buffSpace){
 		NSUInteger buffInc = bytesToRead - buffSpace;
 		
 		[buffer increaseLengthBy:buffInc];
@@ -452,8 +430,7 @@ enum GCDAsyncSocketConfig
 {
 	NSUInteger result;
 	
-	if (readLength > 0)
-	{
+	if (readLength > 0){
 		// Read a specific length of data
 		result = readLength - bytesDone;
 		
@@ -464,8 +441,7 @@ enum GCDAsyncSocketConfig
 		if (shouldPreBufferPtr)
 			*shouldPreBufferPtr = NO;
 	}
-	else
-	{
+	else{
 		// Either reading until we find a specified terminator,
 		// or we're simply reading all available data.
 		// 
@@ -474,11 +450,12 @@ enum GCDAsyncSocketConfig
 		// - readDataToData packet
 		// - readDataWithTimeout packet
 		
-		if (maxLength > 0)
+        if (maxLength > 0){
 			result =  MIN(defaultValue, (maxLength - bytesDone));
-		else
+        }
+        else{
 			result = defaultValue;
-		
+        }
 		// Since we don't know the size of the read in advance,
 		// the shouldPreBuffer decision is based upon whether the returned value would fit
 		// in the current buffer without requiring a resize of the buffer.
@@ -486,8 +463,7 @@ enum GCDAsyncSocketConfig
 		// This is because, in all likelyhood, the amount read from the socket will be less than the default value.
 		// Thus we should avoid over-allocating the read buffer when we can simply use the pre-buffer instead.
 		
-		if (shouldPreBufferPtr)
-		{
+		if (shouldPreBufferPtr){
 			NSUInteger buffSize = [buffer length];
 			NSUInteger buffUsed = startOffset + bytesDone;
 			
@@ -517,8 +493,7 @@ enum GCDAsyncSocketConfig
 	NSAssert(term == nil, @"This method does not apply to term reads");
 	NSAssert(bytesAvailable > 0, @"Invalid parameter: bytesAvailable");
 	
-	if (readLength > 0)
-	{
+	if (readLength > 0){
 		// Read a specific length of data
 		
 		return MIN(bytesAvailable, (readLength - bytesDone));
@@ -531,14 +506,12 @@ enum GCDAsyncSocketConfig
 		// This method does not actually do any resizing.
 		// The resizing will happen elsewhere if needed.
 	}
-	else
-	{
+	else{
 		// Read all available data
 		
 		NSUInteger result = bytesAvailable;
 		
-		if (maxLength > 0)
-		{
+		if (maxLength > 0){
 			result = MIN(result, (maxLength - bytesDone));
 		}
 		
@@ -573,8 +546,7 @@ enum GCDAsyncSocketConfig
 	
 	NSUInteger result = bytesAvailable;
 	
-	if (maxLength > 0)
-	{
+	if (maxLength > 0){
 		result = MIN(result, (maxLength - bytesDone));
 	}
 	
@@ -618,8 +590,7 @@ enum GCDAsyncSocketConfig
 	// If we can read all the data directly into the packet's buffer without resizing it first,
 	// then we do so. Otherwise we use the prebuffer.
 	
-	if (shouldPreBufferPtr)
-	{
+	if (shouldPreBufferPtr){
 		NSUInteger buffSize = [buffer length];
 		NSUInteger buffUsed = startOffset + bytesDone;
 		
@@ -684,8 +655,7 @@ enum GCDAsyncSocketConfig
 	NSUInteger termLength = [term length];
 	NSUInteger preBufferLength = [preBuffer availableBytes];
 	
-	if ((bytesDone + preBufferLength) < termLength)
-	{
+	if ((bytesDone + preBufferLength) < termLength){
 		// Not enough data for a full term sequence yet
 		return preBufferLength;
 	}
@@ -714,17 +684,14 @@ enum GCDAsyncSocketConfig
 	NSUInteger result = maxPreBufferLength;
 	
 	NSUInteger i;
-	for (i = 0; i < loopCount; i++)
-	{
-		if (bufLen > 0)
-		{
+	for (i = 0; i < loopCount; i++){
+		if (bufLen > 0){
 			// Combining bytes from buffer and preBuffer
 			
 			memcpy(seq, buf, bufLen);
 			memcpy(seq + bufLen, pre, preLen);
 			
-			if (memcmp(seq, termBuf, termLength) == 0)
-			{
+			if (memcmp(seq, termBuf, termLength) == 0){
 				result = preLen;
 				found = YES;
 				break;
@@ -734,12 +701,10 @@ enum GCDAsyncSocketConfig
 			bufLen--;
 			preLen++;
 		}
-		else
-		{
+		else{
 			// Comparing directly from preBuffer
 			
-			if (memcmp(pre, termBuf, termLength) == 0)
-			{
+			if (memcmp(pre, termBuf, termLength) == 0){
 				NSUInteger preOffset = pre - [preBuffer readBuffer]; // pointer arithmetic
 				
 				result = preOffset + termLength;
@@ -962,7 +927,9 @@ enum GCDAsyncSocketConfig
 		delegateQueue = dq;
 		
 		#if !OS_OBJECT_USE_OBJC
-		if (dq) dispatch_retain(dq);
+        if (dq){
+            dispatch_retain(dq);
+        }
 		#endif
 		
 		socket4FD = SOCKET_NULL;
@@ -1041,12 +1008,16 @@ enum GCDAsyncSocketConfig
 	delegate = nil;
 	
 	#if !OS_OBJECT_USE_OBJC
-	if (delegateQueue) dispatch_release(delegateQueue);
+    if (delegateQueue){
+        dispatch_release(delegateQueue);
+    }
 	#endif
 	delegateQueue = NULL;
 	
 	#if !OS_OBJECT_USE_OBJC
-	if (socketQueue) dispatch_release(socketQueue);
+    if (socketQueue){
+         dispatch_release(socketQueue);
+    }
 	#endif
 	socketQueue = NULL;
 	
@@ -1073,8 +1044,7 @@ enum GCDAsyncSocketConfig
     struct sockaddr addr;
     socklen_t addr_size = sizeof(struct sockaddr);
     int retVal = getpeername(socketFD, (struct sockaddr *)&addr, &addr_size);
-    if (retVal)
-    {
+    if (retVal){
       NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncSocketOtherError",
                                                            @"GCDAsyncSocket", [NSBundle mainBundle],
                                                            @"Attempt to create socket from socket FD failed. getpeername() failed", nil);
@@ -1082,21 +1052,20 @@ enum GCDAsyncSocketConfig
       NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errMsg};
 
       errorOccured = YES;
-      if (error)
-        *error = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
+        if (error){
+            *error = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
+        }
+        
       return;
     }
     
-    if (addr.sa_family == AF_INET)
-    {
+    if (addr.sa_family == AF_INET){
       socket->socket4FD = socketFD;
     }
-    else if (addr.sa_family == AF_INET6)
-    {
+    else if (addr.sa_family == AF_INET6){
       socket->socket6FD = socketFD;
     }
-    else
-    {
+    else{
       NSString *errMsg = NSLocalizedStringWithDefaultValue(@"GCDAsyncSocketOtherError",
                                                            @"GCDAsyncSocket", [NSBundle mainBundle],
                                                            @"Attempt to create socket from socket FD failed. socket FD is neither IPv4 nor IPv6", nil);
@@ -1104,8 +1073,10 @@ enum GCDAsyncSocketConfig
       NSDictionary *userInfo = @{NSLocalizedDescriptionKey : errMsg};
       
       errorOccured = YES;
-      if (error)
-        *error = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
+      if (error){
+          *error = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
+      }
+        
       return;
     }
     
