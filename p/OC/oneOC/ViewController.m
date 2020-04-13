@@ -95,14 +95,14 @@
 
 - (void)addDiscToColumn:(UITapGestureRecognizer *)tgr {
     if (self.gameState >= GameStateIWin) {
-        //  GameStateYouWin,    GameStateIWin
+        //  GameStateYourOpponentWin,    GameStateIWin
         
         // Notify Players
         [self showWinner];
  
     } else if (self.gameState != GameStateMyTurn) {
         
-        //  GameStateYourTurn
+        //  GameStateYourOpponentTurn
         
         
         // Show Alert
@@ -132,7 +132,7 @@
  // 这里是落子了，去更新状态
         // Update Game State
         // 自己操作处理了
-        self.gameState = GameStateYourTurn;
+        self.gameState = GameStateYourOpponentTurn;
         
         
         // 把消息，告知对方
@@ -165,7 +165,7 @@
     if (self.gameState == GameStateIWin) {
         message = @"You have won the game.";
  
-    } else if (self.gameState == GameStateYouWin) {
+    } else if (self.gameState == GameStateYourOpponentWin) {
         message = @"Your opponent has won the game.";
     }
  
@@ -340,7 +340,7 @@
  
     // Update Game State
     if (_hasWon) {
-        self.gameState = GameStateYouWin;
+        self.gameState = GameStateYourOpponentWin;
         if (playerType == PlayerTypeMe){
             self.gameState = GameStateIWin;
         }
@@ -508,7 +508,7 @@
     [self resetGame];
  
     // Update Game State
-    self.gameState = GameStateYourTurn;
+    self.gameState = GameStateYourOpponentTurn;
 }
 
 
@@ -610,7 +610,7 @@
 // 这里是轮到他落子了
     // 发起操作
     // Update Game State
-    self.gameState = GameStateYourTurn;
+    self.gameState = GameStateYourOpponentTurn;
     
     
     // Start Game with Socket
@@ -647,7 +647,7 @@
             self.gameStateLabel.text = @"It is your turn.";
             break;
         }
-        case GameStateYourTurn: {
+        case GameStateYourOpponentTurn: {
             self.gameStateLabel.text = @"It is your opponent's turn.";
             break;
         }
@@ -655,7 +655,7 @@
             self.gameStateLabel.text = @"You have won.";
             break;
         }
-        case GameStateYouWin: {
+        case GameStateYourOpponentWin: {
             self.gameStateLabel.text = @"Your opponent has won.";
             break;
         }

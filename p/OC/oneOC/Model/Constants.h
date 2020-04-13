@@ -14,9 +14,9 @@
 typedef NS_ENUM(NSInteger, GameState){
     GameStateUnknown = -1,
     GameStateMyTurn,
-    GameStateYourTurn,
+    GameStateYourOpponentTurn,
     GameStateIWin,
-    GameStateYouWin
+    GameStateYourOpponentWin
 };
 
 
