@@ -163,23 +163,19 @@
     NSString *message = nil;
  
     if (self.gameState == GameStateIWin) {
-        message = @"You have won the game.";
- 
+        message = @"赢啦 ✌️ - You have won the game.";
     } else if (self.gameState == GameStateYourOpponentWin) {
-        message = @"Your opponent has won the game.";
+        message = @"你 gg 了，Your opponent has won the game.";
     }
  
     // Show Alert
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"We Have a Winner" message: @"赢啦 ✌️" preferredStyle: UIAlertControllerStyleAlert];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"We Have a Winner" message: message preferredStyle: UIAlertControllerStyleAlert];
                               
     UIAlertAction * ok = [UIAlertAction actionWithTitle: @"OK" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [alert dismissViewControllerAnimated: YES completion:^{
-        }];
     }];
                               
     [alert addAction: ok];
     [self presentViewController: alert animated: YES completion:^{
-        
     }];
     
 }
@@ -377,9 +373,20 @@
 
 
 - (void)resetGame {
+    for (NSArray * eles in self.board) {
+        for (UIView * v in eles){
+            [v removeFromSuperview];
+        }
+    }
+    self.board = nil;
+    self.matrix = nil;
+    
     // Hide Replay Button
     [self.replayButton setHidden:YES];
  
+    
+    
+    
     // Helpers
     CGSize size = self.boardView.frame.size;
     CGFloat cellWidth = floorf(size.width / kMTMatrixWidth);
