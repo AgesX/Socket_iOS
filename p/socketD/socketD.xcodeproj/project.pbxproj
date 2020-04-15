@@ -56,7 +56,6 @@
 		267C05752447391C00BAF530 /* BoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
 		267C05762447391C00BAF530 /* BoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardCell.m; sourceTree = "<group>"; };
 		267C05782447391C00BAF530 /* PacketH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketH.m; sourceTree = "<group>"; };
-		267C05792447391C00BAF530 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		267C057A2447391C00BAF530 /* PacketH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketH.h; sourceTree = "<group>"; };
 		267C057C2447391C00BAF530 /* GameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameManager.m; sourceTree = "<group>"; };
 		267C057D2447391C00BAF530 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
@@ -160,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				267C05782447391C00BAF530 /* PacketH.m */,
-				267C05792447391C00BAF530 /* Constants.h */,
 				267C057A2447391C00BAF530 /* PacketH.h */,
 			);
 			path = Model;

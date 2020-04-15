@@ -8,6 +8,22 @@
 
 import UIKit
 
+
+enum GameState: Int{
+    case unknown = -1, myTurn, yourOpponentTurn, IWin, yourOpponentWin
+}
+
+
+
+
+enum PlayerType: Int{
+    case me = 0, you
+}
+
+
+
+
+
 class ViewController: UIViewController {
 
     
@@ -23,6 +39,9 @@ class ViewController: UIViewController {
     
     
 
+    var gameState = GameState.myTurn
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +92,23 @@ class ViewController: UIViewController {
     }
     
     
+
+    
+    func updateView(){
+        // Update Game State Label
+        switch gameState{
+            case .myTurn:
+                self.gameStateLabel.text = "It is your turn."
+            case .yourOpponentTurn:
+                self.gameStateLabel.text = "It is your opponent's turn."
+            case .IWin:
+                self.gameStateLabel.text = "You have won."
+            case .yourOpponentWin:
+                self.gameStateLabel.text = "Your opponent has won."
+            default:
+                self.gameStateLabel.text = nil
+        }
+    }
 
 }
 
