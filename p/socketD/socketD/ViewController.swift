@@ -98,15 +98,15 @@ class ViewController: UIViewController {
         // Update Game State Label
         switch gameState{
             case .myTurn:
-                self.gameStateLabel.text = "It is your turn."
+               gameStateLabel.text = "It is your turn."
             case .yourOpponentTurn:
-                self.gameStateLabel.text = "It is your opponent's turn."
+               gameStateLabel.text = "It is your opponent's turn."
             case .IWin:
-                self.gameStateLabel.text = "You have won."
+               gameStateLabel.text = "You have won."
             case .yourOpponentWin:
-                self.gameStateLabel.text = "Your opponent has won."
+               gameStateLabel.text = "Your opponent has won."
             default:
-                self.gameStateLabel.text = nil
+               gameStateLabel.text = nil
         }
     }
 

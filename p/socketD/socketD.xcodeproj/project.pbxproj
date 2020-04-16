@@ -16,9 +16,10 @@
 		267C055C2447389E00BAF530 /* socketDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C055B2447389E00BAF530 /* socketDTests.swift */; };
 		267C05672447389E00BAF530 /* socketDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05662447389E00BAF530 /* socketDUITests.swift */; };
 		267C05812447391C00BAF530 /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C05762447391C00BAF530 /* BoardCell.m */; };
-		267C05822447391C00BAF530 /* PacketH.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C05782447391C00BAF530 /* PacketH.m */; };
 		267C05832447391C00BAF530 /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057C2447391C00BAF530 /* GameManager.m */; };
 		267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057F2447391C00BAF530 /* GCDAsyncSocket.m */; };
+		26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* PacketH.swift */; };
+		26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECF24480DAF00E7ED8D /* GameManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,13 +56,13 @@
 		267C05682447389E00BAF530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		267C05752447391C00BAF530 /* BoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoardCell.h; sourceTree = "<group>"; };
 		267C05762447391C00BAF530 /* BoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardCell.m; sourceTree = "<group>"; };
-		267C05782447391C00BAF530 /* PacketH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacketH.m; sourceTree = "<group>"; };
-		267C057A2447391C00BAF530 /* PacketH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacketH.h; sourceTree = "<group>"; };
 		267C057C2447391C00BAF530 /* GameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameManager.m; sourceTree = "<group>"; };
 		267C057D2447391C00BAF530 /* GameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameManager.h; sourceTree = "<group>"; };
 		267C057F2447391C00BAF530 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		267C05802447391C00BAF530 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		267C05852447399B00BAF530 /* ObjC_Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC_Bridge.h; sourceTree = "<group>"; };
+		26CDDECD24480A1800E7ED8D /* PacketH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketH.swift; sourceTree = "<group>"; };
+		26CDDECF24480DAF00E7ED8D /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,8 +159,7 @@
 		267C05772447391C00BAF530 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				267C05782447391C00BAF530 /* PacketH.m */,
-				267C057A2447391C00BAF530 /* PacketH.h */,
+				26CDDECD24480A1800E7ED8D /* PacketH.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -169,6 +169,7 @@
 			children = (
 				267C057C2447391C00BAF530 /* GameManager.m */,
 				267C057D2447391C00BAF530 /* GameManager.h */,
+				26CDDECF24480DAF00E7ED8D /* GameManager.swift */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -313,11 +314,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */,
+				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
 				267C05492447389C00BAF530 /* ViewController.swift in Sources */,
 				267C05832447391C00BAF530 /* GameManager.m in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05812447391C00BAF530 /* BoardCell.m in Sources */,
-				267C05822447391C00BAF530 /* PacketH.m in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
 				267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */,
 			);
