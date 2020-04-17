@@ -6,26 +6,11 @@
 //  Copyright © 2020 Jz D. All rights reserved.
 //
 
-#import "GameManager.h"
- 
-#import "PacketH.h"
 
-#include "GCDAsyncSocket.h"
-
- 
+ /*
 #define TAG_HEAD 0
 #define TAG_BODY 1
  
-@interface GameManager()<GCDAsyncSocketDelegate>
- 
-@property (strong, nonatomic) GCDAsyncSocket *socket;
- 
-@end
-
-
-
-
-@implementation GameManager
 
 
 
@@ -93,23 +78,6 @@
 
 
 
-/*
- Before we look at the implementation of parseHeader:,
- 
- let's first continue our exploration of socket:didReadData:withTag:.
- 
- 
- If tag is equal to 1, we know that we have read the complete encoded packet. We parse the packet and repeat the cycle by telling the socket to watch out for the header of the next packet that arrives.
- 
- 
- 
- 不知道，下一个包，什么时候来
- 
- 
- It is important that we pass -1 for timeout (no timeout) as we don't know when the next packet will arrive.
- 
- */
-
 - (uint64_t)parseHeader:(NSData *)data {
     NSLog(@"header 来了");
     uint64_t headerLength = 0;
@@ -168,26 +136,6 @@
 
 
 
-/*
- When a connection is established, the application instance hosting the game is notified of this by the invocation of the socket:didAcceptNewSocket: delegate method of the GCDAsyncSocketDelegate protocol.
- 
- 
- We implemented this method in the previous article. Take a look at its implementation below to refresh your memory.
-
-
- The last line of its implementation should now be clear.
-
- We tell the new socket to start reading data and we pass a tag, an integer, as the last parameter.
- 
- 
- 不清楚，什么时间
- We don't set a timeout (-1)
- because we don't know when we can expect the first packet to arrive.
- 
- */
-
-
-
 
 - (void)sendPacket:(PacketH *)packet {
     
@@ -235,7 +183,7 @@
  
  
  
- */
+
 
 
 - (void)startNewGame {
@@ -254,23 +202,4 @@
     }
 }
 
-
-@end
-
-
-
-/*
- 
- 
-  Another reason is that
- 
- the only responsibility of the MTHostGameViewController and MTJoinGameViewController classes
- 
- is finding players on the local network and establishing a connection.
-
-
-
- They shouldn't have any other responsibilities.
- 
- 
- */
+*/
