@@ -19,6 +19,12 @@ protocol GameManagerProxy: class{
 }
 
 
+struct Tag {
+    static let head = 0
+    static let body = 1
+}
+
+
 class GameManager : NSObject, GCDAsyncSocketDelegate {
     
 
@@ -35,8 +41,8 @@ class GameManager : NSObject, GCDAsyncSocketDelegate {
 
 
     func startNewGame(){
-        
-        
+        let packet = PacketH(info: [:], type: .startNewGame, action: .go)
+        send(packet: packet)
     }
 
 
@@ -44,8 +50,31 @@ class GameManager : NSObject, GCDAsyncSocketDelegate {
         
     }
 
+    
+    func send(packet p: PacketH){
+        
+        
+    }
 
     
+    func parse(header data: NSData) -> UInt64{
+        print("header 来了")
+        var headerLength: UInt64 = 0
+        
+        
+        //    memcpy(&headerLength, data.bytes, sizeof(uint64_t));
+        
+        return headerLength
+    }
+
+
+
+    
+     
+        
+    
+
+
     
 }
 

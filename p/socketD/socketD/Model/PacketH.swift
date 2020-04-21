@@ -16,6 +16,7 @@ enum PacketType: Int{
 
 enum PacketAction: Int{
     case unknown = -1
+    case go = 0
 }
 
 

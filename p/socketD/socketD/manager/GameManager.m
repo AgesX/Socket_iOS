@@ -8,10 +8,6 @@
 
 
  /*
-#define TAG_HEAD 0
-#define TAG_BODY 1
- 
-
 
 
 #pragma mark -
@@ -76,15 +72,6 @@
 }
 
 
-
-
-- (uint64_t)parseHeader:(NSData *)data {
-    NSLog(@"header 来了");
-    uint64_t headerLength = 0;
-    memcpy(&headerLength, data.bytes, sizeof(uint64_t));
- 
-    return headerLength;
-}
 
 
 
@@ -165,41 +152,12 @@
     [self.socket writeData:buffer withTimeout:-1.0 tag:0];
 }
 
-/*
- 
- As I wrote earlier, we can only send binary data through a TCP connection.
- 
- 
- We then create another NSMutableData instance, which will be the data object that we will pass to the socket a bit later. The data object, however, does not only hold the encoded MTPacket instance.
 
- It also needs to include the header that precedes the encoded packet. We store the length of the encoded packet in a variable named headerLength which is of type uint64_t. We then append the header to the NSMutableData buffer.
- 
- 
- Did you spot the & symbol preceding headerLength?
-
- The appendBytes:length: method expects a buffer of bytes, not the value of the headerLength value. Finally, we append the contents of packetData to the buffer. The buffer is then passed to writeData:withTimeout:tag:.
- 
- The CocoaAsyncSocket library takes care of the nitty gritty details of sending the data.
- 
- 
  
 
 
 
-- (void)startNewGame {
-    // Send Packet
-    NSDictionary *load = nil;
-    PacketH *packet = [[PacketH alloc] initWithData:load type: PacketTypeStartNewGame action:0];
-    [self sendPacket:packet];
-}
 
 
-- (void)dealloc {
-    if (_socket) {
-        [_socket setDelegate:nil delegateQueue:NULL];
-        [_socket disconnect];
-        _socket = nil;
-    }
-}
 
 */
