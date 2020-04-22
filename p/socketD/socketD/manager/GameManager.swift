@@ -25,20 +25,20 @@ struct Tag {
 }
 
 
-//  GCDAsyncSocketDelegate
 class GameManager : NSObject{
     
 
     weak var delegate: GameManagerProxy?
 
-    let socket: GCDAsyncSocket
+    var socket: GCDAsyncSocket
     
     
     init(socket s: GCDAsyncSocket){
         socket = s
         super.init()
+        socket.delegate = self
+        socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head)
     }
-
 
 
     func startNewGame(){
@@ -91,9 +91,9 @@ class GameManager : NSObject{
     }
 
     
-    func parse(header data: NSData) -> UInt64{
-        var headerLength: UInt64 = 0
-        data.getBytes(&headerLength, length: MemoryLayout<UInt64>.size)
+    func parse(header data: NSData) -> UInt{
+        var headerLength: UInt = 0
+        data.getBytes(&headerLength, length: MemoryLayout<UInt>.size)
         return headerLength
     }
 
@@ -142,16 +142,41 @@ class GameManager : NSObject{
     }
 
 
-
-
-
-
-
-        
-    
-
-
     
 }
 
 
+
+extension GameManager: GCDAsyncSocketDelegate{
+
+
+    func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+ 
+        if tag == 0{
+            let d = NSData(data: data)
+            let bodyLength = parse(header: d)
+            socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: 1)
+        } else if (tag == 1) {
+            parse(body: data)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: 0)
+        }
+    }
+
+
+    
+    func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
+
+        
+        if socket == sock{
+            socket.delegate = nil;
+        }
+     
+        // Notify Delegate
+        delegate?.didDisconnect(manager: self)
+    }
+
+
+
+
+
+}
