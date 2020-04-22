@@ -15,7 +15,6 @@
 		267C05512447389E00BAF530 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 267C054F2447389E00BAF530 /* LaunchScreen.storyboard */; };
 		267C055C2447389E00BAF530 /* socketDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C055B2447389E00BAF530 /* socketDTests.swift */; };
 		267C05672447389E00BAF530 /* socketDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05662447389E00BAF530 /* socketDUITests.swift */; };
-		267C05832447391C00BAF530 /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057C2447391C00BAF530 /* GameManager.m */; };
 		267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057F2447391C00BAF530 /* GCDAsyncSocket.m */; };
 		2690B23F244ED64B0092492C /* BoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2690B23E244ED64B0092492C /* BoardCell.swift */; };
 		26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* PacketH.swift */; };
@@ -313,7 +312,6 @@
 				26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */,
 				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
 				267C05492447389C00BAF530 /* ViewController.swift in Sources */,
-				267C05832447391C00BAF530 /* GameManager.m in Sources */,
 				2690B23F244ED64B0092492C /* BoardCell.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
