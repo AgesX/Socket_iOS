@@ -12,7 +12,7 @@ import Foundation
 protocol GameManagerProxy: class{
     
     
-    func didAddDisc(manager: GameManager, to column: GameManager)
+    func didAddDisc(manager: GameManager, to column: UInt)
     func didDisconnect(manager: GameManager)
     func didStartNewGame(manager: GameManager)
 
@@ -91,46 +91,34 @@ class GameManager : NSObject{
     }
 
     
-    func parseH(header data: NSData) -> UInt64{
-        print("header 来了")
+    func parse(header data: NSData) -> UInt64{
         var headerLength: UInt64 = 0
         data.getBytes(&headerLength, length: MemoryLayout<UInt64>.size)
         return headerLength
-        
-        
     }
 
 
-    /*
-    func parseB(body data: Data){
-        
+    
+    func parse(body data: Data){
         do {
-            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Dictionary.self, PacketH.self], from: data)
-            
-            
-
-               print("errorUnfold: \(error)")
+            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, PacketH.self], from: data) as! PacketH
+             
                print("Packet Data > \(packet.data)")
                print("Packet Type > \(packet.type)")
                print("Packet Action > \(packet.action)")
             
                // 落子了
                if packet.type == .didAddDisc{
-                   if let dic = packet.data as? [String: Int], let column = dic["column"] as? Int{
-                       
-                    //   delegate.didAddDisc(self)
-                    //                     [self.delegate manager:self didAddDiscToColumn: column.integerValue];
-                   }
-                   
-                     
+                    if let dic = packet.data as? [String: UInt], let column = dic["column"]{
+                        delegate?.didAddDisc(manager: self, to: column)
+                    }
                }
                else if packet.type == .startNewGame{
 
                      // 这里真的走了，  点击 replay 的时候
                    // 新开一局
                    // Notify Delegate
-                //   delegate.
-                //   [self.delegate managerDidStartNewGame:self];
+                    delegate?.didStartNewGame(manager: self)
                }
             
             
@@ -141,7 +129,7 @@ class GameManager : NSObject{
     }
 
 
-*/
+
 
  
     
