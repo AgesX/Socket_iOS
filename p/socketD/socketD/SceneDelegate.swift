@@ -18,50 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        
-        /*
-        
-        let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
-/*
-        if let date = dateFormatterGet.date(from: "2016-02-29 12:24:26") {
-            print(dateFormatterPrint.string(from: date))
-        } else {
-           print("There was an error decoding the string")
-        }
-  */
-        
-        
-        print(dateFormatterGet.string(from: Date()))
-        */
-        
-        
-        
-        /*
-        let dateFormatCoordinate = DateFormatter()
-        dateFormatCoordinate.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    
-        if let d = dateFormatCoordinate.date(from: "2020-04-17 05:06:06") {
-             let inteval = Date().timeIntervalSince(d)
-             print(Int(inteval))
-        }
-        */
-        
-        
-        let d = Date()
-
-        print(d)
-        // date to integer, you need to unwrap the optional
-        print(d.intVal)
-
-        // integer to date
-        print(d.intVal?.dateVal)
-        
-        
-        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

@@ -60,11 +60,56 @@ class GameManager : NSObject, GCDAsyncSocketDelegate {
     func parse(header data: NSData) -> UInt64{
         print("header 来了")
         var headerLength: UInt64 = 0
-        
-        
-        //    memcpy(&headerLength, data.bytes, sizeof(uint64_t));
-        
+        data.getBytes(&headerLength, length: MemoryLayout<UInt64>.size)
         return headerLength
+        
+        
+    }
+
+
+    
+    
+    
+    func sendPacket(p packet: PacketH){
+        
+        // packet to buffer
+        // 包，到 缓冲
+          
+        // Encode Packet Data
+
+        do {
+            let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+            
+            // Initialize Buffer
+            let buffer = NSMutableData()
+        
+           // buffer = header + packet
+           
+           // Fill Buffer
+            var headerLength = encoded.count
+           
+            buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+            encoded.withUnsafeBytes { (p) in
+                let bufferPointer = p.bindMemory(to: UInt8.self)
+                if let address = bufferPointer.baseAddress{
+                    buffer.append(address, length: MemoryLayout<UInt64>.size)
+                }
+            }
+            
+
+           // Write Buffer
+            if let d = buffer.copy() as? Data{
+                socket.write(d, withTimeout: -1.0, tag: 0)
+            }
+            
+            
+        } catch {
+            print(error)
+        }
+        
+        
+
+        
     }
 
 
