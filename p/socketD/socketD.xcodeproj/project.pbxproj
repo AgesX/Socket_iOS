@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		266B384924507E5300204C56 /* JoinListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266B384524507E5300204C56 /* JoinListController.m */; };
-		266B384C24507E6C00204C56 /* JoinListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384B24507E6C00204C56 /* JoinListCtrl.swift */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
 		267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05462447389C00BAF530 /* SceneDelegate.swift */; };
@@ -20,6 +19,7 @@
 		267C05672447389E00BAF530 /* socketDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05662447389E00BAF530 /* socketDUITests.swift */; };
 		267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057F2447391C00BAF530 /* GCDAsyncSocket.m */; };
 		2690B23F244ED64B0092492C /* BoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2690B23E244ED64B0092492C /* BoardCell.swift */; };
+		2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA224513612006933A6 /* JoinListCtrl.swift */; };
 		26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* PacketH.swift */; };
 		26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECF24480DAF00E7ED8D /* GameManager.swift */; };
 /* End PBXBuildFile section */
@@ -43,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		266B384524507E5300204C56 /* JoinListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinListController.m; sourceTree = "<group>"; };
-		266B384B24507E6C00204C56 /* JoinListCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinListCtrl.swift; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
 		267C05412447389C00BAF530 /* socketD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C05442447389C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		267C05802447391C00BAF530 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		267C05852447399B00BAF530 /* ObjC_Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC_Bridge.h; sourceTree = "<group>"; };
 		2690B23E244ED64B0092492C /* BoardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCell.swift; sourceTree = "<group>"; };
+		2693BBA224513612006933A6 /* JoinListCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinListCtrl.swift; sourceTree = "<group>"; };
 		26CDDECD24480A1800E7ED8D /* PacketH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketH.swift; sourceTree = "<group>"; };
 		26CDDECF24480DAF00E7ED8D /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,8 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				266B384524507E5300204C56 /* JoinListController.m */,
-				266B384B24507E6C00204C56 /* JoinListCtrl.swift */,
 				266B384D24507E7D00204C56 /* HostViewCtrl.swift */,
+				2693BBA224513612006933A6 /* JoinListCtrl.swift */,
 			);
 			path = Ctrl;
 			sourceTree = "<group>";
@@ -324,11 +324,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				266B384C24507E6C00204C56 /* JoinListCtrl.swift in Sources */,
 				26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */,
 				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
 				267C05492447389C00BAF530 /* ViewController.swift in Sources */,
 				266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */,
+				2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */,
 				2690B23F244ED64B0092492C /* BoardCell.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,

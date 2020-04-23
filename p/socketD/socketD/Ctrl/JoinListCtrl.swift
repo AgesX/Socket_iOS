@@ -2,7 +2,7 @@
 //  JoinListCtrl.swift
 //  socketD
 //
-//  Created by Jz D on 2020/4/22.
+//  Created by Jz D on 2020/4/23.
 //  Copyright © 2020 Jz D. All rights reserved.
 //
 
@@ -20,7 +20,7 @@ protocol JoinListCtrlDelegate: class{
 
 
 
-class JoinListCtrl: UIViewController {
+class JoinListCtrl: UITableViewController{
 
     var services = [NetService]()
     var socket: GCDAsyncSocket?
@@ -79,19 +79,46 @@ class JoinListCtrl: UIViewController {
     }
 
 
+    func connectWith(service s: NetService) -> Bool{
+        BOOL _isConnected = NO;
+     
+        // Copy Service Addresses
+        NSArray *addresses = [[service addresses] mutableCopy];
+     
+        if (!self.socket || ![self.socket isConnected]) {
+            // Initialize Socket
+            NSLog(@"Initialize Socket, 新建了 Socket");
+            self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+     
+            // Connect
+            while (!_isConnected && [addresses count]) {
+                NSData *address = [addresses objectAtIndex:0];
+     
+                NSError *error = nil;
+                if ([self.socket connectToAddress:address error:&error]) {
+                    _isConnected = YES;
+     
+                } else if (error) {
+                    NSLog(@"Unable to connect to address. Error %@ with user info %@.", error, [error userInfo]);
+                }
+            }
+     
+        } else {
+            _isConnected = [self.socket isConnected];
+        }
+     
+        return _isConnected;
+    }
+
+
+
+
 }
 
 
 
 
-extension JoinListCtrl: NetServiceDelegate{
-    
-    
-  
-}
-
-
-extension JoinListCtrl: NetServiceBrowserDelegate{
+extension JoinListCtrl: NetServiceDelegate, NetServiceBrowserDelegate{
     
     
     func netServiceBrowser(_ browser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
@@ -102,23 +129,27 @@ extension JoinListCtrl: NetServiceBrowserDelegate{
      
         if !moreComing{
             // Sort Services
-            [self.services sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
-     
+            services.sort { (lhs, rhs) -> Bool in
+                lhs.name > rhs.name
+            }
             // Update Table View
-            [self.tableView reloadData];
+            tableView.reloadData()
         }
     }
 
 
     
     func netServiceBrowser(_ browser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
-        
         // Update Services
-        [self.services removeObject:service];
-     
+        if let index = services.firstIndex(where: {  (s) -> Bool in
+            s == service
+        }){
+             services.remove(at: index)
+        }
+      
         if !moreComing{
             // Update Table View
-            [self.tableView reloadData];
+            tableView.reloadData()
         }
     }
 
@@ -136,6 +167,25 @@ extension JoinListCtrl: NetServiceBrowserDelegate{
     }
 
     
+    func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
+        sender.delegate = nil
+    }
+
+
+    func netServiceDidResolveAddress(_ sender: NetService) {
+
+        // Connect With Service
+     
+        
+        
+        if ([self connectWithService:service]) {
+            NSLog(@"Did Connect with Service: domain(%@) type(%@) name(%@) port(%i)", [service domain], [service type], [service name], (int)[service port]);
+        } else {
+            NSLog(@"XXX: Unable to Connect with Service: domain(%@) type(%@) name(%@) port(%i)", [service domain], [service type], [service name], (int)[service port]);
+        }
+    }
+
+
   
 }
 
@@ -161,3 +211,43 @@ extension JoinListCtrl: GCDAsyncSocketDelegate{
 
 
 }
+
+
+
+
+
+extension JoinListCtrl{
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return services.count
+    }
+    
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let kServiceCell = "ServiceCell"
+        var cell = tableView.dequeueReusableCell(withIdentifier: kServiceCell)
+        if cell == nil{
+            cell = UITableViewCell(style: .default, reuseIdentifier: kServiceCell)
+        }
+        let service = services[indexPath.row]
+        cell?.textLabel?.text = service.name
+        return cell ?? UITableViewCell()
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+         // Fetch Service
+        let service = services[indexPath.row]
+        
+        // Resolve Service
+        service.delegate = self
+        // 点击，服务就 gg
+        service.resolve(withTimeout: 30.0)
+    }
+
+
+
+}
+
