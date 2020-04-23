@@ -65,7 +65,7 @@ class JoinListCtrl: UITableViewController{
         serviceBrowser = NetServiceBrowser()
      
         // Configure Service Browser
-        serviceBrowser.delegate = self
+        serviceBrowser?.delegate = self
         serviceBrowser?.searchForServices(ofType: "_deng._tcp.", inDomain: "local.")
     }
 
@@ -80,34 +80,48 @@ class JoinListCtrl: UITableViewController{
 
 
     func connectWith(service s: NetService) -> Bool{
-        BOOL _isConnected = NO;
+        var isConnected = false
      
         // Copy Service Addresses
-        NSArray *addresses = [[service addresses] mutableCopy];
-     
-        if (!self.socket || ![self.socket isConnected]) {
+        guard let addresses = s.addresses else{
+            return false
+        }
+        
+        var condition = false
+        
+        if let ss = socket{
+            if ss.isConnected == false{
+                condition = true
+            }
+            else{
+                isConnected = ss.isConnected
+            }
+        }
+        if socket == nil || condition{
+            
             // Initialize Socket
-            NSLog(@"Initialize Socket, 新建了 Socket");
-            self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-     
+            
+            socket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
+            
             // Connect
-            while (!_isConnected && [addresses count]) {
-                NSData *address = [addresses objectAtIndex:0];
-     
-                NSError *error = nil;
-                if ([self.socket connectToAddress:address error:&error]) {
-                    _isConnected = YES;
-     
-                } else if (error) {
-                    NSLog(@"Unable to connect to address. Error %@ with user info %@.", error, [error userInfo]);
+            while isConnected == false, addresses.count > 0 {
+                let address = addresses[0]
+                
+                do {
+                    if let sss = socket{
+                        try sss.connect(toAddress: address)
+                        // 结果 bool ,
+                        //  就是 ok,
+                        //  不 ok, 顺带 error 信息
+                        isConnected = true
+                    }
+                } catch {
+                    print("Unable to connect to address. Error \(error) with user info ")
                 }
             }
-     
-        } else {
-            _isConnected = [self.socket isConnected];
         }
      
-        return _isConnected;
+        return isConnected;
     }
 
 
@@ -176,12 +190,11 @@ extension JoinListCtrl: NetServiceDelegate, NetServiceBrowserDelegate{
 
         // Connect With Service
      
-        
-        
-        if ([self connectWithService:service]) {
-            NSLog(@"Did Connect with Service: domain(%@) type(%@) name(%@) port(%i)", [service domain], [service type], [service name], (int)[service port]);
-        } else {
-            NSLog(@"XXX: Unable to Connect with Service: domain(%@) type(%@) name(%@) port(%i)", [service domain], [service type], [service name], (int)[service port]);
+        if connectWith(service: sender){
+            print("Did Connect with Service:  domain(\(sender.domain)) type(\(sender.type)) name(\(sender.name)) port(\(sender.port)")
+        }
+        else{
+            print("Unable to Connect with Service:  domain(\(sender.domain)) type(\(sender.type)) name(\(sender.name)) port(\(sender.port)")
         }
     }
 
