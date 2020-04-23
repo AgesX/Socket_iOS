@@ -345,6 +345,25 @@ class ViewController: UIViewController {
     
     
 
+    func startGame(with socket: GCDAsyncSocket){
+        // Initialize Game Controller
+        gameManager = GameManager(socket: socket)
+        gameManager?.delegate = self
+     
+
+        // Hide/Show Buttons
+        boardView.isHidden = false
+        hostBtn.isHidden = true
+        
+        joinBtn.isHidden = true
+        disconnectBtn.isHidden = false
+        
+        gameStateLabel.isHidden = false
+    }
+
+
+    
+    
 
     func resetGame(){
         for eles in board{
@@ -454,6 +473,53 @@ class ViewController: UIViewController {
 
 
 
+extension ViewController: HostViewCtrlDelegate{
+    func didHostGame(c controller: HostViewCtrl, On socket: GCDAsyncSocket) {
+        gameState = .myTurn
+        startGame(with: socket)
+    }
+    
+    func didCancelHosting(c controller: HostViewCtrl) {
+        print("\(#file), \(#function)")
+    }
+    
+}
+
+
+
+
+extension ViewController: JoinListCtrlDelegate{
+    func didJoinGame(c controller: JoinListCtrl, on socket: GCDAsyncSocket) {
+        gameState = .yourOpponentTurn
+        startGame(with: socket)
+    }
+    
+    
+    func didCancelJoining(c controller: JoinListCtrl) {
+        print("\(#file), \(#function)")
+    }
+}
+
+
+
+
+extension ViewController: GameManagerProxy{
+    func didAddDisc(manager: GameManager, to column: UInt) {
+        
+    }
+    
+    func didDisconnect(manager: GameManager) {
+    
+    }
+    
+    
+    func didStartNewGame(manager: GameManager) {
+        
+        
+    }
+    
+}
+
 
 
 
@@ -478,3 +544,6 @@ public func * (left: CGFloat, right: Int) -> CGFloat {
 public func * (left: Int, right: CGFloat) -> CGFloat {
     return CGFloat(left) * right
 }
+
+
+
