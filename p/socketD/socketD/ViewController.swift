@@ -56,11 +56,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupView()
         // Setup View
-        [self setupView];
         
-        self.boardView.layer.borderColor = UIColor.blueColor.CGColor;
+        self.boardView.layer.borderColor = UIColor.blue.cgColor;
         self.boardView.layer.borderWidth = 1;
     }
 
@@ -70,22 +69,23 @@ class ViewController: UIViewController {
 
     func setupView(){
         // Reset Game
-        [self resetGame];
-     
+        resetGame()
+
         // Configure Subviews
-        [self.boardView setHidden:YES];
-        [self.replayButton setHidden:YES];
-        [self.disconnectBtn setHidden:YES];
-        [self.gameStateLabel setHidden:YES];
+        boardView.isHidden = true
+        replayButton.isHidden = true
         
-        
+        disconnectBtn.isHidden = true
+        gameStateLabel.isHidden = true
+  
         // Add Tap Gesture Recognizer
-        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addDiscToColumn:)];
-        [self.boardView addGestureRecognizer:tgr];
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(ViewController.addDiscToColumn(tap:)))
+        boardView.addGestureRecognizer(tgr)
     }
 
 
 
+    @objc
     func addDiscToColumn(tap tgr: UITapGestureRecognizer){
         
         switch gameState {
@@ -109,8 +109,6 @@ class ViewController: UIViewController {
             //  .unknown, .yourOpponentTurn, .IWin
             let alert = UIAlertController(title: "It's not your turn.", message: "Warning 不啊", preferredStyle: UIAlertController.Style.alert)
             let ok = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (act) in
-                alert.dismiss(animated: true) {
-                }
             }
             alert.addAction(ok)
             present(alert, animated: true) {
@@ -175,6 +173,7 @@ class ViewController: UIViewController {
         }
         if hasWon == false{
             for i in 0..<Matrix.w{
+                // 算法有问题，所以需要正着来一遍，倒着来一遍
                 counter = 0
                 var j = i
                 var row = 0
@@ -227,49 +226,79 @@ class ViewController: UIViewController {
             
         }
         
-                  
-        
-     
-        if (!_hasWon) {
+        if hasWon == false{
+           
             // Check Diagonal Matches - Second Pass
-            for (int i = 0; i < kMTMatrixWidth; i++) {
-                _counter = 0;
+            for i in 0..<Matrix.w{
+                
+                counter = 0;
      
                 // Forward
-                for (int j = i, row = (kMTMatrixHeight - 1); j < kMTMatrixWidth && row >= 0; j++, row--) {
-                    BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                    _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                    _hasWon = (_counter > 3) ? YES : _hasWon;
-     
-                    if (_hasWon) break;
+                var j = i
+                var row = Matrix.h - 1
+                while j < Matrix.w, row >= 0 {
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    
+                    if hasWon{
+                        break
+                    }
+                    
+                    j += 1
+                    row -= 1
                 }
-     
-                if (_hasWon) break;
-     
-                _counter = 0;
+                if hasWon{
+                    break
+                }
+                
+                 counter = 0;
+                
      
                 // Backward
-                for (int j = i, row = (kMTMatrixHeight - 1); j >= 0 && row >= 0; j--, row--) {
-                    BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                    _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                    _hasWon = (_counter > 3) ? YES : _hasWon;
-     
-                    if (_hasWon) break;
+                j = i
+                row = Matrix.h - 1
+                while j >= 0, row >= 0{
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    
+                    if hasWon{
+                        break
+                    }
+                    j -= 1
+                    row -= 1
                 }
+                
+                if hasWon{
+                    break
+                }
+                
+       
+
      
-                if (_hasWon) break;
             }
         }
      
         // Update Game State
-        if (_hasWon) {
-            self.gameState = GameStateYourOpponentWin;
-            if (playerType == PlayerTypeMe){
-                self.gameState = GameStateIWin;
+        if hasWon{
+            gameState = .yourOpponentWin
+            if type == .me{
+                gameState = .IWin
             }
-        }
      
-        return _hasWon;
+        }
+        return hasWon
     }
 
     
@@ -278,30 +307,23 @@ class ViewController: UIViewController {
 
 
     func showWinner(){
-        if (self.gameState < GameStateIWin){
-            return;
+        
+        switch gameState {
+        case .IWin, .yourOpponentWin:
+            replayButton.isHidden = false
+            var message = "你 gg 了，Your opponent has won the game."
+            if case GameState.IWin = gameState{
+                message = "赢啦 ✌️ - You have won the game."
+            }
+            let alert = UIAlertController(title: "We Have a Winner", message: message, preferredStyle: UIAlertController.Style.alert)
+            let ok = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (act) in
+            }
+            alert.addAction(ok)
+            present(alert, animated: true) {
+            }
+        default:
+            ()
         }
-     
-        // Show Replay Button
-        [self.replayButton setHidden:NO];
-     
-        NSString *message = nil;
-     
-        if (self.gameState == GameStateIWin) {
-            message = @"赢啦 ✌️ - You have won the game.";
-        } else if (self.gameState == GameStateYourOpponentWin) {
-            message = @"你 gg 了，Your opponent has won the game.";
-        }
-     
-        // Show Alert
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"We Have a Winner" message: message preferredStyle: UIAlertControllerStyleAlert];
-                                  
-        UIAlertAction * ok = [UIAlertAction actionWithTitle: @"OK" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        }];
-                                  
-        [alert addAction: ok];
-        [self presentViewController: alert animated: YES completion:^{
-        }];
         
     }
 
@@ -322,6 +344,40 @@ class ViewController: UIViewController {
     
     
     
+
+
+    func resetGame(){
+        for eles in board{
+            eles.forEach { $0.removeFromSuperview() }
+        }
+        board = []
+        matrix = []
+        
+        // Hide Replay Button
+        replayButton.isHidden = true
+     
+        // Helpers
+        let size = boardView.frame.size
+        let cellWidth = size.width / Matrix.w
+        let cellHeight = size.height / Matrix.h
+        var buffer = [[BoardCell]]()
+        for i in 0..<Matrix.w{
+            var column = [BoardCell]()
+            for j in 0..<Matrix.h{
+                let frame = CGRect(x: i * cellWidth, y: size.height - (j + 1) * cellHeight, width: cellWidth, height: cellHeight)
+                let cell = BoardCell(frame: frame)
+                cell.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                boardView.addSubview(cell)
+                column.append(cell)
+            }
+            buffer.append(column)
+        }
+        board = buffer
+        matrix = [[]]
+    }
+
+
+
 
     
     @IBAction func hostGame(_ sender: UIButton) {
@@ -411,4 +467,14 @@ extension Array {
 
 public func / (left: CGFloat, right: Int) -> CGFloat {
     return left/CGFloat(right)
+}
+
+
+public func * (left: CGFloat, right: Int) -> CGFloat {
+    return left * CGFloat(right)
+}
+
+
+public func * (left: Int, right: CGFloat) -> CGFloat {
+    return CGFloat(left) * right
 }
