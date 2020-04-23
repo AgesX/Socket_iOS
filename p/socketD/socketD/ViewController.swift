@@ -412,6 +412,10 @@ class ViewController: UIViewController {
         }
         board = buffer
         matrix = [[]]
+        
+        // 有 Matrix.w 个空盒子，可以装东西
+        let array = repeatElement([BoardCellType](), count: Matrix.w)
+        matrix.append(contentsOf: array)
     }
 
 
