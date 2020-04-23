@@ -362,6 +362,25 @@ class ViewController: UIViewController {
     }
 
 
+ 
+
+    
+    func endGame(){
+        
+        // Clean Up
+        gameManager?.delegate = nil
+        gameManager = nil
+               
+        // Hide/Show Buttons
+        boardView.isHidden = true
+        hostBtn.isHidden = false
+        
+        joinBtn.isHidden = false
+        disconnectBtn.isHidden = true
+        gameStateLabel.isHidden = true
+        
+    }
+
     
     
 
@@ -397,13 +416,21 @@ class ViewController: UIViewController {
 
 
 
-
     
     @IBAction func hostGame(_ sender: UIButton) {
         
-        
-        
-        
+        // Initialize Host Game View Controller
+        let vc = HostViewCtrl()
+       
+              // Configure Host Game View Controller
+        vc.delegate = self
+      
+              // Initialize Navigation Controller
+        let nc = UINavigationController(rootViewController: vc)
+
+              // Present Navigation Controller
+        present(nc, animated: true) {
+        }
     }
     
     
@@ -412,33 +439,35 @@ class ViewController: UIViewController {
     
     @IBAction func joinGame(_ sender: UIButton) {
         
+        // Initialize Join Game View Controller
+        let vc = JoinListCtrl(style: .plain)
         
+           // Configure Join Game View Controller
+        vc.delegate = self
         
-        
-        
+           // Initialize Navigation Controller
+        let nc = UINavigationController(rootViewController: vc)
+
+           // Present Navigation Controller
+        present(nc, animated: true) {
+        }
     }
     
     
-    
-    
+
     
     @IBAction func disconnectIt(_ sender: UIButton) {
-        
-        
-        
-        
-        
+        endGame()
     }
     
     
     
     @IBAction func replayGame(_ sender: UIButton) {
         
-        
-        
-        
-        
-        
+        resetGame()
+        gameState = .myTurn
+        gameManager?.startNewGame()
+
     }
     
     
@@ -505,45 +534,23 @@ extension ViewController: JoinListCtrlDelegate{
 
 extension ViewController: GameManagerProxy{
     func didAddDisc(manager: GameManager, to column: UInt) {
-        
+        addDiscTo(column: column, with: .yours)
+        if hasPlayerWon(of: .you){
+            showWinner()
+        }
+        else{
+            gameState = .myTurn
+        }
     }
     
     func didDisconnect(manager: GameManager) {
-    
+        endGame()
     }
     
     
     func didStartNewGame(manager: GameManager) {
-        
-        
+        resetGame()
+        gameState = .yourOpponentTurn
     }
     
 }
-
-
-
-
-extension Array {
-    public subscript(index: UInt) -> Element {
-        return self[Int(index)]
-    }
-}
-
-
-
-public func / (left: CGFloat, right: Int) -> CGFloat {
-    return left/CGFloat(right)
-}
-
-
-public func * (left: CGFloat, right: Int) -> CGFloat {
-    return left * CGFloat(right)
-}
-
-
-public func * (left: Int, right: CGFloat) -> CGFloat {
-    return CGFloat(left) * right
-}
-
-
-
