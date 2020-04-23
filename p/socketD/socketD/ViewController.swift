@@ -336,9 +336,8 @@ class ViewController: UIViewController {
         columnArray.append(type)
      
         // Update Cells
-        if let cell = board[c].last{
-            cell.cellType = type
-        }
+        let cell = board[c][columnArray.count - 1]
+        cell.cellType = type
         
     }
     

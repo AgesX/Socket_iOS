@@ -101,6 +101,7 @@ class GameManager : NSObject{
     
     func parse(body data: Data){
         do {
+            NSKeyedUnarchiver.setClass(PacketH.self, forClassName: "PacketH")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, PacketH.self], from: data) as! PacketH
              
                print("Packet Data > \(packet.data)")
