@@ -1,107 +1,10 @@
-//
-//  TableViewController.m
-//  oneOC
-//
-//  Created by Jz D on 2020/4/1.
-//  Copyright © 2020 Jz D. All rights reserved.
-//
-
-#import "JoinListController.h"
-
-#include "GCDAsyncSocket.h"
-
-
-#import "PacketH.h"
-
-
-// 目前，收数据
-@interface JoinListController()<NSNetServiceDelegate, NSNetServiceBrowserDelegate, GCDAsyncSocketDelegate>
- 
-@property (strong, nonatomic) GCDAsyncSocket *socket;
-@property (strong, nonatomic) NSMutableArray *services;
-@property (strong, nonatomic) NSNetServiceBrowser *serviceBrowser;
-
-
-@end
-
-@implementation JoinListController
 
 static NSString *ServiceCell = @"ServiceCell";
 
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Setup View
-    [self setupView];
-    
-    // Start Browsing
-    [self startBrowsing];
-}
-
-- (void)setupView {
-    // Create Cancel Button
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel:)];
-}
 
 
 
-
-- (void)cancel:(id)sender {
-       // Notify Delegate
-       [self.delegate controllerDidCancelJoining:self];
-    
-       // Stop Browsing Services
-       [self stopBrowsing];
-    
-       // Dismiss View Controller
-       [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-
-
-- (void)dealloc {
-    if (_delegate) {
-        _delegate = nil;
-    }
-
-}
-
-/*
-    In the dealloc method of the MTJoinGameViewController class, we clean everything up. However, because this socket is managed by the game controller, we shouldn't set the delegate to nil and neither should we set the delegate queue to NULL. The game controller is instantiated before the dealloc method is invoked, which means that the delegate of the game controller's socket is (re)set to nil when the join game view controller is deallocated.
- 
- 
- In other words, even though the game controller has a reference to the socket, the socket's delegate is set to nil and this renders the socket unusable to us. The solution is as simple as removing the last few lines of the dealloc method in which we set the socket's delegate to nil and the socket's delegate queue to NULL. Run the application one more time to see if we have successfully fixed that nasty bug.
- 
- 
- */
-
-
-- (void)startBrowsing {
-    if (self.services) {
-        [self.services removeAllObjects];
-    } else {
-        self.services = [[NSMutableArray alloc] init];
-    }
- 
-    // Initialize Service Browser
-    self.serviceBrowser = [[NSNetServiceBrowser alloc] init];
- 
-    // Configure Service Browser
-    self.serviceBrowser.delegate = self;
-    [self.serviceBrowser searchForServicesOfType:@"_deng._tcp." inDomain:@"local."];
-}
-
-
-
-- (void)stopBrowsing {
-    if (self.serviceBrowser) {
-        [self.serviceBrowser stop];
-        self.serviceBrowser.delegate = nil;
-        [self setServiceBrowser:nil];
-    }
-}
 
 
 
@@ -148,41 +51,6 @@ static NSString *ServiceCell = @"ServiceCell";
     // 点击，服务就 gg
     
     [service resolveWithTimeout:30.0];
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)serviceBrowser didFindService:(NSNetService *)service moreComing:(BOOL)moreComing {
-    // Update Services
-    [self.services addObject:service];
- 
-    if(!moreComing) {
-        // Sort Services
-        [self.services sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
- 
-        // Update Table View
-        [self.tableView reloadData];
-    }
-}
-
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)serviceBrowser didRemoveService:(NSNetService *)service moreComing:(BOOL)moreComing {
-    // Update Services
-    [self.services removeObject:service];
- 
-    if(!moreComing) {
-        // Update Table View
-        [self.tableView reloadData];
-    }
-}
-
-
-- (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)serviceBrowser {
-    [self stopBrowsing];
-}
-
-
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aBrowser didNotSearch:(NSDictionary *)userInfo {
-    [self stopBrowsing];
 }
 
 
@@ -240,19 +108,7 @@ static NSString *ServiceCell = @"ServiceCell";
 
 
 
-// 读数据
-- (void)socket:(GCDAsyncSocket *)socket didConnectToHost:(NSString *)host port:(UInt16)port {
-       NSLog(@"Socket Did Connect to Host: %@ Port: %hu", host, port);
-    
-       // Notify Delegate
-       [self.delegate controller:self didJoinGameOnSocket:socket];
-    
-       // Stop Browsing
-       [self stopBrowsing];
-    
-       // Dismiss View Controller
-       [self dismissViewControllerAnimated:YES completion:nil];
-}
+
 
 
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		266B384924507E5300204C56 /* JoinListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266B384524507E5300204C56 /* JoinListController.m */; };
-		266B384A24507E5300204C56 /* HostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266B384824507E5300204C56 /* HostViewController.m */; };
 		266B384C24507E6C00204C56 /* JoinListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384B24507E6C00204C56 /* JoinListCtrl.swift */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		266B384524507E5300204C56 /* JoinListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinListController.m; sourceTree = "<group>"; };
-		266B384824507E5300204C56 /* HostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostViewController.m; sourceTree = "<group>"; };
 		266B384B24507E6C00204C56 /* JoinListCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinListCtrl.swift; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
 		267C05412447389C00BAF530 /* socketD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketD.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				266B384524507E5300204C56 /* JoinListController.m */,
-				266B384824507E5300204C56 /* HostViewController.m */,
 				266B384B24507E6C00204C56 /* JoinListCtrl.swift */,
 				266B384D24507E7D00204C56 /* HostViewCtrl.swift */,
 			);
@@ -335,7 +332,6 @@
 				2690B23F244ED64B0092492C /* BoardCell.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
-				266B384A24507E5300204C56 /* HostViewController.m in Sources */,
 				267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */,
 				266B384924507E5300204C56 /* JoinListController.m in Sources */,
 			);
