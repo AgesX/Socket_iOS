@@ -335,6 +335,13 @@ class ViewController: UIViewController {
      
         // Update Cells
         let cell = board[c][columnArray.count - 1]
+        //   有一个 assign,
+        
+        //   和 ref, mutate
+        
+        
+        
+        
         // 有 bug, 总是同一个
         cell.cellType = type
         
