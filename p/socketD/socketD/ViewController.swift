@@ -103,10 +103,10 @@ class ViewController: UIViewController {
             if hasPlayerWon(of: .me){
                 showWinner()
             }
-        case .yourOpponentWin:
+        case .yourOpponentWin, .IWin:
             showWinner()
         default:
-            //  .unknown, .yourOpponentTurn, .IWin
+            //  .unknown, .yourOpponentTurn
             let alert = UIAlertController(title: "It's not your turn.", message: "Warning 不啊", preferredStyle: UIAlertController.Style.alert)
             let ok = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel) { (act) in
             }
@@ -117,10 +117,8 @@ class ViewController: UIViewController {
         
   
     }
+            
 
-
-    
-    
 
 
     func hasPlayerWon(of type: PlayerType) -> Bool{
@@ -337,10 +335,11 @@ class ViewController: UIViewController {
      
         // Update Cells
         let cell = board[c][columnArray.count - 1]
+        // 有 bug, 总是同一个
         cell.cellType = type
         
     }
-    
+
     
     
 

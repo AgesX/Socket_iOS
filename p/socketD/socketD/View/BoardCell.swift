@@ -48,12 +48,12 @@ class BoardCell: UIView {
     func updateView(){
         // Background Color
         switch cellType {
-        case .empty:
-            backgroundColor = UIColor.yellow
         case .mine:
+            backgroundColor = UIColor.yellow
+        case .yours:
             backgroundColor = UIColor.red
         default :
-            //  .yours
+            //  .empty
             backgroundColor = UIColor.white
         }
     }
