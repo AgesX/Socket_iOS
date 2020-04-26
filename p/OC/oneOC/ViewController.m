@@ -152,37 +152,6 @@
 
 
 
-- (void)showWinner {
-    if (self.gameState < GameStateIWin){
-        return;
-    }
- 
-    // Show Replay Button
-    [self.replayButton setHidden:NO];
- 
-    NSString *message = nil;
- 
-    if (self.gameState == GameStateIWin) {
-        message = @"赢啦 ✌️ - You have won the game.";
-    } else if (self.gameState == GameStateYourOpponentWin) {
-        message = @"你 gg 了，Your opponent has won the game.";
-    }
- 
-    // Show Alert
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"We Have a Winner" message: message preferredStyle: UIAlertControllerStyleAlert];
-                              
-    UIAlertAction * ok = [UIAlertAction actionWithTitle: @"OK" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-                              
-    [alert addAction: ok];
-    [self presentViewController: alert animated: YES completion:^{
-    }];
-    
-}
-
-
-
-
 /*
     The columnForPoint:
 
@@ -224,6 +193,37 @@
  
  */
 
+#pragma mark - 5
+- (void)updateView {
+    // Update Game State Label
+    switch (self.gameState) {
+        case GameStateMyTurn: {
+            self.gameStateLabel.text = @"It is your turn.";
+            break;
+        }
+        case GameStateYourOpponentTurn: {
+            self.gameStateLabel.text = @"It is your opponent's turn.";
+            break;
+        }
+        case GameStateIWin: {
+            self.gameStateLabel.text = @"You have won.";
+            break;
+        }
+        case GameStateYourOpponentWin: {
+            self.gameStateLabel.text = @"Your opponent has won.";
+            break;
+        }
+        default: {
+            self.gameStateLabel.text = nil;
+            break;
+        }
+    }
+}
+
+
+
+#pragma mark -
+#pragma mark game relevant
 
 
 - (BOOL)hasPlayerOfTypeWon: (PlayerType) playerType {
@@ -424,6 +424,78 @@
 
 
 
+
+- (void)setGameState: (GameState) gameState {
+    if (_gameState != gameState) {
+        _gameState = gameState;
+ 
+        // Update View
+        [self updateView];
+    }
+}
+
+
+
+
+
+#pragma mark - 10
+
+
+- (void)endGame {
+    // Clean Up
+    self.gameManager.delegate = nil;
+    self.gameManager = nil;
+    
+    // Hide/Show Buttons
+     [self.boardView setHidden:YES];
+   [self.hostBtn setHidden:NO];
+   [self.joinBtn setHidden:NO];
+   [self.disconnectBtn setHidden:YES];
+
+    [self.gameStateLabel setHidden:YES];
+}
+
+
+
+
+
+
+
+- (void)showWinner {
+    if (self.gameState < GameStateIWin){
+        return;
+    }
+ 
+    // Show Replay Button
+    [self.replayButton setHidden:NO];
+ 
+    NSString *message = nil;
+ 
+    if (self.gameState == GameStateIWin) {
+        message = @"赢啦 ✌️ - You have won the game.";
+    } else if (self.gameState == GameStateYourOpponentWin) {
+        message = @"你 gg 了，Your opponent has won the game.";
+    }
+ 
+    // Show Alert
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle: @"We Have a Winner" message: message preferredStyle: UIAlertControllerStyleAlert];
+                              
+    UIAlertAction * ok = [UIAlertAction actionWithTitle: @"OK" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+                              
+    [alert addAction: ok];
+    [self presentViewController: alert animated: YES completion:^{
+    }];
+    
+}
+
+
+#pragma mark -
+#pragma mark Target action
+
+
+
+
 - (IBAction)hostGame:(UIButton *)sender {
     
     
@@ -483,6 +555,7 @@
     
 }
 
+#pragma mark - 15
 
 
 - (IBAction)replayGame:(UIButton *)sender {
@@ -504,8 +577,8 @@
 
 
 
-
-
+#pragma mark -
+#pragma mark GameManagerProxy
 
 ///
 
@@ -549,19 +622,6 @@
 }
 
 
-- (void)endGame {
-    // Clean Up
-    self.gameManager.delegate = nil;
-    self.gameManager = nil;
-    
-    // Hide/Show Buttons
-     [self.boardView setHidden:YES];
-   [self.hostBtn setHidden:NO];
-   [self.joinBtn setHidden:NO];
-   [self.disconnectBtn setHidden:YES];
-
-    [self.gameStateLabel setHidden:YES];
-}
 
 
 
@@ -599,6 +659,8 @@
 }
 
 
+#pragma mark - 20
+
 
 - (void)controllerDidCancelHosting:(HostViewController *)controller{
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -631,46 +693,6 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
     
     
-}
-
-
-
-- (void)setGameState: (GameState) gameState {
-    if (_gameState != gameState) {
-        _gameState = gameState;
- 
-        // Update View
-        [self updateView];
-    }
-}
-
-
-
-
-- (void)updateView {
-    // Update Game State Label
-    switch (self.gameState) {
-        case GameStateMyTurn: {
-            self.gameStateLabel.text = @"It is your turn.";
-            break;
-        }
-        case GameStateYourOpponentTurn: {
-            self.gameStateLabel.text = @"It is your opponent's turn.";
-            break;
-        }
-        case GameStateIWin: {
-            self.gameStateLabel.text = @"You have won.";
-            break;
-        }
-        case GameStateYourOpponentWin: {
-            self.gameStateLabel.text = @"Your opponent has won.";
-            break;
-        }
-        default: {
-            self.gameStateLabel.text = nil;
-            break;
-        }
-    }
 }
 
 

@@ -42,8 +42,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var gameStateLabel: UILabel!
     
     var gameManager: GameManager?
-    var gameState = GameState.myTurn
     
+    
+    private var _gameState = GameState.myTurn
+    var gameState: GameState{
+        get{
+            return _gameState
+        }
+        set{
+            if newValue != _gameState{
+                _gameState = newValue
+                switch _gameState{
+                    case .myTurn:
+                       gameStateLabel.text = "It is your turn."
+                    case .yourOpponentTurn:
+                       gameStateLabel.text = "It is your opponent's turn."
+                    case .IWin:
+                       gameStateLabel.text = "You have won."
+                    case .yourOpponentWin:
+                       gameStateLabel.text = "Your opponent has won."
+                    default:
+                       gameStateLabel.text = nil
+                }
+            }
+        }
+        
+    }
+
     
     
     // 数据，未更改
@@ -119,6 +144,112 @@ class ViewController: UIViewController {
     }
             
 
+
+    
+    func column(for point: CGPoint) -> UInt{
+         return UInt(point.x)/UInt(boardView.frame.size.width / Matrix.w);
+     }
+
+
+    
+    func addDiscTo(column c: UInt, with type: BoardCellType){
+        // Update Matrix
+      
+        matrix[c].append(type)
+        // Update Cells
+        let cell = board[c][matrix[c].count - 1]
+        //   有一个 assign,
+        
+        //   和 ref, mutate
+        
+        
+        
+        
+        // 有 bug, 总是同一个
+        cell.cellType = type
+        
+    }
+// MARK: 5
+    
+    // MARK: game relevant
+
+    func startGame(with socket: GCDAsyncSocket){
+        // Initialize Game Controller
+        gameManager = GameManager(socket: socket)
+        gameManager?.delegate = self
+     
+
+        // Hide/Show Buttons
+        boardView.isHidden = false
+        hostBtn.isHidden = true
+        
+        joinBtn.isHidden = true
+        disconnectBtn.isHidden = false
+        
+        gameStateLabel.isHidden = false
+    }
+
+
+ 
+
+    
+    func endGame(){
+        
+        // Clean Up
+        gameManager?.delegate = nil
+        gameManager = nil
+               
+        // Hide/Show Buttons
+        boardView.isHidden = true
+        hostBtn.isHidden = false
+        
+        joinBtn.isHidden = false
+        disconnectBtn.isHidden = true
+        gameStateLabel.isHidden = true
+        
+    }
+
+    
+    
+
+    func resetGame(){
+        for eles in board{
+            eles.forEach { $0.removeFromSuperview() }
+        }
+        board = []
+        matrix = []
+        
+        // Hide Replay Button
+        replayButton.isHidden = true
+     
+        // Helpers
+        let size = boardView.frame.size
+        let cellWidth = size.width / Matrix.w
+        let cellHeight = size.height / Matrix.h
+        var buffer = [[BoardCell]]()
+        for i in 0..<Matrix.w{
+            var column = [BoardCell]()
+            for j in 0..<Matrix.h{
+                let frame = CGRect(x: i * cellWidth, y: size.height - (j + 1) * cellHeight, width: cellWidth, height: cellHeight)
+                let cell = BoardCell(frame: frame)
+                cell.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                boardView.addSubview(cell)
+                column.append(cell)
+            }
+            buffer.append(column)
+        }
+        board = buffer
+        matrix = [[]]
+        
+        // 有 Matrix.w 个空盒子，可以装东西
+        let array = repeatElement([BoardCellType](), count: Matrix.w)
+        matrix.append(contentsOf: array)
+    }
+
+
+
+    
+    
 
 
     func hasPlayerWon(of type: PlayerType) -> Bool{
@@ -324,106 +455,13 @@ class ViewController: UIViewController {
         }
         
     }
-
-
-    
-    
-    func addDiscTo(column c: UInt, with type: BoardCellType){
-        // Update Matrix
       
-        matrix[c].append(type)
-        // Update Cells
-        let cell = board[c][matrix[c].count - 1]
-        //   有一个 assign,
-        
-        //   和 ref, mutate
-        
-        
-        
-        
-        // 有 bug, 总是同一个
-        cell.cellType = type
-        
-    }
-
-    
-    
-
-    func startGame(with socket: GCDAsyncSocket){
-        // Initialize Game Controller
-        gameManager = GameManager(socket: socket)
-        gameManager?.delegate = self
      
-
-        // Hide/Show Buttons
-        boardView.isHidden = false
-        hostBtn.isHidden = true
-        
-        joinBtn.isHidden = true
-        disconnectBtn.isHidden = false
-        
-        gameStateLabel.isHidden = false
-    }
-
-
- 
-
-    
-    func endGame(){
-        
-        // Clean Up
-        gameManager?.delegate = nil
-        gameManager = nil
-               
-        // Hide/Show Buttons
-        boardView.isHidden = true
-        hostBtn.isHidden = false
-        
-        joinBtn.isHidden = false
-        disconnectBtn.isHidden = true
-        gameStateLabel.isHidden = true
-        
-    }
-
     
     
-
-    func resetGame(){
-        for eles in board{
-            eles.forEach { $0.removeFromSuperview() }
-        }
-        board = []
-        matrix = []
-        
-        // Hide Replay Button
-        replayButton.isHidden = true
-     
-        // Helpers
-        let size = boardView.frame.size
-        let cellWidth = size.width / Matrix.w
-        let cellHeight = size.height / Matrix.h
-        var buffer = [[BoardCell]]()
-        for i in 0..<Matrix.w{
-            var column = [BoardCell]()
-            for j in 0..<Matrix.h{
-                let frame = CGRect(x: i * cellWidth, y: size.height - (j + 1) * cellHeight, width: cellWidth, height: cellHeight)
-                let cell = BoardCell(frame: frame)
-                cell.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                boardView.addSubview(cell)
-                column.append(cell)
-            }
-            buffer.append(column)
-        }
-        board = buffer
-        matrix = [[]]
-        
-        // 有 Matrix.w 个空盒子，可以装东西
-        let array = repeatElement([BoardCellType](), count: Matrix.w)
-        matrix.append(contentsOf: array)
-    }
-
-
-
+    // MARK: target action
+    
+    // MARK: 10
     
     @IBAction func hostGame(_ sender: UIButton) {
         
@@ -440,9 +478,6 @@ class ViewController: UIViewController {
         present(nc, animated: true) {
         }
     }
-    
-    
-    
     
     
     @IBAction func joinGame(_ sender: UIButton) {
@@ -479,33 +514,7 @@ class ViewController: UIViewController {
     }
     
     
-    
-
-    
-    func column(for point: CGPoint) -> UInt{
-        return UInt(point.x)/UInt(boardView.frame.size.width / Matrix.w);
-    }
-
-
-
-
-    
-    func updateView(){
-        // Update Game State Label
-        switch gameState{
-            case .myTurn:
-               gameStateLabel.text = "It is your turn."
-            case .yourOpponentTurn:
-               gameStateLabel.text = "It is your opponent's turn."
-            case .IWin:
-               gameStateLabel.text = "You have won."
-            case .yourOpponentWin:
-               gameStateLabel.text = "Your opponent has won."
-            default:
-               gameStateLabel.text = nil
-        }
-    }
-
+  
 }
 
 
@@ -515,6 +524,8 @@ extension ViewController: HostViewCtrlDelegate{
         gameState = .myTurn
         startGame(with: socket)
     }
+    
+    // MARK: 15
     
     func didCancelHosting(c controller: HostViewCtrl) {
         print("\(#file), \(#function)")
@@ -554,7 +565,7 @@ extension ViewController: GameManagerProxy{
     func didDisconnect(manager: GameManager) {
         endGame()
     }
-    
+    // MARK: 20
     
     func didStartNewGame(manager: GameManager) {
         resetGame()
