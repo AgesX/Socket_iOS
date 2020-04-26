@@ -13,7 +13,12 @@ import UIKit
 
 extension Array {
     public subscript(index: UInt) -> Element {
-        return self[Int(index)]
+        get{
+            return self[Int(index)]
+        }
+        set{
+            self[Int(index)] = newValue
+        }
     }
 }
 

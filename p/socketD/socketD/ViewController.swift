@@ -330,11 +330,10 @@ class ViewController: UIViewController {
     
     func addDiscTo(column c: UInt, with type: BoardCellType){
         // Update Matrix
-        var columnArray = matrix[c]
-        columnArray.append(type)
-     
+      
+        matrix[c].append(type)
         // Update Cells
-        let cell = board[c][columnArray.count - 1]
+        let cell = board[c][matrix[c].count - 1]
         //   有一个 assign,
         
         //   和 ref, mutate
