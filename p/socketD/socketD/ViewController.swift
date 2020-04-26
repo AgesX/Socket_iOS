@@ -261,7 +261,7 @@ class ViewController: UIViewController {
         }
         // Check Vertical Matches
         // 竖着来
-        for line in board{
+        Outer: for line in board{
             counter = 0
             for cell in line{
                 if cell.cellType == targetType{
@@ -272,15 +272,12 @@ class ViewController: UIViewController {
                 }
                 hasWon = (counter > 3)
                 if hasWon{
-                    break
+                    break Outer
                 }
-            }
-            if hasWon{
-                break
             }
         }
         if hasWon == false{
-            for i in 0..<(Matrix.h){
+            Outer: for i in 0..<(Matrix.h){
                 counter = 0
                 for j in 0..<Matrix.w{
                     let cell = board[j][i]
@@ -292,16 +289,13 @@ class ViewController: UIViewController {
                     }
                     hasWon = (counter > 3)
                     if hasWon{
-                        break
+                        break Outer
                     }
-                }
-                if hasWon{
-                    break
                 }
             }
         }
         if hasWon == false{
-            for i in 0..<Matrix.w{
+            Outer: for i in 0..<Matrix.w{
                 // 算法有问题，所以需要正着来一遍，倒着来一遍
                 counter = 0
                 var j = i
@@ -316,14 +310,10 @@ class ViewController: UIViewController {
                     }
                     hasWon = (counter > 3)
                     if hasWon{
-                        break
+                        break Outer
                     }
                     j += 1
                     row += 1
-                }
-                
-                if hasWon{
-                    break
                 }
                 
                 // Backward
@@ -341,15 +331,11 @@ class ViewController: UIViewController {
                     }
                     hasWon = (counter > 3)
                     if hasWon{
-                        break
+                        break Outer
                     }
                     j -= 1
                     row += 1
                 }
-                if hasWon{
-                    break
-                }
-                
             }
             
             
@@ -358,7 +344,7 @@ class ViewController: UIViewController {
         if hasWon == false{
            
             // Check Diagonal Matches - Second Pass
-            for i in 0..<Matrix.w{
+            Outer: for i in 0..<Matrix.w{
                 
                 counter = 0;
      
@@ -376,16 +362,12 @@ class ViewController: UIViewController {
                     hasWon = (counter > 3)
                     
                     if hasWon{
-                        break
+                        break Outer
                     }
                     
                     j += 1
                     row -= 1
                 }
-                if hasWon{
-                    break
-                }
-                
                  counter = 0;
                 
      
@@ -403,18 +385,11 @@ class ViewController: UIViewController {
                     hasWon = (counter > 3)
                     
                     if hasWon{
-                        break
+                        break Outer
                     }
                     j -= 1
                     row -= 1
                 }
-                
-                if hasWon{
-                    break
-                }
-                
-       
-
      
             }
         }
