@@ -70,29 +70,21 @@ class ViewController: UIViewController {
     }
 
     
-    
-    // 数据，未更改
     var board = [[BoardCell]]()
 
 
-    // 数据，已经更改
     var matrix = [[BoardCellType]]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+
         // Setup View
         
         self.boardView.layer.borderColor = UIColor.blue.cgColor;
         self.boardView.layer.borderWidth = 1;
-    }
-
-
-
-
-
-    func setupView(){
+  
+        
         // Reset Game
         resetGame()
 

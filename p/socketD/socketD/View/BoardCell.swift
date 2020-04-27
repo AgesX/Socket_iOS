@@ -38,27 +38,19 @@ class BoardCell: UIView {
         set{
             if _cellType != newValue{
                 _cellType = newValue
-                updateView()
+                switch newValue {
+                case .mine:
+                    backgroundColor = UIColor.yellow
+                case .yours:
+                    backgroundColor = UIColor.red
+                default :
+                    //  .empty
+                    backgroundColor = UIColor.white
+                }
             }
         }
     }
     
-    
-        
-    func updateView(){
-        // Background Color
-        switch cellType {
-        case .mine:
-            backgroundColor = UIColor.yellow
-        case .yours:
-            backgroundColor = UIColor.red
-        default :
-            //  .empty
-            backgroundColor = UIColor.white
-        }
-    }
-     
-
     
 
 }
