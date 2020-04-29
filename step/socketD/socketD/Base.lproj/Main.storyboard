@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f5P-r7-n5q">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EEk-Um-oO5">
+            <objects>
+                <viewController id="f5P-r7-n5q" customClass="ViewController" customModule="socketD" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uYo-Mz-N1N">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="90" translatesAutoresizingMaskIntoConstraints="NO" id="sd8-UO-pus">
+                                <rect key="frame" x="30" y="792" width="354" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-Zn-YqX">
+                                        <rect key="frame" x="0.0" y="0.0" width="181" height="30"/>
+                                        <state key="normal" title="Host a game"/>
+                                        <connections>
+                                            <action selector="hostGame:" destination="f5P-r7-n5q" eventType="touchUpInside" id="RcU-XY-hMa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzA-ht-YYi">
+                                        <rect key="frame" x="271" y="0.0" width="83" height="30"/>
+                                        <state key="normal" title="Join a game"/>
+                                        <connections>
+                                            <action selector="joinGame:" destination="f5P-r7-n5q" eventType="touchUpInside" id="DHK-Su-ogp"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ph4-21-Hth"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="PqY-QB-gSX">
+                                <rect key="frame" x="30" y="84" width="354" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Ol-wDB">
+                                        <rect key="frame" x="0.0" y="0.0" width="212" height="30"/>
+                                        <state key="normal" title="disconnect">
+                                            <color key="titleColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="disconnectIt:" destination="f5P-r7-n5q" eventType="touchUpInside" id="rhM-iU-q02"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KK7-br-vDD">
+                                        <rect key="frame" x="312" y="0.0" width="42" height="30"/>
+                                        <state key="normal" title="replay"/>
+                                        <connections>
+                                            <action selector="replayGame:" destination="f5P-r7-n5q" eventType="touchUpInside" id="tyH-P1-A0L"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="oNL-wL-Jhv"/>
+                                </constraints>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4I-P4-UjV">
+                                <rect key="frame" x="67" y="333" width="280" height="240"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="240" id="MqE-0Q-hAP"/>
+                                    <constraint firstAttribute="width" constant="280" id="w53-6u-ChM"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xoz-Cz-hQC">
+                                <rect key="frame" x="0.0" y="702" width="414" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="让我来" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="txi-b5-3Xt">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="31.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="65" translatesAutoresizingMaskIntoConstraints="NO" id="NYv-8I-VUw">
+                                        <rect key="frame" x="0.0" y="39.5" width="414" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="我是黄色" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fyp-hk-rhy">
+                                                <rect key="frame" x="0.0" y="0.0" width="262" height="20.5"/>
+                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="对手是红色" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sE3-Pk-3nm">
+                                                <rect key="frame" x="327" y="0.0" width="87" height="20.5"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="uBB-x2-889"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="a4I-P4-UjV" firstAttribute="centerY" secondItem="5wB-DU-sEr" secondAttribute="centerY" id="0dA-pn-h5g"/>
+                            <constraint firstItem="5wB-DU-sEr" firstAttribute="bottom" secondItem="sd8-UO-pus" secondAttribute="bottom" constant="40" id="5D1-Al-NfO"/>
+                            <constraint firstItem="5wB-DU-sEr" firstAttribute="trailing" secondItem="PqY-QB-gSX" secondAttribute="trailing" constant="30" id="9mY-FT-tDM"/>
+                            <constraint firstItem="5wB-DU-sEr" firstAttribute="trailing" secondItem="Xoz-Cz-hQC" secondAttribute="trailing" id="Db2-qc-9lB"/>
+                            <constraint firstItem="PqY-QB-gSX" firstAttribute="top" secondItem="5wB-DU-sEr" secondAttribute="top" constant="40" id="E13-mq-TjX"/>
+                            <constraint firstItem="a4I-P4-UjV" firstAttribute="centerX" secondItem="5wB-DU-sEr" secondAttribute="centerX" id="LWa-Ld-JYA"/>
+                            <constraint firstItem="sd8-UO-pus" firstAttribute="top" secondItem="Xoz-Cz-hQC" secondAttribute="bottom" constant="30" id="N8a-AP-cE6"/>
+                            <constraint firstItem="sd8-UO-pus" firstAttribute="leading" secondItem="5wB-DU-sEr" secondAttribute="leading" constant="30" id="f1o-Eq-Z6g"/>
+                            <constraint firstItem="PqY-QB-gSX" firstAttribute="leading" secondItem="5wB-DU-sEr" secondAttribute="leading" constant="30" id="fnu-W0-peo"/>
+                            <constraint firstItem="Xoz-Cz-hQC" firstAttribute="leading" secondItem="5wB-DU-sEr" secondAttribute="leading" id="qB5-1n-wtD"/>
+                            <constraint firstItem="5wB-DU-sEr" firstAttribute="trailing" secondItem="sd8-UO-pus" secondAttribute="trailing" constant="30" id="x5x-j0-Y7N"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5wB-DU-sEr"/>
+                    </view>
+                    <connections>
+                        <outlet property="boardView" destination="a4I-P4-UjV" id="n6o-HP-3ya"/>
+                        <outlet property="disconnectBtn" destination="Z54-Ol-wDB" id="SbQ-bN-LFh"/>
+                        <outlet property="gameStateLabel" destination="txi-b5-3Xt" id="Ca5-le-2Df"/>
+                        <outlet property="hostBtn" destination="hcc-Zn-YqX" id="mIg-fL-yEf"/>
+                        <outlet property="joinBtn" destination="yzA-ht-YYi" id="aWE-y7-uGb"/>
+                        <outlet property="replayButton" destination="KK7-br-vDD" id="XZG-z1-H94"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ExD-p6-4BR" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="323" y="117"/>
+        </scene>
+    </scenes>
+</document>
