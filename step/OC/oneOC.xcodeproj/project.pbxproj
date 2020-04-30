@@ -22,6 +22,8 @@
 		267CE99A243A412900AE5B5D /* GameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 267CE999243A412900AE5B5D /* GameManager.m */; };
 		2689418A243B0C3B00EAE582 /* BoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26894189243B0C3B00EAE582 /* BoardCell.m */; };
 		26E62BF42436D9FE0042CC1F /* PacketH.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E62BF32436D9FE0042CC1F /* PacketH.m */; };
+		26F6C4B0245A70DC00D95963 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F6C4AF245A70DC00D95963 /* AsyncSocket.m */; };
+		26F6C4B3245A712E00D95963 /* SocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F6C4B2245A712E00D95963 /* SocketManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,10 @@
 		2689418B243B150C00EAE582 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		26E62BF22436D9FE0042CC1F /* PacketH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PacketH.h; sourceTree = "<group>"; };
 		26E62BF32436D9FE0042CC1F /* PacketH.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PacketH.m; sourceTree = "<group>"; };
+		26F6C4AE245A70DC00D95963 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		26F6C4AF245A70DC00D95963 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		26F6C4B1245A712E00D95963 /* SocketManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketManager.h; sourceTree = "<group>"; };
+		26F6C4B2245A712E00D95963 /* SocketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,8 +170,10 @@
 		2615717E24347C5800A1C6C6 /* TCP */ = {
 			isa = PBXGroup;
 			children = (
-				2615717F24347C5800A1C6C6 /* GCDAsyncSocket.m */,
+				26F6C4AE245A70DC00D95963 /* AsyncSocket.h */,
+				26F6C4AF245A70DC00D95963 /* AsyncSocket.m */,
 				2615718024347C5800A1C6C6 /* GCDAsyncSocket.h */,
+				2615717F24347C5800A1C6C6 /* GCDAsyncSocket.m */,
 			);
 			path = TCP;
 			sourceTree = "<group>";
@@ -184,6 +192,8 @@
 		267CE997243A411500AE5B5D /* manager */ = {
 			isa = PBXGroup;
 			children = (
+				26F6C4B1245A712E00D95963 /* SocketManager.h */,
+				26F6C4B2245A712E00D95963 /* SocketManager.m */,
 				267CE998243A412900AE5B5D /* GameManager.h */,
 				267CE999243A412900AE5B5D /* GameManager.m */,
 			);
@@ -346,8 +356,10 @@
 				2689418A243B0C3B00EAE582 /* BoardCell.m in Sources */,
 				267CE99A243A412900AE5B5D /* GameManager.m in Sources */,
 				26E62BF42436D9FE0042CC1F /* PacketH.m in Sources */,
+				26F6C4B0245A70DC00D95963 /* AsyncSocket.m in Sources */,
 				2615715C24347C2700A1C6C6 /* main.m in Sources */,
 				2615714E24347C2200A1C6C6 /* SceneDelegate.m in Sources */,
+				26F6C4B3245A712E00D95963 /* SocketManager.m in Sources */,
 				2615718B243493C200A1C6C6 /* JoinListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
