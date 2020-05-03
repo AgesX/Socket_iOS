@@ -519,6 +519,7 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: GameManagerProxy{
+    // 对方的行为
     func didAddDisc(manager: GameManager, to column: UInt) {
         addDiscTo(column: column, with: .yours)
         if hasPlayerWon(of: .you){
@@ -529,11 +530,15 @@ extension ViewController: GameManagerProxy{
         }
     }
     
+    
+    // 对方的行为，对方可以发起结束
     func didDisconnect(manager: GameManager) {
         endGame()
     }
     // MARK: 20
     
+    
+    // 对方的行为
     func didStartNewGame(manager: GameManager) {
         resetGame()
         gameState = .yourOpponentTurn

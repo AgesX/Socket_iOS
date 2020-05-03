@@ -170,7 +170,7 @@ extension GameManager: GCDAsyncSocketDelegate{
 
         
         if socket == sock{
-            socket.delegate = nil;
+            socket.delegate = nil
         }
      
         // Notify Delegate
