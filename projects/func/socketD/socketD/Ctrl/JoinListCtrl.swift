@@ -12,7 +12,7 @@ import UIKit
 protocol JoinListCtrlDelegate: class{
 
     
-    func didJoinGame(c controller: JoinListCtrl, on socket: GCDAsyncSocket)
+    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket)
     
     func didCancelJoining(c controller: JoinListCtrl)
 
@@ -211,7 +211,7 @@ extension JoinListCtrl: GCDAsyncSocketDelegate{
            print("Socket Did Connect to Host: \(host) Port: \(port)")
         
            // Notify Delegate
-           delegate?.didJoinGame(c: self, on: sock)
+           delegate?.didJoinTask(c: self, on: sock)
 
            // Stop Browsing
            stopBrowsing()

@@ -9,7 +9,7 @@
 import UIKit
 
 
-enum GameState: Int{
+enum TaskState: Int{
     case unknown = -1, myTurn, yourOpponentTurn, IWin, yourOpponentWin
 }
 
@@ -20,12 +20,6 @@ enum PlayerType: Int{
     case me = 0, you
 }
 
-
-
-struct Matrix{
-    static let w = 7
-    static let h = 6
-}
 
 
 class ViewController: UIViewController {
@@ -40,7 +34,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var sendButton: UIButton!
    
-    var gameManager: GameManager?
+    var gameManager: TaskManager?
     
   
 
@@ -48,7 +42,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-      
+        // test data
+        UserSetting.std.age = 80
     }
 
 
@@ -57,25 +52,18 @@ class ViewController: UIViewController {
 
 // MARK: 5
     
-    // MARK: game relevant
-
-    func startGame(with socket: GCDAsyncSocket){
-        // Initialize Game Controller
-        gameManager = GameManager(socket: socket)
-        gameManager?.delegate = self
-  
-    }
+    
 
 
     
     // MARK: target action
 
-    @IBAction func hostGame(_ sender: UIButton) {
+    @IBAction func hostTask(_ sender: UIButton) {
         
-        // Initialize Host Game View Controller
+        // Initialize Host Task View Controller
         let vc = HostViewCtrl()
        
-              // Configure Host Game View Controller
+              // Configure Host Task View Controller
         vc.delegate = self
       
               // Initialize Navigation Controller
@@ -87,12 +75,12 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func joinGame(_ sender: UIButton) {
+    @IBAction func joinTask(_ sender: UIButton) {
         
-        // Initialize Join Game View Controller
+        // Initialize Join Task View Controller
         let vc = JoinListCtrl(style: .plain)
         
-           // Configure Join Game View Controller
+           // Configure Join Task View Controller
         vc.delegate = self
         
            // Initialize Navigation Controller
@@ -119,15 +107,47 @@ class ViewController: UIViewController {
     }
     
     
+    // MARK: game relevant
+
+    func startTask(with socket: GCDAsyncSocket){
+        // Initialize Task Controller
+        gameManager = TaskManager(socket: socket)
+        gameManager?.delegate = self
+    
+        // Hide/Show Buttons
+        
+        sendButton.isHidden = false
+        hostBtn.isHidden = true
+        
+        joinBtn.isHidden = true
+        disconnectBtn.isHidden = false
+    }
+    
+    
+    func endTask(){
+        
+        // Clean Up
+        gameManager?.delegate = nil
+        gameManager = nil
+               
+        // Hide/Show Buttons
+        sendButton.isHidden = true
+        hostBtn.isHidden = false
+        
+        joinBtn.isHidden = false
+        disconnectBtn.isHidden = true
+        
+        
+    }
   
 }
 
 
 
 extension ViewController: HostViewCtrlDelegate{
-    func didHostGame(c controller: HostViewCtrl, On socket: GCDAsyncSocket) {
+    func didHostTask(c controller: HostViewCtrl, On socket: GCDAsyncSocket) {
         
-        startGame(with: socket)
+        startTask(with: socket)
     }
     
     // MARK: 15
@@ -142,9 +162,9 @@ extension ViewController: HostViewCtrlDelegate{
 
 
 extension ViewController: JoinListCtrlDelegate{
-    func didJoinGame(c controller: JoinListCtrl, on socket: GCDAsyncSocket) {
+    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket) {
     
-        startGame(with: socket)
+        startTask(with: socket)
     }
     
     
@@ -156,17 +176,17 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 
-extension ViewController: GameManagerProxy{
-    func didAddDisc(manager: GameManager, to column: UInt) {
+extension ViewController: TaskManagerProxy{
+    func didAddDisc(manager: TaskManager, to column: UInt) {
        
     }
     
-    func didDisconnect(manager: GameManager) {
+    func didDisconnect(manager: TaskManager) {
        
     }
     // MARK: 20
     
-    func didStartNewGame(manager: GameManager) {
+    func didStartNewTask(manager: TaskManager) {
     
     }
     

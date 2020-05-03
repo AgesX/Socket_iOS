@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="f5P-r7-n5q">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,24 +11,24 @@
             <objects>
                 <viewController id="f5P-r7-n5q" customClass="ViewController" customModule="socketD" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uYo-Mz-N1N">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Squ-By-DOM">
-                                <rect key="frame" x="142" y="238" width="130" height="430"/>
+                                <rect key="frame" x="235" y="85" width="130" height="430"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-Zn-YqX">
                                         <rect key="frame" x="21.5" y="0.0" width="87" height="107.5"/>
                                         <state key="normal" title="Host a game"/>
                                         <connections>
-                                            <action selector="hostGame:" destination="f5P-r7-n5q" eventType="touchUpInside" id="RcU-XY-hMa"/>
+                                            <action selector="hostTask:" destination="f5P-r7-n5q" eventType="touchUpInside" id="RcU-XY-hMa"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzA-ht-YYi">
                                         <rect key="frame" x="23.5" y="107.5" width="83" height="107.5"/>
                                         <state key="normal" title="Join a game"/>
                                         <connections>
-                                            <action selector="joinGame:" destination="f5P-r7-n5q" eventType="touchUpInside" id="DHK-Su-ogp"/>
+                                            <action selector="joinTask:" destination="f5P-r7-n5q" eventType="touchUpInside" id="DHK-Su-ogp"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KK7-br-vDD">

@@ -10,7 +10,7 @@ import Foundation
 
 
 enum PacketType: Int{
-    case unknown = -1, didAddDisc, startNewGame
+    case unknown = -1, didAddDisc, startNewTask
 }
 
 
@@ -32,13 +32,13 @@ struct PacketKey {
 class PacketH: NSObject{
 
 
-    let data: Any
+    let data: Data
     let type: PacketType
     let action: PacketAction
     
 
     
-    init(info d: Any, type t: PacketType, action a: PacketAction){
+    init(info d: Data, type t: PacketType, action a: PacketAction){
         data = d
         type = t
         action = a
@@ -47,7 +47,7 @@ class PacketH: NSObject{
     
     
     required init?(coder: NSCoder) {
-        data = coder.decodeObject(forKey: PacketKey.data) ?? [:]
+        data = coder.decodeObject(forKey: PacketKey.data) as! Data
         type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.unknown
         action = PacketAction(rawValue: coder.decodeInteger(forKey: PacketKey.action)) ?? PacketAction.unknown
     }
