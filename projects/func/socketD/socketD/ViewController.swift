@@ -44,6 +44,10 @@ class ViewController: UIViewController {
 
         // test data
         UserSetting.std.age = 80
+        // Configure Subviews
+        sendButton.isHidden = true
+        
+        disconnectBtn.isHidden = true
     }
 
 

@@ -42,7 +42,7 @@ class TaskManager : NSObject{
 
 
     func startNewTask(){
-        let packet = PacketH(info: ["1": 1], type: .startNewTask, action: .go)
+        let packet = PacketH(info: ["1": 1], type: .startNewTask)
         send(packet: packet)
     }
 
@@ -107,8 +107,7 @@ class TaskManager : NSObject{
              
                print("Packet Data > \(packet.data)")
                print("Packet Type > \(packet.type)")
-               print("Packet Action > \(packet.action)")
-            
+         
                // 落子了
                if packet.type == .didAddDisc{
                     if let dic = packet.data as? [String: UInt], let column = dic["column"]{
@@ -139,7 +138,7 @@ class TaskManager : NSObject{
     func addDiscTo(column c: UInt){
         // Send Packet
         let load = ["column": c]
-        let packet = PacketH(info: load, type: .didAddDisc, action: .go)
+        let packet = PacketH(info: load, type: .didAddDisc)
         send(packet: packet)
     }
 
