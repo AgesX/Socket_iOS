@@ -22,9 +22,9 @@ struct UserSetting {
     
     static var std = UserSetting()
 
-    var age: Int8{
+    var age: Int{
         get {
-            if let year = UserDefaults.standard.value(forKey: InfoKeys.age) as? Int8{
+            if let year = UserDefaults.standard.value(forKey: InfoKeys.age) as? Int{
                 return year
             }
             return 0

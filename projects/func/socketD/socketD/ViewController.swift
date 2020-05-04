@@ -201,13 +201,9 @@ extension ViewController: TaskManagerProxy{
     func didReceive(packet data: Data, by manager: TaskManager){
         do {
            let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
-           print(dict)
-           if let url = URL.prefer{
-               if FileManager.default.fileExists(atPath: url.absoluteString){
-                   try FileManager.default.removeItem(atPath: url.absoluteString)
-               }
-               NSDictionary(dictionary: dict).write(toFile: url.absoluteString, atomically: true)
-           }
+            for pair in dict{
+                UserDefaults.standard.set(pair.value, forKey: pair.key)
+            }
         } catch {
             print("122")
             print(error)
