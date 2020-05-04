@@ -184,7 +184,7 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didAddDisc(manager: TaskManager, to column: UInt) {
+    func didSend(data d: Data, by manager: TaskManager){
        
     }
     

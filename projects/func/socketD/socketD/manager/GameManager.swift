@@ -10,12 +10,10 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
+    func didSend(data d: Data, by manager: TaskManager)
     
-    
-    func didAddDisc(manager: TaskManager, to column: UInt)
     func didDisconnect(manager: TaskManager)
     func didStartNewTask(manager: TaskManager)
-
 }
 
 
@@ -42,7 +40,7 @@ class TaskManager : NSObject{
 
 
     func startNewTask(){
-        let packet = PacketH(info: ["1": 1], type: .startNewTask)
+        let packet = PacketH(info: Data.start, type: .start)
         send(packet: packet)
     }
 
@@ -108,20 +106,14 @@ class TaskManager : NSObject{
                print("Packet Data > \(packet.data)")
                print("Packet Type > \(packet.type)")
          
-               // 落子了
-               if packet.type == .didAddDisc{
-                    if let dic = packet.data as? [String: UInt], let column = dic["column"]{
-                        delegate?.didAddDisc(manager: self, to: column)
-                    }
+               switch packet.type {
+                    case .start:
+                        delegate?.didStartNewTask(manager: self)
+                    case .sendData:
+                        delegate?.didSend(data: packet.data, by: self)
+                    default:
+                        ()
                }
-               else if packet.type == .startNewTask{
-
-                     // 这里真的走了，  点击 replay 的时候
-                   // 新开一局
-                   // Notify Delegate
-                    delegate?.didStartNewTask(manager: self)
-               }
-            
             
         } catch {
             print(error)
@@ -137,8 +129,7 @@ class TaskManager : NSObject{
 
     func addDiscTo(column c: UInt){
         // Send Packet
-        let load = ["column": c]
-        let packet = PacketH(info: load, type: .didAddDisc)
+        let packet = PacketH(info: Data.dummy, type: .sendData)
         send(packet: packet)
     }
 

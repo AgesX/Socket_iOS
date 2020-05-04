@@ -10,7 +10,7 @@ import Foundation
 
 
 enum PacketType: Int{
-    case unknown = -1, didAddDisc, startNewTask
+    case `default` = -1, sendData, start
 }
 
 
@@ -24,11 +24,11 @@ struct PacketKey {
 class PacketH: NSObject{
 
 
-    let data: Any
+    let data: Data
     let type: PacketType
 
     
-    init(info d: Any, type t: PacketType){
+    init(info d: Data, type t: PacketType){
         data = d
         type = t
      
@@ -37,8 +37,9 @@ class PacketH: NSObject{
     
     
     required init?(coder: NSCoder) {
-        data = coder.decodeObject(forKey: PacketKey.data) ?? [:]
-        type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.unknown
+        let datum = coder.decodeObject(forKey: PacketKey.data) as? Data
+        data = datum ?? Data.dummy
+        type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.default
       
     }
     
