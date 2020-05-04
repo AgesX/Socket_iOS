@@ -38,13 +38,15 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var stateLabel: UILabel!
     
-
+    @IBOutlet weak var verifyLabel: UILabel!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // test data
         UserSetting.std.age = 80
+        verifyLabel.text = "验: 年 \(UserSetting.std.age)"
         // Configure Subviews
         sendButton.isHidden = true
         
@@ -107,9 +109,13 @@ class ViewController: UIViewController {
     
     
     @IBAction func sendData(_ sender: UIButton) {
-        
-      
-
+        if let fileName = Bundle.main.bundleIdentifier, let library = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first{
+            let preferences = library.appendingPathComponent("Preferences")
+            let userDefaultsPlistURL = preferences.appendingPathComponent(fileName).appendingPathExtension("plist")
+            if FileManager.default.fileExists(atPath: userDefaultsPlistURL.path),let data = NSData(contentsOf: userDefaultsPlistURL){
+                taskAdmin?.send(packet: Package(info: Data(referencing: data), type: PacketType.sendData))
+            }
+        }
     }
     
     
@@ -184,7 +190,7 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didSend(packet data: Data, by manager: TaskManager){
+    func didReceive(packet data: Data, by manager: TaskManager){
        
     }
     

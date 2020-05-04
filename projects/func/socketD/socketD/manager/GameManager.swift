@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
-    func didSend(packet data: Data, by manager: TaskManager)
+    func didReceive(packet data: Data, by manager: TaskManager)
     
     func didDisconnect(manager: TaskManager)
     func didStartNewTask(manager: TaskManager)
@@ -110,7 +110,7 @@ class TaskManager : NSObject{
                     case .start:
                         delegate?.didStartNewTask(manager: self)
                     case .sendData:
-                        delegate?.didSend(packet: packet.data, by: self)
+                        delegate?.didReceive(packet: packet.data, by: self)
                     default:
                         ()
                }
