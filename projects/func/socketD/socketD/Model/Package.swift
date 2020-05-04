@@ -1,5 +1,5 @@
 //
-//  PacketH.swift
+//  Package.swift
 //  socketD
 //
 //  Created by Jz D on 2020/4/16.
@@ -21,7 +21,7 @@ struct PacketKey {
 }
 
 
-class PacketH: NSObject{
+class Package: NSObject{
 
 
     let data: Data
@@ -46,7 +46,7 @@ class PacketH: NSObject{
 }
 
 
-extension PacketH: NSCoding, NSSecureCoding{
+extension Package: NSCoding, NSSecureCoding{
     
     
     

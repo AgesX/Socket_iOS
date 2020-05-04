@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
-    func didSend(data d: Data, by manager: TaskManager)
+    func didSend(packet data: Data, by manager: TaskManager)
     
     func didDisconnect(manager: TaskManager)
     func didStartNewTask(manager: TaskManager)
@@ -40,14 +40,14 @@ class TaskManager : NSObject{
 
 
     func startNewTask(){
-        let packet = PacketH(info: Data.start, type: .start)
+        let packet = Package(info: Data.start, type: .start)
         send(packet: packet)
     }
 
 
 
     
-    func send(packet p: PacketH){
+    func send(packet p: Package){
         
         
              // packet to buffer
@@ -99,9 +99,9 @@ class TaskManager : NSObject{
     
     func parse(body data: Data){
         do {
-            NSKeyedUnarchiver.setClass(PacketH.self, forClassName: "socketG.PacketH")
-            NSKeyedUnarchiver.setClass(PacketH.self, forClassName: "PacketH")
-            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, PacketH.self], from: data) as! PacketH
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
+            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
              
                print("Packet Data > \(packet.data)")
                print("Packet Type > \(packet.type)")
@@ -110,7 +110,7 @@ class TaskManager : NSObject{
                     case .start:
                         delegate?.didStartNewTask(manager: self)
                     case .sendData:
-                        delegate?.didSend(data: packet.data, by: self)
+                        delegate?.didSend(packet: packet.data, by: self)
                     default:
                         ()
                }
@@ -129,7 +129,7 @@ class TaskManager : NSObject{
 
     func addDiscTo(column c: UInt){
         // Send Packet
-        let packet = PacketH(info: Data.dummy, type: .sendData)
+        let packet = Package(info: Data.dummy, type: .sendData)
         send(packet: packet)
     }
 

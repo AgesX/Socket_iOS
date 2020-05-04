@@ -20,7 +20,7 @@
 		267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057F2447391C00BAF530 /* GCDAsyncSocket.m */; };
 		2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA224513612006933A6 /* JoinListCtrl.swift */; };
 		2693BBA624519490006933A6 /* Extern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA524519490006933A6 /* Extern.swift */; };
-		26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* PacketH.swift */; };
+		26CDDECE24480A1800E7ED8D /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* Package.swift */; };
 		26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECF24480DAF00E7ED8D /* GameManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +63,7 @@
 		267C05852447399B00BAF530 /* ObjC_Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC_Bridge.h; sourceTree = "<group>"; };
 		2693BBA224513612006933A6 /* JoinListCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinListCtrl.swift; sourceTree = "<group>"; };
 		2693BBA524519490006933A6 /* Extern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extern.swift; sourceTree = "<group>"; };
-		26CDDECD24480A1800E7ED8D /* PacketH.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketH.swift; sourceTree = "<group>"; };
+		26CDDECD24480A1800E7ED8D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		26CDDECF24480DAF00E7ED8D /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +170,7 @@
 		267C05772447391C00BAF530 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				26CDDECD24480A1800E7ED8D /* PacketH.swift */,
+				26CDDECD24480A1800E7ED8D /* Package.swift */,
 				261FA7C8245F387F00B4B555 /* UserSetting.swift */,
 			);
 			path = Model;
@@ -332,7 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26CDDECE24480A1800E7ED8D /* PacketH.swift in Sources */,
+				26CDDECE24480A1800E7ED8D /* Package.swift in Sources */,
 				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
 				267C05492447389C00BAF530 /* ViewController.swift in Sources */,
 				261FA7C9245F387F00B4B555 /* UserSetting.swift in Sources */,
