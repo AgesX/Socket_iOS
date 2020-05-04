@@ -27,3 +27,18 @@ extension Data{
     }()
     
 }
+
+
+
+
+
+extension URL{
+    static var prefer: URL?{
+        var preferURL: URL? = nil
+        if let fileName = Bundle.main.bundleIdentifier, let library = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first{
+            let preferences = library.appendingPathComponent("Preferences")
+            preferURL = preferences.appendingPathComponent(fileName).appendingPathExtension("plist")
+        }
+        return preferURL
+    }
+}
