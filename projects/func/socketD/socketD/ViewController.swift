@@ -34,9 +34,10 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var sendButton: UIButton!
    
-    var gameManager: TaskManager?
+    var taskAdmin: TaskManager?
     
-  
+    @IBOutlet weak var stateLabel: UILabel!
+    
 
 
     override func viewDidLoad() {
@@ -48,6 +49,7 @@ class ViewController: UIViewController {
         sendButton.isHidden = true
         
         disconnectBtn.isHidden = true
+        stateLabel.text = ""
     }
 
 
@@ -99,7 +101,7 @@ class ViewController: UIViewController {
 
     
     @IBAction func disconnectIt(_ sender: UIButton) {
-      
+        endTask()
     }
     
     
@@ -115,8 +117,8 @@ class ViewController: UIViewController {
 
     func startTask(with socket: GCDAsyncSocket){
         // Initialize Task Controller
-        gameManager = TaskManager(socket: socket)
-        gameManager?.delegate = self
+        taskAdmin = TaskManager(socket: socket)
+        taskAdmin?.delegate = self
     
         // Hide/Show Buttons
         
@@ -131,8 +133,8 @@ class ViewController: UIViewController {
     func endTask(){
         
         // Clean Up
-        gameManager?.delegate = nil
-        gameManager = nil
+        taskAdmin?.delegate = nil
+        taskAdmin = nil
                
         // Hide/Show Buttons
         sendButton.isHidden = true
@@ -140,7 +142,7 @@ class ViewController: UIViewController {
         
         joinBtn.isHidden = false
         disconnectBtn.isHidden = true
-        
+        stateLabel.text = ""
         
     }
   
@@ -166,8 +168,9 @@ extension ViewController: HostViewCtrlDelegate{
 
 
 extension ViewController: JoinListCtrlDelegate{
-    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket) {
-    
+  
+    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket, host name: String) {
+        stateLabel.text = "主机: \(name)"
         startTask(with: socket)
     }
     
@@ -186,7 +189,7 @@ extension ViewController: TaskManagerProxy{
     }
     
     func didDisconnect(manager: TaskManager) {
-       
+        endTask()
     }
     // MARK: 20
     

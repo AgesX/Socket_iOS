@@ -12,7 +12,7 @@ import UIKit
 protocol JoinListCtrlDelegate: class{
 
     
-    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket)
+    func didJoinTask(c controller: JoinListCtrl, on socket: GCDAsyncSocket, host name: String)
     
     func didCancelJoining(c controller: JoinListCtrl)
 
@@ -27,6 +27,7 @@ class JoinListCtrl: UITableViewController{
     var serviceBrowser: NetServiceBrowser?
     
     weak var delegate: JoinListCtrlDelegate?
+    var hostName: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,7 +212,9 @@ extension JoinListCtrl: GCDAsyncSocketDelegate{
            print("Socket Did Connect to Host: \(host) Port: \(port)")
         
            // Notify Delegate
-           delegate?.didJoinTask(c: self, on: sock)
+           if let n = hostName{
+                delegate?.didJoinTask(c: self, on: sock, host: n)
+           }
 
            // Stop Browsing
            stopBrowsing()
@@ -253,10 +256,10 @@ extension JoinListCtrl{
         tableView.deselectRow(at: indexPath, animated: true)
          // Fetch Service
         let service = services[indexPath.row]
-        
+        hostName = service.name
         // Resolve Service
         service.delegate = self
-        // 点击，服务就 gg
+        // 点击服务
         service.resolve(withTimeout: 30.0)
     }
 
