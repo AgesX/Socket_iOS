@@ -11,6 +11,7 @@
 		264CF81B2461AC15002AED20 /* Buffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF8192461AC15002AED20 /* Buffer.swift */; };
 		264CF81C2461AC15002AED20 /* Talk.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF81A2461AC15002AED20 /* Talk.swift */; };
 		264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF81D2461AD8F002AED20 /* FileAdminister.swift */; };
+		264CF8222461C9E2002AED20 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF8212461C9E2002AED20 /* Header.swift */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
 		267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05462447389C00BAF530 /* SceneDelegate.swift */; };
@@ -49,6 +50,7 @@
 		264CF8192461AC15002AED20 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		264CF81A2461AC15002AED20 /* Talk.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Talk.swift; sourceTree = "<group>"; };
 		264CF81D2461AD8F002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
+		264CF8212461C9E2002AED20 /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
 		267C05412447389C00BAF530 /* socketD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C05442447389C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 		267C05772447391C00BAF530 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				264CF8212461C9E2002AED20 /* Header.swift */,
 				264CF8192461AC15002AED20 /* Buffer.swift */,
 				264CF81A2461AC15002AED20 /* Talk.swift */,
 				26CDDECD24480A1800E7ED8D /* Package.swift */,
@@ -351,6 +354,7 @@
 				2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */,
 				2693BBA624519490006933A6 /* Extern.swift in Sources */,
 				264CF81B2461AC15002AED20 /* Buffer.swift in Sources */,
+				264CF8222461C9E2002AED20 /* Header.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
 				267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */,

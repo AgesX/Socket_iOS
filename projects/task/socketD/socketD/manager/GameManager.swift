@@ -30,8 +30,6 @@ enum Tag: Int{
 }
 
 
-
-
 class TaskManager : NSObject{
     
 
@@ -146,16 +144,24 @@ class TaskManager : NSObject{
                   // buffer = header + packet
                   
                   // Fill Buffer
+                   
+                   let size = MemoryLayout<UInt>.size
                    var headerLength = encoded.count
-                  
-                   buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+                   buffer.append(&headerLength, length: size)
                    encoded.withUnsafeBytes { (p) in
-                       let bufferPointer = p.bindMemory(to: UInt8.self)
+                       let bufferPointer = p.bindMemory(to: UInt64.self)
                        if let address = bufferPointer.baseAddress{
-                           buffer.append(address, length: headerLength)
+                           buffer.append(address, length: size)
                        }
                    }
-                   
+                   var val = Tag.bTalk.rawValue
+                   buffer.append(&val, length: size)
+                   withUnsafeBytes(of: val, { (p) in
+                       let bufferPointer = p.bindMemory(to: UInt64.self)
+                       if let address = bufferPointer.baseAddress{
+                          buffer.append(address, length: size)
+                       }
+                   })
 
                   // Write Buffer
                    if let d = buffer.copy() as? Data{
@@ -181,24 +187,28 @@ class TaskManager : NSObject{
              let packet = Talk(word: txt)
              do {
             
-                 let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+                     let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+                     let head = Header(length: encoded.count, tag: Tag.bTalk.rawValue)
+                     let encodedH = try NSKeyedArchiver.archivedData(withRootObject: head, requiringSecureCoding: false)
                  
-                 // Initialize Buffer
-                 let buffer = NSMutableData()
-             
-                // buffer = header + packet
-                
-                // Fill Buffer
-                 var headerLength = encoded.count
-                
-                 buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
-                 encoded.withUnsafeBytes { (p) in
-                     let bufferPointer = p.bindMemory(to: UInt8.self)
-                     if let address = bufferPointer.baseAddress{
-                         buffer.append(address, length: headerLength)
-                     }
-                 }
+                     // Initialize Buffer
+                     let buffer = NSMutableData()
                  
+                    // buffer = header + packet
+                     
+                    // Fill Buffer
+                      encodedH.withUnsafeBytes { (p) in
+                          let bufferPointer = p.bindMemory(to: UInt64.self)
+                          if let address = bufferPointer.baseAddress{
+                            buffer.append(address, length: encodedH.count)
+                          }
+                      }
+                      encoded.withUnsafeBytes { (p) in
+                          let bufferPointer = p.bindMemory(to: UInt64.self)
+                          if let address = bufferPointer.baseAddress{
+                              buffer.append(address, length: encoded.count)
+                          }
+                      }
 
                 // Write Buffer
                  if let d = buffer.copy() as? Data{
@@ -214,10 +224,19 @@ class TaskManager : NSObject{
     }
     
     
-    func parse(header data: Data) -> UInt{
-        var headerLength: UInt = 0
-        NSData(data: data).getBytes(&headerLength, length: MemoryLayout<UInt>.size)
-        return headerLength
+    func parse(header data: Data) -> Header{
+        do {
+            var d = Data()
+            NSData(data: data).getBytes(&d, length: MemoryLayout<UInt>.size)
+            
+            NSKeyedUnarchiver.setClass(Header.self, forClassName: "socketG.Header")
+            NSKeyedUnarchiver.setClass(Header.self, forClassName: "Header")
+            let head = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Header.self], from: d) as! Header
+            return head
+        } catch {
+            print(error)
+            fatalError()
+        }
     }
 
 
@@ -291,20 +310,17 @@ extension TaskManager: GCDAsyncSocketDelegate{
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         switch Tag(rawValue: tag) {
         case .head:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.body.rawValue)
+            let meta = parse(header: data)
+            socket.readData(toLength: UInt(meta.length), withTimeout: -1.0, tag: Int(meta.tag))
         case .body:
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
-        case .headStream:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bodyStream.rawValue)
         case .bodyStream:
             parse(buffer: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.headStream.rawValue)
-        case .hTalk:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bTalk.rawValue)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
         case .bTalk:
             parse(talk: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.hTalk.rawValue)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
         default:
             ()
         }

@@ -227,7 +227,12 @@ extension ViewController: TaskManagerProxy{
     
     
     func didCome(a message: String) {
-        
+        let alert = UIAlertController(title: "打招呼", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "嗯嗯", style: UIAlertAction.Style.default, handler: { (alert) in
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.default, handler: { (alert) in
+        }))
+        present(alert, animated: true){    }
         
     }
     
