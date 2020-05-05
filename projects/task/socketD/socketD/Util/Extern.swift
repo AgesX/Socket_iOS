@@ -42,3 +42,12 @@ extension URL{
         return preferURL
     }
 }
+
+
+
+
+
+extension String{
+    static let dummy = "嗯嗯"
+}
+

@@ -114,7 +114,7 @@ class ViewController: UIViewController {
     @IBAction func sendData(_ sender: UIButton) {
         
         if let src = URL.prefer, FileManager.default.fileExists(atPath: src.path), let data = NSData(contentsOf: src){
-            taskAdmin?.send(packet: Package(info: Data(referencing: data), type: PacketType.sendData))
+            taskAdmin?.send(packet: data)
         }
         else{
             let alert = UIAlertController(title: "数据异常", message: "请检查下", preferredStyle: UIAlertController.Style.alert)
@@ -198,11 +198,13 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didReceive(packet data: Data, by manager: TaskManager){
+    
+    func didReceive(packet data: Data){
         do {
-           let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
-            for pair in dict{
-                UserDefaults.standard.set(pair.value, forKey: pair.key)
+            if let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as? [String: Any]{
+                for pair in dict{
+                    UserDefaults.standard.set(pair.value, forKey: pair.key)
+                }
             }
         } catch {
             print("122")
@@ -214,13 +216,27 @@ extension ViewController: TaskManagerProxy{
     
     
     
-    func didDisconnect(manager: TaskManager) {
+    func didDisconnect(){
         endTask()
     }
     // MARK: 20
     
-    func didStartNewTask(manager: TaskManager) {
+    func didStartNewTask(){
     
     }
+    
+    
+    func didCome(a message: String) {
+        
+        
+    }
+    
+
+    
+    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool) {
+        
+    }
+    
+    
     
 }
