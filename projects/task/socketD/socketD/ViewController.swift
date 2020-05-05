@@ -199,9 +199,12 @@ extension ViewController: JoinListCtrlDelegate{
 
 extension ViewController: TaskManagerProxy{
     
-    func didReceive(packet data: Data){
+    func didReceive(packet data: Data?){
+        guard let datum = data else {
+            return
+        }
         do {
-            if let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as? [String: Any]{
+            if let dict = try PropertyListSerialization.propertyList(from: datum, format: nil) as? [String: Any]{
                 for pair in dict{
                     UserDefaults.standard.set(pair.value, forKey: pair.key)
                 }
@@ -226,8 +229,11 @@ extension ViewController: TaskManagerProxy{
     }
     
     
-    func didCome(a message: String) {
-        let alert = UIAlertController(title: "打招呼", message: message, preferredStyle: UIAlertController.Style.alert)
+    func didCome(a message: String?) {
+        guard let word = message else {
+            return
+        }
+        let alert = UIAlertController(title: "打招呼", message: word, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "嗯嗯", style: UIAlertAction.Style.default, handler: { (alert) in
         }))
         alert.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.default, handler: { (alert) in
@@ -238,7 +244,7 @@ extension ViewController: TaskManagerProxy{
     
 
     
-    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool) {
+    func didReceive(_ name: String?, buffer data: Data?, to theEnd: Bool) {
         
     }
     

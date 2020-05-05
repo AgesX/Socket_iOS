@@ -10,23 +10,20 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
-    func didReceive(packet data: Data)
+    func didReceive(packet data: Data?)
     func didDisconnect()
     func didStartNewTask()
     
-    func didCome(a message: String)
-    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool)
+    func didCome(a message: String?)
+    func didReceive(_ name: String?, buffer data: Data?, to theEnd: Bool)
 }
 
 
 enum Tag: Int{
     case head = 0
-    case body = 1
-    case headStream = 2
-    
-    case bodyStream = 3
-    case hTalk = 4
-    case bTalk = 5
+    case file = 1
+    case buffer = 2
+    case word = 3
 }
 
 
@@ -48,7 +45,7 @@ class TaskManager : NSObject{
 
 
     func startNewTask(){
-        let packet = Package(info: Data.start, type: .start)
+        let packet = Package(package: Data.start, type: PacketType.start)
         send(with: packet)
     }
 
@@ -77,7 +74,7 @@ class TaskManager : NSObject{
             guard let body = fileAdmin?.handler?.readData(ofLength: Int(fileAdmin?.offset ?? 0)) else{
                 return
             }
-            let packet = Buffer((fileAdmin?.name ?? String.dummy), buffer: body, to: toTheEnd)
+            let packet = Package(buffer: body, name: (fileAdmin?.name ?? String.dummy), to: toTheEnd)
             let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
                 
                 // Initialize Buffer
@@ -98,7 +95,7 @@ class TaskManager : NSObject{
                 
                // Write Buffer
                 if let d = buffer.copy() as? Data{
-                    socket.write(d, withTimeout: -1.0, tag: Tag.headStream.rawValue)
+                    socket.write(d, withTimeout: -1.0, tag: Tag.buffer.rawValue)
                 }
             
         }catch{
@@ -121,7 +118,7 @@ class TaskManager : NSObject{
     
     func send(packet data: NSData){
         // Send Packet
-        let packet = Package(info: Data(referencing: data), type: PacketType.sendData)
+        let packet = Package(package: Data(referencing: data), type: PacketType.sendData)
         send(with: packet)
     }
     
@@ -137,32 +134,22 @@ class TaskManager : NSObject{
 
                do {
                    let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+                       
+                       // Initialize Buffer
+                       let buffer = NSMutableData()
                    
-                   // Initialize Buffer
-                   let buffer = NSMutableData()
-               
-                  // buffer = header + packet
-                  
-                  // Fill Buffer
-                   
-                   let size = MemoryLayout<UInt>.size
-                   var headerLength = encoded.count
-                   buffer.append(&headerLength, length: size)
-                   encoded.withUnsafeBytes { (p) in
-                       let bufferPointer = p.bindMemory(to: UInt64.self)
-                       if let address = bufferPointer.baseAddress{
-                           buffer.append(address, length: size)
+                      // buffer = header + packet
+                      
+                      // Fill Buffer
+                       var headerLength = encoded.count
+                      
+                       buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+                       encoded.withUnsafeBytes { (p) in
+                           let bufferPointer = p.bindMemory(to: UInt8.self)
+                           if let address = bufferPointer.baseAddress{
+                               buffer.append(address, length: headerLength)
+                           }
                        }
-                   }
-                   var val = Tag.bTalk.rawValue
-                   buffer.append(&val, length: size)
-                   withUnsafeBytes(of: val, { (p) in
-                       let bufferPointer = p.bindMemory(to: UInt64.self)
-                       if let address = bufferPointer.baseAddress{
-                          buffer.append(address, length: size)
-                       }
-                   })
-
                   // Write Buffer
                    if let d = buffer.copy() as? Data{
                        socket.write(d, withTimeout: -1.0, tag: 0)
@@ -184,35 +171,31 @@ class TaskManager : NSObject{
              // 包，到 缓冲
                
              // Encode Packet Data
-             let packet = Talk(word: txt)
+             let packet = Package(message: txt)
              do {
             
-                     let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
-                     let head = Header(length: encoded.count, tag: Tag.bTalk.rawValue)
-                     let encodedH = try NSKeyedArchiver.archivedData(withRootObject: head, requiringSecureCoding: false)
-                 
-                     // Initialize Buffer
-                     let buffer = NSMutableData()
-                 
-                    // buffer = header + packet
+                 let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+                      
+                  // Initialize Buffer
+                  let buffer = NSMutableData()
+                  
+                  // buffer = header + packet
                      
-                    // Fill Buffer
-                      encodedH.withUnsafeBytes { (p) in
-                          let bufferPointer = p.bindMemory(to: UInt64.self)
-                          if let address = bufferPointer.baseAddress{
-                            buffer.append(address, length: encodedH.count)
-                          }
+                 
+                  // Fill Buffer
+                  var headerLength = encoded.count
+                     
+                  buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+                  encoded.withUnsafeBytes { (p) in
+                     let bufferPointer = p.bindMemory(to: UInt8.self)
+                     if let address = bufferPointer.baseAddress{
+                         buffer.append(address, length: headerLength)
                       }
-                      encoded.withUnsafeBytes { (p) in
-                          let bufferPointer = p.bindMemory(to: UInt64.self)
-                          if let address = bufferPointer.baseAddress{
-                              buffer.append(address, length: encoded.count)
-                          }
-                      }
+                  }
 
                 // Write Buffer
                  if let d = buffer.copy() as? Data{
-                    socket.write(d, withTimeout: -1.0, tag: Tag.hTalk.rawValue)
+                    socket.write(d, withTimeout: -1.0, tag: Tag.word.rawValue)
                  }
                  
                  
@@ -224,19 +207,10 @@ class TaskManager : NSObject{
     }
     
     
-    func parse(header data: Data) -> Header{
-        do {
-            var d = Data()
-            NSData(data: data).getBytes(&d, length: MemoryLayout<UInt>.size)
-            
-            NSKeyedUnarchiver.setClass(Header.self, forClassName: "socketG.Header")
-            NSKeyedUnarchiver.setClass(Header.self, forClassName: "Header")
-            let head = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Header.self], from: d) as! Header
-            return head
-        } catch {
-            print(error)
-            fatalError()
-        }
+    func parse(header data: Data) -> UInt{
+        var headerLength: UInt = 0
+        NSData(data: data).getBytes(&headerLength, length: MemoryLayout<UInt>.size)
+        return headerLength
     }
 
 
@@ -246,58 +220,30 @@ class TaskManager : NSObject{
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
-             
-               print("Packet Data > \(packet.data)")
-               print("Packet Type > \(packet.type)")
-         
-               switch packet.type {
-                    case .start:
-                        delegate?.didStartNewTask()
-                    case .sendData:
-                        delegate?.didReceive(packet: packet.data)
-                    default:
-                        ()
-               }
+            
+            switch packet.kind {
+            case 1:
+                switch packet.type {
+                     case .start:
+                         delegate?.didStartNewTask()
+                     case .sendData:
+                         delegate?.didReceive(packet: packet.data)
+                     default:
+                         ()
+                }
+            case 2:
+                delegate?.didCome(a: packet.word)
+            case 3:
+                delegate?.didReceive(packet.name, buffer: packet.data, to: packet.toTheEnd)
+            default:
+                ()
+            }
             
         } catch {
             print(error)
         }
         
     }
-
-
-
-    func parse(buffer data: Data){
-        do {
-            NSKeyedUnarchiver.setClass(Buffer.self, forClassName: "socketD.Buffer")
-            NSKeyedUnarchiver.setClass(Buffer.self, forClassName: "Buffer")
-            let buffer = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Buffer.self], from: data) as! Buffer
-            delegate?.didReceive(buffer.name, buffer: buffer.data, to: buffer.toTheEnd)
-            
-        } catch {
-            print(error)
-        }
-        
-    }
-    
-    
-    func parse(talk data: Data){
-        do {
-            NSKeyedUnarchiver.setClass(Talk.self, forClassName: "socketD.Talk")
-            NSKeyedUnarchiver.setClass(Talk.self, forClassName: "Talk")
-            let message = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Talk.self], from: data) as! Talk
-            delegate?.didCome(a: message.word)
-            
-        } catch {
-            print(error)
-        }
-        
-    }
- 
-    
-
-    
-
 
     
 }
@@ -308,19 +254,13 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        switch Tag(rawValue: tag) {
-        case .head:
-            let meta = parse(header: data)
-            socket.readData(toLength: UInt(meta.length), withTimeout: -1.0, tag: Int(meta.tag))
-        case .body:
+        switch tag{
+        case 0:
+            let bodyLength = parse(header: data)
+            socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: 1)
+        case 1:
             parse(body: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
-        case .bodyStream:
-            parse(buffer: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
-        case .bTalk:
-            parse(talk: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: 0)
         default:
             ()
         }
@@ -340,7 +280,7 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-        if tag == Tag.headStream.rawValue{
+        if tag == Tag.buffer.rawValue{
             sendFile()
         }
     }

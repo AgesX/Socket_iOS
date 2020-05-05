@@ -18,29 +18,72 @@ enum PacketType: Int{
 struct PacketKey {
     static let data = "data"
     static let type = "type"
+    static let word = "word"
+    
+    static let name = "name"
+    static let toTheEnd = "toTheEnd"
+    static let kind = "kind"
 }
 
 
 class Package: NSObject{
 
 
-    let data: Data
+    let data: Data?
     let type: PacketType
+    let word: String?
+    
+    let name: String?
+    let toTheEnd: Bool
+    let kind: Int
 
     
-    init(info d: Data, type t: PacketType){
-        data = d
+    init(package info: Data, type t: PacketType){
+        data = info
         type = t
-     
+        word = nil
+        
+        name = nil
+        toTheEnd = false
+        kind = 1
+        
+        super.init()
+    }
+    
+    
+    init(message info: String){
+        data = nil
+        type = PacketType.sendData
+        word = info
+        
+        name = nil
+        toTheEnd = false
+        kind = 2
+        
+        super.init()
+    }
+    
+    init(buffer info: Data, name n: String, to theEnd: Bool){
+        data = info
+        type = PacketType.sendData
+        word = nil
+        
+        name = n
+        toTheEnd = theEnd
+        kind = 3
+        
         super.init()
     }
     
     
     required init?(coder: NSCoder) {
-        let datum = coder.decodeObject(forKey: PacketKey.data) as? Data
-        data = datum ?? Data.dummy
+        data = coder.decodeObject(forKey: PacketKey.data) as? Data
         type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.default
-      
+        word = coder.decodeObject(forKey: PacketKey.word) as? String
+        
+        name = coder.decodeObject(forKey: PacketKey.name) as? String
+        toTheEnd = coder.decodeBool(forKey: PacketKey.toTheEnd)
+        kind = coder.decodeInteger(forKey: PacketKey.kind)
     }
     
 }
@@ -53,6 +96,11 @@ extension Package: NSCoding, NSSecureCoding{
     func encode(with coder: NSCoder) {
         coder.encode(data, forKey: PacketKey.data)
         coder.encode(type.rawValue, forKey: PacketKey.type)
+        coder.encode(word, forKey: PacketKey.word)
+        
+        coder.encode(name, forKey: PacketKey.name)
+        coder.encode(toTheEnd, forKey: PacketKey.toTheEnd)
+        coder.encode(kind, forKey: PacketKey.kind)
     }
     
     
