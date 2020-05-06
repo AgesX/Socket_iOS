@@ -238,7 +238,9 @@ extension ViewController: TaskManagerProxy{
         }))
         alert.addAction(UIAlertAction(title: "取消", style: UIAlertAction.Style.default, handler: { (alert) in
         }))
-        present(alert, animated: true){    }
+        
+        top.present(alert, animated: true, completion: {
+        })
         
     }
     

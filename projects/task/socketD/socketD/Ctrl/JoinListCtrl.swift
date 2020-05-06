@@ -45,6 +45,7 @@ class JoinListCtrl: UITableViewController{
         // Create Cancel Button
         view.backgroundColor = UIColor.yellow
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(test))
     }
 
 
@@ -55,6 +56,11 @@ class JoinListCtrl: UITableViewController{
         stopBrowsing()
         dismiss(animated: true) {
         }
+    }
+    
+    @objc
+    func test(){
+        tp(viewController: self)
     }
     
     
