@@ -129,6 +129,26 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
+    @IBAction func broswerFiles(_ sender: UIButton) {
+        
+        let vc = FileListController(style: .grouped)
+        
+           // Initialize Navigation Controller
+        let nc = UINavigationController(rootViewController: vc)
+
+           // Present Navigation Controller
+        present(nc, animated: true) {
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
     // MARK: game relevant
 
     func startTask(with socket: GCDAsyncSocket){
@@ -253,17 +273,15 @@ extension ViewController: TaskManagerProxy{
             return
         }
         
-        print(title, theEnd)
-        /*
         tempData?.append(buffer)
         if theEnd{
             if let file = tempData{
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-                file.write(toFile: "\(documentsPath)/\(title)", atomically: true)
+                let path = "\(URL.dir)/\(title)"
+                file.write(toFile: path, atomically: true)
             }
         }
 
-        */
+        
     }
     
     

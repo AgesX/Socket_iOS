@@ -41,6 +41,16 @@ extension URL{
         }
         return preferURL
     }
+    
+    
+    static var dir: String{
+        return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+    }
+        
+        
+    var file: String{
+        absoluteString.replacingOccurrences(of: "file://", with: "")
+    }
 }
 
 
@@ -52,10 +62,3 @@ extension String{
 }
 
 
-
-
-extension URL{
-    var file: String{
-        absoluteString.replacingOccurrences(of: "file://", with: "")
-    }
-}

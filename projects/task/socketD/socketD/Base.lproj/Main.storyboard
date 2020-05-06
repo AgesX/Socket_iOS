@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Squ-By-DOM">
-                                <rect key="frame" x="142" y="238" width="130" height="430"/>
+                                <rect key="frame" x="245.5" y="238" width="130" height="430"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hcc-Zn-YqX">
                                         <rect key="frame" x="32" y="0.0" width="66" height="107.5"/>
@@ -54,6 +54,22 @@
                                     <constraint firstAttribute="width" constant="130" id="n82-jW-370"/>
                                 </constraints>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="puw-hw-B04">
+                                <rect key="frame" x="38.5" y="238" width="130" height="430"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gr6-jV-BC4">
+                                        <rect key="frame" x="37" y="0.0" width="56" height="430"/>
+                                        <state key="normal" title="Broswer"/>
+                                        <connections>
+                                            <action selector="broswerFiles:" destination="f5P-r7-n5q" eventType="touchUpInside" id="ef2-jl-Nd9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="GBd-p4-sgU"/>
+                                    <constraint firstAttribute="height" constant="430" id="McW-SI-gGr"/>
+                                </constraints>
+                            </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="wqR-YK-Z4U">
                                 <rect key="frame" x="183.5" y="64" width="47" height="59"/>
                                 <subviews>
@@ -75,7 +91,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="wqR-YK-Z4U" firstAttribute="centerX" secondItem="5wB-DU-sEr" secondAttribute="centerX" id="Hx1-c8-MDF"/>
-                            <constraint firstItem="Squ-By-DOM" firstAttribute="centerX" secondItem="5wB-DU-sEr" secondAttribute="centerX" id="clM-Mt-b6t"/>
+                            <constraint firstItem="puw-hw-B04" firstAttribute="centerY" secondItem="5wB-DU-sEr" secondAttribute="centerY" id="PEy-jF-mOs"/>
+                            <constraint firstItem="puw-hw-B04" firstAttribute="centerX" secondItem="5wB-DU-sEr" secondAttribute="centerX" multiplier="0.5" id="RmM-Ya-SQG"/>
+                            <constraint firstItem="Squ-By-DOM" firstAttribute="centerX" secondItem="5wB-DU-sEr" secondAttribute="centerX" multiplier="1.5" id="clM-Mt-b6t"/>
                             <constraint firstItem="wqR-YK-Z4U" firstAttribute="top" secondItem="5wB-DU-sEr" secondAttribute="top" constant="20" id="t02-PQ-PVU"/>
                             <constraint firstItem="Squ-By-DOM" firstAttribute="centerY" secondItem="5wB-DU-sEr" secondAttribute="centerY" id="t9W-vc-eFV"/>
                         </constraints>

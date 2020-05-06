@@ -10,6 +10,7 @@
 		261FA7C9245F387F00B4B555 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261FA7C8245F387F00B4B555 /* UserSetting.swift */; };
 		264497D224624ADC008E17D0 /* CtrlExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264497D124624ADC008E17D0 /* CtrlExtern.swift */; };
 		264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF81D2461AD8F002AED20 /* FileAdminister.swift */; };
+		26526EB12463267F00073418 /* FileListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26526EAF2463267F00073418 /* FileListController.swift */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
 		267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05462447389C00BAF530 /* SceneDelegate.swift */; };
@@ -47,6 +48,7 @@
 		261FA7C8245F387F00B4B555 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		264497D124624ADC008E17D0 /* CtrlExtern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlExtern.swift; sourceTree = "<group>"; };
 		264CF81D2461AD8F002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
+		26526EAF2463267F00073418 /* FileListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListController.swift; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
 		267C05412447389C00BAF530 /* socketD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C05442447389C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,8 +101,10 @@
 		266B384424507E5300204C56 /* Ctrl */ = {
 			isa = PBXGroup;
 			children = (
+				267C054F2447389E00BAF530 /* LaunchScreen.storyboard */,
 				266B384D24507E7D00204C56 /* HostViewCtrl.swift */,
 				2693BBA224513612006933A6 /* JoinListCtrl.swift */,
+				26526EAF2463267F00073418 /* FileListController.swift */,
 			);
 			path = Ctrl;
 			sourceTree = "<group>";
@@ -132,7 +136,6 @@
 				267C054D2447389E00BAF530 /* Assets.xcassets */,
 				266B384424507E5300204C56 /* Ctrl */,
 				267C05522447389E00BAF530 /* Info.plist */,
-				267C054F2447389E00BAF530 /* LaunchScreen.storyboard */,
 				267C054A2447389C00BAF530 /* Main.storyboard */,
 				267C057B2447391C00BAF530 /* manager */,
 				267C05772447391C00BAF530 /* Model */,
@@ -349,6 +352,7 @@
 				2693BBA624519490006933A6 /* DataExtern.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
+				26526EB12463267F00073418 /* FileListController.swift in Sources */,
 				267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
