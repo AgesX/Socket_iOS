@@ -51,3 +51,11 @@ extension String{
     static let dummy = "嗯嗯"
 }
 
+
+
+
+extension URL{
+    var file: String{
+        absoluteString.replacingOccurrences(of: "file://", with: "")
+    }
+}

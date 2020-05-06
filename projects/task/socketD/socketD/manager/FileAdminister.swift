@@ -20,9 +20,9 @@ struct FileAdminister {
     var tillEnd: Bool
     
     init(url src: URL) {
-        handler = FileHandle(forReadingAtPath: src.absoluteString)
+        handler = FileHandle(forReadingAtPath: src.file)
         var len = 0
-        if let data = NSData(contentsOfFile: src.absoluteString){
+        if let data = NSData(contentsOfFile: src.file){
             len = data.length
         }
         length = UInt64(len)

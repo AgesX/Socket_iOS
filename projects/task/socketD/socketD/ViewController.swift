@@ -40,6 +40,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var verifyLabel: UILabel!
     
+    var tempData: NSMutableData?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -246,8 +248,22 @@ extension ViewController: TaskManagerProxy{
     
 
     
-    func didReceive(_ name: String?, buffer data: Data?, to theEnd: Bool) {
+    func didReceive(title name: String?, buffer data: Data?, to theEnd: Bool) {
+        guard let title = name, let buffer = data else {
+            return
+        }
         
+        print(title, theEnd)
+        /*
+        tempData?.append(buffer)
+        if theEnd{
+            if let file = tempData{
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+                file.write(toFile: "\(documentsPath)/\(title)", atomically: true)
+            }
+        }
+
+        */
     }
     
     

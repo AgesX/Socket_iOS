@@ -15,7 +15,7 @@ protocol TaskManagerProxy: class{
     func didStartNewTask()
     
     func didCome(a message: String?)
-    func didReceive(_ name: String?, buffer data: Data?, to theEnd: Bool)
+    func didReceive(title name: String?, buffer data: Data?, to theEnd: Bool)
 }
 
 
@@ -234,7 +234,7 @@ class TaskManager : NSObject{
             case 2:
                 delegate?.didCome(a: packet.word)
             case 3:
-                delegate?.didReceive(packet.name, buffer: packet.data, to: packet.toTheEnd)
+                delegate?.didReceive(title: packet.name, buffer: packet.data, to: packet.toTheEnd)
             default:
                 ()
             }
