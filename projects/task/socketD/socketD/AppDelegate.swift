@@ -34,3 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+
+
+//  How to efficiently write large files to disk on background thread (Swift)
