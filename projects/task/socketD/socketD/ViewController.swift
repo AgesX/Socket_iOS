@@ -108,7 +108,7 @@ class ViewController: UIViewController {
 
     
     @IBAction func disconnectIt(_ sender: UIButton) {
-        endTask()
+        disconnectUI()
     }
     
     
@@ -166,7 +166,7 @@ class ViewController: UIViewController {
     }
     
     
-    func endTask(){
+    func disconnectUI(){
         
         // Clean Up
         taskAdmin?.delegate = nil
@@ -242,7 +242,7 @@ extension ViewController: TaskManagerProxy{
     
     
     func didDisconnect(){
-        endTask()
+        disconnectUI()
     }
     // MARK: 20
     
