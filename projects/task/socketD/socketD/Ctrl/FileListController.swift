@@ -8,15 +8,21 @@
 
 import UIKit
 
+import AVFoundation
+
 class FileListController: UITableViewController {
     
     let cellID = "cellID"
     var files = [URL]()
+    
+    var player: AVAudioPlayer?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
     }
+    
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +46,11 @@ class FileListController: UITableViewController {
         }
     }
 
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        player?.stop()
+    }
     // MARK: - Table view data source
 
 
@@ -58,7 +69,27 @@ class FileListController: UITableViewController {
     }
     
 
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        do {
+            let data = try Data(contentsOf: files[indexPath.row])
+            player = try AVAudioPlayer(data: data)
+            player?.volume = 1.0
+            player?.prepareToPlay()
+            player?.play()
+        } catch  {
+            print(error)
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
     /*
+     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.

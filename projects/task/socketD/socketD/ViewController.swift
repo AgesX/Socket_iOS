@@ -272,13 +272,15 @@ extension ViewController: TaskManagerProxy{
         guard let title = name, let buffer = data else {
             return
         }
+        if tempData == nil{
+            tempData = NSMutableData(data: buffer)
+        }
+        else{
+            tempData?.append(buffer)
+        }
         
-        tempData?.append(buffer)
-        if theEnd{
-            if let file = tempData{
-                let path = "\(URL.dir)/\(title)"
-                file.write(toFile: path, atomically: true)
-            }
+        if theEnd, let file = tempData{
+            file.write(toFile: "\(URL.dir)/\(title)", atomically: true)
         }
 
         
