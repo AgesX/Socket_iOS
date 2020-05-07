@@ -16,10 +16,18 @@ class FileListController: UITableViewController {
     var files = [URL]()
     
     var player: AVAudioPlayer?
+    
+    private lazy var refresh: UIRefreshControl = {
+        let c = UIRefreshControl()
+        c.addTarget(self, action: #selector(self.pullToRefresh), for: UIControl.Event.valueChanged)
+        return c
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        
+        tableView.refreshControl = refresh
     }
     
     
@@ -32,6 +40,14 @@ class FileListController: UITableViewController {
         refreshData()
     }
 
+    
+    @objc
+    func pullToRefresh(){
+        refreshData()
+        refresh.endRefreshing()
+    }
+    
+    
     
     func refreshData(){
         files.removeAll()
