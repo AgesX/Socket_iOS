@@ -27,7 +27,7 @@ class FileListController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-  
+        files.removeAll()
         if let src = URL(string: URL.dir){
             do {
                 let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
@@ -87,6 +87,16 @@ class FileListController: UITableViewController {
     
     
     
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .destructive, title: "删文件") {  (contextualAction, view, boolValue) in
+            
+            
+            
+        }
+
+        return UISwipeActionsConfiguration(actions: [contextItem])
+    }
     
     /*
      
