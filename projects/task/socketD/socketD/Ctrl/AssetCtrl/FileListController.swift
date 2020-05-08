@@ -15,7 +15,7 @@ class FileListController: UITableViewController {
     let cellID = "cellID"
     var files = [URL]()
     
-    var player: AVAudioPlayer?
+
     
     private lazy var refresh: UIRefreshControl = {
         let c = UIRefreshControl()
@@ -25,6 +25,7 @@ class FileListController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "媒体库"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
         
         tableView.refreshControl = refresh
@@ -70,10 +71,7 @@ class FileListController: UITableViewController {
     }
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        player?.stop()
-    }
+
     // MARK: - Table view data source
 
 
@@ -95,11 +93,11 @@ class FileListController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         do {
-            let data = try Data(contentsOf: files[indexPath.row])
-            player = try AVAudioPlayer(data: data)
-            player?.volume = 1.0
-            player?.prepareToPlay()
-            player?.play()
+            let url = files[indexPath.row]
+            let data = try Data(contentsOf: url)
+            let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
+            musicCtrl.music = SongInfo(song: data, name: url.lastPathComponent)
+            navigationController?.pushViewController(musicCtrl, animated: true)
         } catch  {
             print(error)
         }

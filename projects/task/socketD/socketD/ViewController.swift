@@ -54,6 +54,9 @@ class ViewController: UIViewController {
         
         disconnectBtn.isHidden = true
         stateLabel.text = ""
+        
+        
+        title = "Socket Play"
     }
 
 
@@ -135,12 +138,8 @@ class ViewController: UIViewController {
         
         let vc = FileListController(style: .grouped)
         
-           // Initialize Navigation Controller
-        let nc = UINavigationController(rootViewController: vc)
-
-           // Present Navigation Controller
-        present(nc, animated: true) {
-        }
+        navigationController?.pushViewController(vc, animated: true)
+        
         
         
     }
