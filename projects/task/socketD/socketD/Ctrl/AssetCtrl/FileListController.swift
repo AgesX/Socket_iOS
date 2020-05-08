@@ -96,7 +96,7 @@ class FileListController: UITableViewController {
             let url = files[indexPath.row]
             let data = try Data(contentsOf: url)
             let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
-            musicCtrl.music = SongInfo(song: data, name: url.lastPathComponent)
+            musicCtrl.music = SongInfo(song: data, url: url)
             navigationController?.pushViewController(musicCtrl, animated: true)
         } catch  {
             print(error)

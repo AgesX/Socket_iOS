@@ -41,7 +41,7 @@
                         <constraint firstAttribute="width" constant="64" id="eRX-kT-Q4W"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" image="previous.png">
+                    <state key="normal" image="previous">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
@@ -55,7 +55,7 @@
                         <constraint firstAttribute="height" constant="89" id="uVH-72-gqX"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" image="play.png">
+                    <state key="normal" image="play">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
@@ -69,7 +69,7 @@
                         <constraint firstAttribute="height" constant="64" id="Tu2-E4-QRl"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" image="next.png">
+                    <state key="normal" image="next">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
@@ -77,7 +77,7 @@
                     </connections>
                 </button>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Hes-c0-bD7">
-                    <rect key="frame" x="35" y="641.5" width="344" height="31"/>
+                    <rect key="frame" x="35" y="616.5" width="344" height="31"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="9Hq-J0-Mkz"/>
                     </constraints>
@@ -86,19 +86,19 @@
                     </connections>
                 </slider>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aml-bA-EdN">
-                    <rect key="frame" x="343.5" y="660.5" width="33.5" height="17.5"/>
+                    <rect key="frame" x="343.5" y="656.5" width="33.5" height="17.5"/>
                     <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                     <color key="textColor" red="0.2470588235" green="0.30588235289999999" blue="0.39607843139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAF-HR-n1W">
-                    <rect key="frame" x="38" y="661.5" width="33.5" height="17.5"/>
+                    <rect key="frame" x="38" y="656.5" width="33.5" height="17.5"/>
                     <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="15"/>
                     <color key="textColor" red="0.2470588235" green="0.30588235289999999" blue="0.39607843139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THRILLER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EMB-AX-qVZ" userLabel="Album Name">
-                    <rect key="frame" x="26" y="574.5" width="144" height="45"/>
+                    <rect key="frame" x="26" y="549.5" width="144" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="dq2-b8-fnR"/>
                     </constraints>
@@ -107,25 +107,25 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMt-qA-9h9">
-                    <rect key="frame" x="303" y="621" width="29" height="23"/>
+                    <rect key="frame" x="303" y="596" width="29" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="YEt-4A-HRo"/>
                         <constraint firstAttribute="width" constant="29" id="uAt-LA-8rk"/>
                     </constraints>
-                    <state key="normal" image="shuffle.png"/>
-                    <state key="selected" image="shuffle_s.png"/>
+                    <state key="normal" image="shuffle"/>
+                    <state key="selected" image="shuffle_s"/>
                     <connections>
                         <action selector="shuffleButtonTapped:" destination="-1" eventType="touchUpInside" id="gg8-aK-B7Z"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYS-Cs-DOx">
-                    <rect key="frame" x="346" y="620.5" width="24" height="24"/>
+                    <rect key="frame" x="346" y="595.5" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="XCF-HB-MKW"/>
                         <constraint firstAttribute="width" constant="24" id="y5j-zF-i6u"/>
                     </constraints>
-                    <state key="normal" image="repeat.png"/>
-                    <state key="selected" image="repeat_s.png"/>
+                    <state key="normal" image="repeat"/>
+                    <state key="selected" image="repeat_s"/>
                     <connections>
                         <action selector="repeatButtonTapped:" destination="-1" eventType="touchUpInside" id="pqG-87-OMH"/>
                     </connections>
@@ -133,18 +133,18 @@
             </subviews>
             <color key="backgroundColor" red="0.89411764709999997" green="0.90588235289999997" blue="0.71372549019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="aml-bA-EdN" firstAttribute="top" secondItem="Hes-c0-bD7" secondAttribute="bottom" constant="-11" id="3TQ-RH-tCv"/>
-                <constraint firstItem="Akr-El-KqJ" firstAttribute="top" secondItem="Hes-c0-bD7" secondAttribute="bottom" constant="20" id="4fD-X5-dOk"/>
+                <constraint firstItem="Akr-El-KqJ" firstAttribute="top" secondItem="Hes-c0-bD7" secondAttribute="bottom" constant="45" id="4fD-X5-dOk"/>
                 <constraint firstItem="mAF-HR-n1W" firstAttribute="leading" secondItem="Hes-c0-bD7" secondAttribute="leading" constant="1" id="5Cu-gA-bfP"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="centerY" secondItem="Akr-El-KqJ" secondAttribute="centerY" id="6cB-3S-Nk2"/>
                 <constraint firstItem="tM9-zd-pAz" firstAttribute="bottom" secondItem="Akr-El-KqJ" secondAttribute="bottom" constant="81.5" id="9Jf-Ss-ASk"/>
-                <constraint firstItem="mAF-HR-n1W" firstAttribute="top" secondItem="Hes-c0-bD7" secondAttribute="bottom" constant="-10" id="9io-Yy-jZS"/>
+                <constraint firstItem="mAF-HR-n1W" firstAttribute="top" secondItem="Hes-c0-bD7" secondAttribute="bottom" constant="10" id="9io-Yy-jZS"/>
                 <constraint firstItem="Akr-El-KqJ" firstAttribute="centerX" secondItem="tM9-zd-pAz" secondAttribute="centerX" id="BRc-VI-V81"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="top" secondItem="84i-4n-gty" secondAttribute="top" id="DQl-c5-6R0"/>
                 <constraint firstItem="LYS-Cs-DOx" firstAttribute="trailing" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="-7" id="Mhp-xD-LNO"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="leading" secondItem="Akr-El-KqJ" secondAttribute="trailing" constant="26" id="NjP-hd-KEX"/>
                 <constraint firstItem="LYS-Cs-DOx" firstAttribute="leading" secondItem="bMt-qA-9h9" secondAttribute="trailing" constant="14" id="O5e-3b-j1P"/>
                 <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="EMB-AX-qVZ" secondAttribute="bottom" constant="22" id="OSF-uL-loT"/>
+                <constraint firstItem="aml-bA-EdN" firstAttribute="top" secondItem="mAF-HR-n1W" secondAttribute="top" id="bo7-PB-1BT"/>
                 <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="LYS-Cs-DOx" secondAttribute="bottom" constant="-3" id="cEX-To-QWc"/>
                 <constraint firstItem="bMt-qA-9h9" firstAttribute="centerY" secondItem="LYS-Cs-DOx" secondAttribute="centerY" id="dkV-oB-aC4"/>
                 <constraint firstItem="Akr-El-KqJ" firstAttribute="leading" secondItem="84i-4n-gty" secondAttribute="trailing" constant="29" id="dpP-BI-4rU"/>
@@ -158,12 +158,12 @@
         </view>
     </objects>
     <resources>
-        <image name="next.png" width="128" height="128"/>
-        <image name="play.png" width="128" height="128"/>
-        <image name="previous.png" width="128" height="128"/>
-        <image name="repeat.png" width="128" height="128"/>
-        <image name="repeat_s.png" width="128" height="128"/>
-        <image name="shuffle.png" width="128" height="128"/>
-        <image name="shuffle_s.png" width="128" height="128"/>
+        <image name="next" width="129" height="129"/>
+        <image name="play" width="178" height="178"/>
+        <image name="previous" width="129" height="129"/>
+        <image name="repeat" width="28" height="29"/>
+        <image name="repeat_s" width="28" height="29"/>
+        <image name="shuffle" width="32" height="26"/>
+        <image name="shuffle_s" width="32" height="26"/>
     </resources>
 </document>

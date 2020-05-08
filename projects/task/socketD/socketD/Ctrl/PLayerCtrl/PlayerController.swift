@@ -10,35 +10,26 @@ import MediaPlayer
 struct SongInfo {
     let music: Data?
     let songName: String?
+    let url: URL?
     
-    init(song data: Data? = nil, name title: String? = nil){
+    init(song data: Data? = nil, url src: URL? = nil){
         music = data
-        songName = title
+        songName = src?.lastPathComponent
+        url = src
     }
 }
 
 
 
 class PlayerController: UIViewController{
-    
-    //Choose background here. Between 1 - 7
-    let selectedBackground = 1
-    
-    
-    var audioPlayer:AVAudioPlayer! = nil
+
+    var audioPlayer: AVAudioPlayer!
     
     var audioList:NSArray!
     var currentAudioIndex = 0
-    var timer:Timer!
-    
-    
-    var audioLength = 0.0
-    
-    var totalLengthOfAudio = ""
-    var finalImage:UIImage!
-    var isTableViewOnscreen = false
-    
-    
+    var timer: Timer!
+
+
     var shuffleState = false
     var repeatState = false
     var shuffleArray = [Int]()
@@ -64,58 +55,18 @@ class PlayerController: UIViewController{
     var music = SongInfo()
     
     
-    //MARK:- Lockscreen Media Control
-    
-    // This shows media info on lock screen - used currently and perform controls
-    func showMediaInfo(){
-        
-        if let songName = music.songName{
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyTitle : songName]
-        }
-        
-    }
-    
-    override func remoteControlReceived(with event: UIEvent?) {
-        if event!.type == UIEvent.EventType.remoteControl{
-            switch event!.subtype{
-            case UIEventSubtype.remoteControlPlay:
-                play(self)
-            case UIEventSubtype.remoteControlPause:
-                play(self)
-            case UIEventSubtype.remoteControlNextTrack:
-                next(self)
-            case UIEventSubtype.remoteControlPreviousTrack:
-                previous(self)
-            default:
-                print("There is an issue with the control")
-            }
-        }
-    }
-    
-    
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.default
-    }
-    
-    override var prefersStatusBarHidden : Bool {
-        isTableViewOnscreen
-    }
-    
-    
-    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //assing background
-
+        previousButton.isHidden = true
+        nextButton.isHidden = true
         
         //this sets last listened trach number as current
         retrieveSavedTrackNumber()
         prepareAudio()
       
-        assingSliderUI()
         setRepeatAndShuffle()
         retrievePlayerProgressSliderValue()
         //LockScreen Media control registry
@@ -129,6 +80,52 @@ class PlayerController: UIViewController{
 
 
     }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopTimer()
+        audioPlayer.stop()
+        
+    }
+    
+    
+    
+    //MARK:- Lockscreen Media Control
+      
+      // This shows media info on lock screen - used currently and perform controls
+      func showMediaInfo(){
+          
+          if let songName = music.songName{
+              MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyTitle : songName]
+          }
+          
+      }
+      
+      override func remoteControlReceived(with event: UIEvent?) {
+          if event!.type == UIEvent.EventType.remoteControl{
+              switch event!.subtype{
+              case UIEventSubtype.remoteControlPlay:
+                  play(self)
+              case UIEventSubtype.remoteControlPause:
+                  play(self)
+              case UIEventSubtype.remoteControlNextTrack:
+                  next(self)
+              case UIEventSubtype.remoteControlPreviousTrack:
+                  previous(self)
+              default:
+                  print("There is an issue with the control")
+              }
+          }
+      }
+      
+      
+      
+      override var preferredStatusBarStyle : UIStatusBarStyle {
+          return UIStatusBarStyle.default
+      }
+      
+
 
     
     func setRepeatAndShuffle(){
@@ -186,23 +183,40 @@ class PlayerController: UIViewController{
             audioPlayer = try AVAudioPlayer(data: data)
             audioPlayer.delegate = self
         
-            audioLength = audioPlayer.duration
-            playerProgressSlider.maximumValue = CFloat(audioPlayer.duration)
-            playerProgressSlider.minimumValue = 0.0
-            playerProgressSlider.value = 0.0
-        
-        
             audioPlayer.prepareToPlay()
-            showTotalSongLength()
-        
-            progressTimerLabel.text = "00:00"
+            
         } catch{
             print(error)
         }
         
         
         
+        guard let src = music.url else{
+            return
+        }
+        let audioAsset = AVURLAsset(url: src, options: nil)
+        let d_k = "duration"
+        audioAsset.loadValuesAsynchronously(forKeys: [d_k]) {
+            var error: NSError? = nil
+            let status = audioAsset.statusOfValue(forKey: d_k, error: &error)
+            switch status {
+            case .loaded: // Sucessfully loaded. Continue processing.
+                let duration = audioAsset.duration
+                let durationInSec = CMTimeGetSeconds(duration)
+                DispatchQueue.main.async {
+                    self.playerProgressSlider.maximumValue = Float(durationInSec)
+                    self.totalLengthOfAudioLabel.text = self.calculateTime(from: Double(durationInSec))
+                }
+                break
+            case .failed: break // Handle error
+            case .cancelled: break // Terminate processing
+            default: break // Handle all other cases
+            }
+        }
         
+        playerProgressSlider.minimumValue = 0.0
+        playerProgressSlider.value = 0.0
+        progressTimerLabel.text = "00:00"
     }
     
     
@@ -210,7 +224,7 @@ class PlayerController: UIViewController{
     
     
     //MARK:- Player Controls Methods
-    func  playAudio(){
+    func playAudio(){
         guard audioPlayer != nil else {
             return
         }
@@ -295,7 +309,7 @@ class PlayerController: UIViewController{
     
     func stopTimer(){
         timer.invalidate()
-        
+        timer = nil
     }
     
     
@@ -303,8 +317,7 @@ class PlayerController: UIViewController{
         if !audioPlayer.isPlaying{
             return
         }
-        let time = calculateTimeFromNSTimeInterval(audioPlayer.currentTime)
-        progressTimerLabel.text  = "\(time.minute):\(time.second)"
+        progressTimerLabel.text = calculateTime(from: audioPlayer.currentTime)
         playerProgressSlider.value = CFloat(audioPlayer.currentTime)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: AudioTags.playerProgress.rawValue)
 
@@ -335,8 +348,7 @@ class PlayerController: UIViewController{
             
             audioPlayer.currentTime = TimeInterval(playerProgressSliderValue)
             
-            let time = calculateTimeFromNSTimeInterval(audioPlayer.currentTime)
-            progressTimerLabel.text  = "\(time.minute):\(time.second)"
+            progressTimerLabel.text  = calculateTime(from: audioPlayer.currentTime)
             playerProgressSlider.value = CFloat(audioPlayer.currentTime)
         }
     }
@@ -344,7 +356,7 @@ class PlayerController: UIViewController{
     
     
     //This returns song length
-    func calculateTimeFromNSTimeInterval(_ duration:TimeInterval) ->(minute:String, second:String){
+    func calculateTime(from duration:TimeInterval) -> String{
        // let hour_   = abs(Int(duration)/3600)
         let minute_ = abs(Int((duration/60).truncatingRemainder(dividingBy: 60)))
         let second_ = abs(Int(duration.truncatingRemainder(dividingBy: 60)))
@@ -352,43 +364,9 @@ class PlayerController: UIViewController{
        // var hour = hour_ > 9 ? "\(hour_)" : "0\(hour_)"
         let minute = minute_ > 9 ? "\(minute_)" : "0\(minute_)"
         let second = second_ > 9 ? "\(second_)" : "0\(second_)"
-        return (minute,second)
+        return "\(minute) : \(second)"
     }
-    
 
-    
-    func showTotalSongLength(){
-        calculateSongLength()
-        totalLengthOfAudioLabel.text = totalLengthOfAudio
-    }
-    
-    
-    func calculateSongLength(){
-        let time = calculateTimeFromNSTimeInterval(audioLength)
-        totalLengthOfAudio = "\(time.minute):\(time.second)"
-    }
-    
-    
-
-
- 
-  
-    
-    
- 
-   
-    func assingSliderUI () {
-        let minImage = UIImage(named: "slider-track-fill")
-        let maxImage = UIImage(named: "slider-track")
-        let thumb = UIImage(named: "thumb")
-
-        playerProgressSlider.setMinimumTrackImage(minImage, for: UIControl.State())
-        playerProgressSlider.setMaximumTrackImage(maxImage, for: UIControl.State())
-        playerProgressSlider.setThumbImage(thumb, for: UIControl.State())
-
-    
-    }
-    
     //MARK:- Target Action
     
     @IBAction func play(_ sender : AnyObject) {
@@ -403,22 +381,10 @@ class PlayerController: UIViewController{
         let pause = UIImage(named: "pause")
         if audioPlayer.isPlaying{
             pauseAudioPlayer()
-            if audioPlayer.isPlaying {
-                playButton.setImage( pause, for: UIControl.State())
-            }
-            else{
-                playButton.setImage(play , for: UIControl.State())
-            }
-            
+            playButton.setImage(play , for: UIControl.State.normal)
         }else{
             playAudio()
-            if audioPlayer.isPlaying {
-                playButton.setImage( pause, for: UIControl.State())
-            }
-            else{
-                playButton.setImage(play , for: UIControl.State())
-            }
-            
+            playButton.setImage( pause, for: UIControl.State.normal)
         }
     }
     
@@ -486,113 +452,6 @@ class PlayerController: UIViewController{
     
 }
 
-
-
-
-
-
-extension PlayerController: UITableViewDelegate{
-    
-    
-    // MARK: - UITableViewDelegate
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-      
-        currentAudioIndex = (indexPath as NSIndexPath).row
-        prepareAudio()
-        playAudio()
-
-        let play = UIImage(named: "play")
-        let pause = UIImage(named: "pause")
-        
-        
-        if audioPlayer.isPlaying{
-            playButton.setImage( pause, for: UIControl.State())
-        }
-        else{
-            playButton.setImage(play , for: UIControl.State())
-        }
-        
-        
-    }
-    
-    
-    
-    
-}
-
-
-
-
-
-
-
-extension PlayerController: UITableViewDataSource{
-    
-
-
-    //MARK-
-
-
-    // Table View Part of the code. Displays Song name and Artist Name
-    // MARK: - UITableViewDataSource
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1;
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return audioList.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
-        var songNameDict = NSDictionary();
-        songNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
-        let songName = songNameDict.value(forKey: "songName") as! String
-        
-        var albumNameDict = NSDictionary();
-        albumNameDict = audioList.object(at: (indexPath as NSIndexPath).row) as! NSDictionary
-        let albumName = albumNameDict.value(forKey: "albumName") as! String
-        
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-BookIta", size: 25.0)
-        cell.textLabel?.textColor = UIColor.white
-        cell.textLabel?.text = songName
-        
-        cell.detailTextLabel?.font = UIFont(name: "BodoniSvtyTwoITCTT-Book", size: 16.0)
-        cell.detailTextLabel?.textColor = UIColor.white
-        cell.detailTextLabel?.text = albumName
-        return cell
-    }
-
-
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 54.0
-    }
-
-
-
-    func tableView(_ tableView: UITableView,willDisplay cell: UITableViewCell,forRowAt indexPath: IndexPath){
-        tableView.backgroundColor = UIColor.clear
-        
-        let backgroundView = UIView(frame: CGRect.zero)
-        backgroundView.backgroundColor = UIColor.clear
-        cell.backgroundView = backgroundView
-        cell.backgroundColor = UIColor.clear
-    }
-
-
-
-
-}
-
-
-
-
-
-
-
 extension PlayerController: AVAudioPlayerDelegate{
 
 
@@ -602,7 +461,7 @@ extension PlayerController: AVAudioPlayerDelegate{
             
             if shuffleState == false && repeatState == false {
                 // do nothing
-                playButton.setImage( UIImage(named: "play"), for: UIControl.State())
+                playButton.setImage( UIImage(named: "play"), for: UIControl.State.normal)
                 return
                 
             } else if shuffleState == false && repeatState == true {
@@ -615,7 +474,7 @@ extension PlayerController: AVAudioPlayerDelegate{
                 //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
                 shuffleArray.append(currentAudioIndex)
                 if shuffleArray.count >= audioList.count {
-                    playButton.setImage( UIImage(named: "play"), for: UIControl.State())
+                    playButton.setImage( UIImage(named: "play"), for: UIControl.State.normal)
                     return
                     
                 }
