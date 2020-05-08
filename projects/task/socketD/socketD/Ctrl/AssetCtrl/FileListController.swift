@@ -92,18 +92,11 @@ class FileListController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        do {
-            let url = files[indexPath.row]
-            let data = try Data(contentsOf: url)
-            let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
-            musicCtrl.music = SongInfo(song: data, url: url)
-            navigationController?.pushViewController(musicCtrl, animated: true)
-        } catch  {
-            print(error)
-        }
         
-        
-        
+        let url = files[indexPath.row]
+        let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
+        musicCtrl.music = SongInfo(song: url)
+        navigationController?.pushViewController(musicCtrl, animated: true)
     }
     
     

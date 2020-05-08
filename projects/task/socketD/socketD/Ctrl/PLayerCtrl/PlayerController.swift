@@ -8,14 +8,12 @@ import MediaPlayer
 
 
 struct SongInfo {
-    let music: Data?
     let songName: String?
-    let url: URL?
+    let src: URL?
     
-    init(song data: Data? = nil, url src: URL? = nil){
-        music = data
-        songName = src?.lastPathComponent
-        url = src
+    init(song url: URL? = nil){
+        songName = url?.lastPathComponent
+        src = url
     }
 }
 
@@ -23,11 +21,11 @@ struct SongInfo {
 
 class PlayerController: UIViewController{
 
-    var audioPlayer: AVAudioPlayer!
+    var audioPlayer: AVAudioPlayer?
     
     var audioList:NSArray!
     var currentAudioIndex = 0
-    var timer: Timer!
+    var timer: Timer?
 
 
     var shuffleState = false
@@ -85,7 +83,7 @@ class PlayerController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         stopTimer()
-        audioPlayer.stop()
+        audioPlayer?.stop()
         
     }
     
@@ -171,7 +169,7 @@ class PlayerController: UIViewController{
     // Prepare audio for playing
     func prepareAudio(){
     
-        guard let data = music.music else {
+        guard let src = music.src else{
             alertSongExsit()
             return
         }
@@ -180,20 +178,17 @@ class PlayerController: UIViewController{
         UIApplication.shared.beginReceivingRemoteControlEvents()
      
         do {
+            let data = try Data(contentsOf: src)
             audioPlayer = try AVAudioPlayer(data: data)
-            audioPlayer.delegate = self
-        
-            audioPlayer.prepareToPlay()
+            audioPlayer?.delegate = self
+            audioPlayer?.volume = 1
+            audioPlayer?.prepareToPlay()
             
         } catch{
             print(error)
         }
         
         
-        
-        guard let src = music.url else{
-            return
-        }
         let audioAsset = AVURLAsset(url: src, options: nil)
         let d_k = "duration"
         audioAsset.loadValuesAsynchronously(forKeys: [d_k]) {
@@ -228,7 +223,7 @@ class PlayerController: UIViewController{
         guard audioPlayer != nil else {
             return
         }
-        audioPlayer.play()
+        audioPlayer?.play()
         startTimer()
      
         saveCurrentTrackNumber()
@@ -239,7 +234,7 @@ class PlayerController: UIViewController{
     
     
     func playNextAudio(){
-        guard audioPlayer != nil else{
+        guard let p = audioPlayer else{
             alertSongExsit()
             return
         }
@@ -250,9 +245,7 @@ class PlayerController: UIViewController{
             return
         }
         
-     
-        
-        if audioPlayer.isPlaying{
+        if p.isPlaying{
             prepareAudio()
             playAudio()
         }else{
@@ -266,7 +259,7 @@ class PlayerController: UIViewController{
     
     
     func playPreviousAudio(){
-        guard audioPlayer != nil else{
+        guard let p = audioPlayer else{
             alertSongExsit()
             return
         }
@@ -277,7 +270,7 @@ class PlayerController: UIViewController{
         }
         
         
-        if audioPlayer.isPlaying{
+        if p.isPlaying{
             prepareAudio()
             playAudio()
         }else{
@@ -288,12 +281,12 @@ class PlayerController: UIViewController{
     
     
     func stopAudiplayer(){
-        audioPlayer.stop();
+        audioPlayer?.stop()
         
     }
     
     func pauseAudioPlayer(){
-        audioPlayer.pause()
+        audioPlayer?.pause()
         
     }
     
@@ -303,24 +296,24 @@ class PlayerController: UIViewController{
     func startTimer(){
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(PlayerController.update(_:)), userInfo: nil,repeats: true)
-            timer.fire()
+            timer?.fire()
         }
     }
     
     func stopTimer(){
-        if timer != nil{
-            timer.invalidate()
-            timer = nil
-        }
+        
+        timer?.invalidate()
+        timer = nil
+    
     }
     
     
     @objc func update(_ timer: Timer){
-        if !audioPlayer.isPlaying{
+        guard let p = audioPlayer, p.isPlaying else {
             return
         }
-        progressTimerLabel.text = audioPlayer.currentTime.formattedTime
-        playerProgressSlider.value = Float(audioPlayer.currentTime)
+        progressTimerLabel.text = p.currentTime.formattedTime
+        playerProgressSlider.value = Float(p.currentTime)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: AudioTags.playerProgress.rawValue)
 
         
@@ -337,21 +330,21 @@ class PlayerController: UIViewController{
         let playerProgressSliderValue =  UserDefaults.standard.float(forKey: AudioTags.playerProgress.rawValue)
         if playerProgressSliderValue == 0 {
             playerProgressSlider.value = 0.0
-            audioPlayer.currentTime = 0.0
+            audioPlayer?.currentTime = 0.0
             progressTimerLabel.text = "00:00:00"
             
             
         }else{
-            guard audioPlayer != nil else{
+            guard let p = audioPlayer else{
                 alertSongExsit()
                 return
             }
             playerProgressSlider.value  = playerProgressSliderValue
             
-            audioPlayer.currentTime = TimeInterval(playerProgressSliderValue)
+            audioPlayer?.currentTime = TimeInterval(playerProgressSliderValue)
             
-            progressTimerLabel.text = audioPlayer.currentTime.formattedTime
-            playerProgressSlider.value = Float(audioPlayer.currentTime)
+            progressTimerLabel.text = p.currentTime.formattedTime
+            playerProgressSlider.value = Float(p.currentTime)
         }
     }
 
@@ -359,7 +352,7 @@ class PlayerController: UIViewController{
     //MARK:- Target Action
     
     @IBAction func play(_ sender : AnyObject) {
-        guard audioPlayer != nil else{
+        guard let p = audioPlayer else{
             alertSongExsit()
             return
         }
@@ -368,7 +361,7 @@ class PlayerController: UIViewController{
         }
         let play = UIImage(named: "play")
         let pause = UIImage(named: "pause")
-        if audioPlayer.isPlaying{
+        if p.isPlaying{
             pauseAudioPlayer()
             playButton.setImage(play , for: UIControl.State.normal)
         }else{
@@ -393,11 +386,11 @@ class PlayerController: UIViewController{
     
     
     @IBAction func progressSliderTouchedDown(_ sender: UISlider) {
-        guard audioPlayer != nil else{
+        guard let p = audioPlayer else{
             alertSongExsit()
             return
         }
-        if audioPlayer.isPlaying{
+        if p.isPlaying{
             pauseAudioPlayer()
         }
         stopTimer()
@@ -421,15 +414,11 @@ class PlayerController: UIViewController{
     
     // 这个控制，非常的流畅，漂亮
     @IBAction func progressSliderTouchedUp(_ sender: UISlider) {
-        guard audioPlayer != nil else{
-            alertSongExsit()
-            return
-        }
-        
-        audioPlayer.currentTime = TimeInterval(sender.value)
+
+        audioPlayer?.currentTime = TimeInterval(sender.value)
        
-        if audioPlayer.isPlaying == false{
-            audioPlayer.play()
+        if audioPlayer?.isPlaying == false{
+            audioPlayer?.play()
         }
         startTimer()
     }
