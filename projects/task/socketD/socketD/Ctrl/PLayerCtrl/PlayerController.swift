@@ -188,30 +188,36 @@ class PlayerController: UIViewController{
             print(error)
         }
         
-        
-        let audioAsset = AVURLAsset(url: src, options: nil)
-        let d_k = "duration"
-        audioAsset.loadValuesAsynchronously(forKeys: [d_k]) {
-            var error: NSError? = nil
-            let status = audioAsset.statusOfValue(forKey: d_k, error: &error)
-            switch status {
-            case .loaded: // Sucessfully loaded. Continue processing.
-                let duration = audioAsset.duration
-                let durationInSec = CMTimeGetSeconds(duration)
-                DispatchQueue.main.async {
-                    self.playerProgressSlider.maximumValue = Float(durationInSec)
-                    self.totalLengthOfAudioLabel.text = Double(durationInSec).formattedTime
+        if src.lastPathComponent.contains("mp3"){
+            let audioAsset = AVURLAsset(url: src, options: nil)
+            let d_k = "duration"
+            audioAsset.loadValuesAsynchronously(forKeys: [d_k]) {
+                var error: NSError? = nil
+                let status = audioAsset.statusOfValue(forKey: d_k, error: &error)
+                switch status {
+                case .loaded: // Sucessfully loaded. Continue processing.
+                    let duration = audioAsset.duration
+                    let durationInSec = CMTimeGetSeconds(duration)
+                    DispatchQueue.main.async {
+                        self.playerProgressSlider.maximumValue = Float(durationInSec)
+                        self.totalLengthOfAudioLabel.text = Double(durationInSec).formattedTime
+                    }
+                    break
+                case .failed: break // Handle error
+                case .cancelled: break // Terminate processing
+                default: break // Handle all other cases
                 }
-                break
-            case .failed: break // Handle error
-            case .cancelled: break // Terminate processing
-            default: break // Handle all other cases
             }
+        }
+        else{
+            let t = audioPlayer?.duration ?? 0
+            playerProgressSlider.maximumValue = Float(t)
+            totalLengthOfAudioLabel.text = t.formattedTime
         }
         
         playerProgressSlider.minimumValue = 0.0
         playerProgressSlider.value = 0.0
-        progressTimerLabel.text = "00:00"
+        progressTimerLabel.text = "00: 00: 00"
     }
     
     

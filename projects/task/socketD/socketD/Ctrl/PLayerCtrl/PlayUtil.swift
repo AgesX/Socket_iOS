@@ -57,14 +57,14 @@ extension TimeInterval{
     //This returns song length
     
     var formattedTime: String{
-        // let hour   = abs(Int(duration)/3600)
+         let hour   = abs(Int(self)/3600)
          let minute = abs(Int((self/60).truncatingRemainder(dividingBy: 60)))
          let second = abs(Int(self.truncatingRemainder(dividingBy: 60)))
          
-        // var hour = hour > 9 ? "\(hour_)" : "0\(hour_)"
+         let h = hour > 9 ? "\(hour)" : "0\(hour)"
          let min = minute > 9 ? "\(minute)" : "0\(minute)"
          let sec = second > 9 ? "\(second)" : "0\(second)"
-         return "\(min) : \(sec)"
+         return "\(h) : \(min) : \(sec)"
         
     }
     
