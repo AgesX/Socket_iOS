@@ -40,8 +40,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var verifyLabel: UILabel!
     
-    var tempData: NSMutableData?
-    
+    var buffers = [String: NSMutableData]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -271,16 +270,17 @@ extension ViewController: TaskManagerProxy{
         guard let title = name, let buffer = data else {
             return
         }
-        if tempData == nil{
-            tempData = NSMutableData(data: buffer)
+        
+        if buffers[title] == nil{
+            buffers[title] = NSMutableData(data: buffer)
         }
         else{
-            tempData?.append(buffer)
+            buffers[title]?.append(buffer)
         }
         
-        if theEnd, let file = tempData{
+        if theEnd, let file = buffers[title]{
             file.write(toFile: "\(URL.dir)/\(title)", atomically: true)
-            tempData = nil
+            buffers[title] = nil
             // 及时清除
         }
 
