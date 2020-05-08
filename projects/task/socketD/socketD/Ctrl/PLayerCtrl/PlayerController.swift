@@ -205,7 +205,7 @@ class PlayerController: UIViewController{
                 let durationInSec = CMTimeGetSeconds(duration)
                 DispatchQueue.main.async {
                     self.playerProgressSlider.maximumValue = Float(durationInSec)
-                    self.totalLengthOfAudioLabel.text = self.calculateTime(from: Double(durationInSec))
+                    self.totalLengthOfAudioLabel.text = Double(durationInSec).formattedTime
                 }
                 break
             case .failed: break // Handle error
@@ -308,8 +308,10 @@ class PlayerController: UIViewController{
     }
     
     func stopTimer(){
-        timer.invalidate()
-        timer = nil
+        if timer != nil{
+            timer.invalidate()
+            timer = nil
+        }
     }
     
     
@@ -317,8 +319,8 @@ class PlayerController: UIViewController{
         if !audioPlayer.isPlaying{
             return
         }
-        progressTimerLabel.text = calculateTime(from: audioPlayer.currentTime)
-        playerProgressSlider.value = CFloat(audioPlayer.currentTime)
+        progressTimerLabel.text = audioPlayer.currentTime.formattedTime
+        playerProgressSlider.value = Float(audioPlayer.currentTime)
         UserDefaults.standard.set(playerProgressSlider.value , forKey: AudioTags.playerProgress.rawValue)
 
         
@@ -348,25 +350,12 @@ class PlayerController: UIViewController{
             
             audioPlayer.currentTime = TimeInterval(playerProgressSliderValue)
             
-            progressTimerLabel.text  = calculateTime(from: audioPlayer.currentTime)
-            playerProgressSlider.value = CFloat(audioPlayer.currentTime)
+            progressTimerLabel.text = audioPlayer.currentTime.formattedTime
+            playerProgressSlider.value = Float(audioPlayer.currentTime)
         }
     }
 
     
-    
-    //This returns song length
-    func calculateTime(from duration:TimeInterval) -> String{
-       // let hour_   = abs(Int(duration)/3600)
-        let minute_ = abs(Int((duration/60).truncatingRemainder(dividingBy: 60)))
-        let second_ = abs(Int(duration.truncatingRemainder(dividingBy: 60)))
-        
-       // var hour = hour_ > 9 ? "\(hour_)" : "0\(hour_)"
-        let minute = minute_ > 9 ? "\(minute_)" : "0\(minute_)"
-        let second = second_ > 9 ? "\(second_)" : "0\(second_)"
-        return "\(minute) : \(second)"
-    }
-
     //MARK:- Target Action
     
     @IBAction func play(_ sender : AnyObject) {
@@ -402,19 +391,50 @@ class PlayerController: UIViewController{
     
     
     
-    @IBAction func changeAudioLocationSlider(_ sender : UISlider) {
+    
+    @IBAction func progressSliderTouchedDown(_ sender: UISlider) {
         guard audioPlayer != nil else{
             alertSongExsit()
             return
         }
-        audioPlayer.pause()
-        audioPlayer.currentTime = TimeInterval(sender.value)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.audioPlayer.play()
+        if audioPlayer.isPlaying{
+            pauseAudioPlayer()
         }
-       
-        
+        stopTimer()
     }
+    
+    
+    
+    
+    
+    @IBAction func progressSliderValueChanged(_ sender: UISlider) {
+        guard audioPlayer != nil else{
+            alertSongExsit()
+            return
+        }
+        
+        progressTimerLabel.text = TimeInterval(sender.value).formattedTime
+    }
+    
+    
+    
+    
+    // 这个控制，非常的流畅，漂亮
+    @IBAction func progressSliderTouchedUp(_ sender: UISlider) {
+        guard audioPlayer != nil else{
+            alertSongExsit()
+            return
+        }
+        
+        audioPlayer.currentTime = TimeInterval(sender.value)
+       
+        if audioPlayer.isPlaying == false{
+            audioPlayer.play()
+        }
+        startTimer()
+    }
+    
+    
     
   
     

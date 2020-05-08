@@ -82,7 +82,13 @@
                         <constraint firstAttribute="height" constant="30" id="9Hq-J0-Mkz"/>
                     </constraints>
                     <connections>
-                        <action selector="changeAudioLocationSlider:" destination="-1" eventType="valueChanged" id="Lkp-8g-o14"/>
+                        <action selector="progressSliderTouchedDown:" destination="-1" eventType="touchDown" id="OZO-gN-OzX"/>
+                        <action selector="progressSliderTouchedDown:" destination="-1" eventType="touchDragEnter" id="agj-iD-P9E"/>
+                        <action selector="progressSliderTouchedDown:" destination="-1" eventType="touchDragInside" id="hs0-aa-cXs"/>
+                        <action selector="progressSliderTouchedUp:" destination="-1" eventType="touchCancel" id="Qxz-lP-6LL"/>
+                        <action selector="progressSliderTouchedUp:" destination="-1" eventType="touchUpOutside" id="Xat-NN-WLH"/>
+                        <action selector="progressSliderTouchedUp:" destination="-1" eventType="touchUpInside" id="ZSd-Q6-FNw"/>
+                        <action selector="progressSliderValueChanged:" destination="-1" eventType="valueChanged" id="8xt-n5-6x6"/>
                     </connections>
                 </slider>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="05:30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aml-bA-EdN">
@@ -98,7 +104,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THRILLER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EMB-AX-qVZ" userLabel="Album Name">
-                    <rect key="frame" x="26" y="549.5" width="144" height="45"/>
+                    <rect key="frame" x="26" y="531.5" width="144" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="dq2-b8-fnR"/>
                     </constraints>
@@ -107,7 +113,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMt-qA-9h9">
-                    <rect key="frame" x="303" y="596" width="29" height="23"/>
+                    <rect key="frame" x="287" y="583" width="29" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="YEt-4A-HRo"/>
                         <constraint firstAttribute="width" constant="29" id="uAt-LA-8rk"/>
@@ -119,7 +125,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYS-Cs-DOx">
-                    <rect key="frame" x="346" y="595.5" width="24" height="24"/>
+                    <rect key="frame" x="346" y="582.5" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="XCF-HB-MKW"/>
                         <constraint firstAttribute="width" constant="24" id="y5j-zF-i6u"/>
@@ -142,10 +148,10 @@
                 <constraint firstItem="5mn-np-yAF" firstAttribute="top" secondItem="84i-4n-gty" secondAttribute="top" id="DQl-c5-6R0"/>
                 <constraint firstItem="LYS-Cs-DOx" firstAttribute="trailing" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="-7" id="Mhp-xD-LNO"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="leading" secondItem="Akr-El-KqJ" secondAttribute="trailing" constant="26" id="NjP-hd-KEX"/>
-                <constraint firstItem="LYS-Cs-DOx" firstAttribute="leading" secondItem="bMt-qA-9h9" secondAttribute="trailing" constant="14" id="O5e-3b-j1P"/>
-                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="EMB-AX-qVZ" secondAttribute="bottom" constant="22" id="OSF-uL-loT"/>
+                <constraint firstItem="LYS-Cs-DOx" firstAttribute="leading" secondItem="bMt-qA-9h9" secondAttribute="trailing" constant="30" id="O5e-3b-j1P"/>
+                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="EMB-AX-qVZ" secondAttribute="bottom" constant="40" id="OSF-uL-loT"/>
                 <constraint firstItem="aml-bA-EdN" firstAttribute="top" secondItem="mAF-HR-n1W" secondAttribute="top" id="bo7-PB-1BT"/>
-                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="LYS-Cs-DOx" secondAttribute="bottom" constant="-3" id="cEX-To-QWc"/>
+                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="LYS-Cs-DOx" secondAttribute="bottom" constant="10" id="cEX-To-QWc"/>
                 <constraint firstItem="bMt-qA-9h9" firstAttribute="centerY" secondItem="LYS-Cs-DOx" secondAttribute="centerY" id="dkV-oB-aC4"/>
                 <constraint firstItem="Akr-El-KqJ" firstAttribute="leading" secondItem="84i-4n-gty" secondAttribute="trailing" constant="29" id="dpP-BI-4rU"/>
                 <constraint firstAttribute="trailingMargin" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="17" id="ewQ-jn-HW4"/>
