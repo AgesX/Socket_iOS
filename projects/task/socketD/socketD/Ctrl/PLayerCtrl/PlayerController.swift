@@ -61,6 +61,11 @@ class PlayerController: UIViewController{
         previousButton.isHidden = true
         nextButton.isHidden = true
         
+        shuffleButton.isHidden = true
+        repeatButton.isHidden = true
+        
+        
+        
         //this sets last listened trach number as current
         retrieveSavedTrackNumber()
         prepareAudio()
