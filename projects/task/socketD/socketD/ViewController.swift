@@ -280,8 +280,7 @@ extension ViewController: TaskManagerProxy{
         
         if theEnd, let file = buffers[title]{
             file.write(toFile: "\(URL.dir)/\(title)", atomically: true)
-            buffers[title] = nil
-            // 及时清除
+            buffers.removeValue(forKey: title)
         }
 
         
