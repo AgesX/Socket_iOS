@@ -67,7 +67,6 @@ class PlayerController: UIViewController{
         
         
         //this sets last listened trach number as current
-        retrieveSavedTrackNumber()
         prepareAudio()
       
         setRepeatAndShuffle()
@@ -145,16 +144,6 @@ class PlayerController: UIViewController{
 
     
 
-
-    
-    func saveCurrentTrackNumber(){
-        UserDefaults.standard.set(currentAudioIndex, forKey: AudioTags.currentIndex.rawValue)
-   
-        
-    }
-    
-    
-
     func alertSongExsit(){
         let alert = UIAlertController(title: "Music Error", message: "No songs Exsit", preferredStyle: UIAlertController.Style.alert)
         let action = UIAlertAction(title: "Cancel it", style: UIAlertAction.Style.cancel) { (action) in            }
@@ -162,13 +151,6 @@ class PlayerController: UIViewController{
         present(alert, animated: true, completion: {})
     }
     
-    
-    
-    func retrieveSavedTrackNumber(){
-        
-        currentAudioIndex = UserDefaults.standard.intVal(forKey: AudioTags.currentIndex.rawValue)
-    }
-
 
     
     // Prepare audio for playing
@@ -187,6 +169,7 @@ class PlayerController: UIViewController{
             audioPlayer = try AVAudioPlayer(data: data)
             audioPlayer?.delegate = self
             audioPlayer?.volume = 1
+            audioPlayer?.numberOfLoops = 5
             audioPlayer?.prepareToPlay()
             
         } catch{
@@ -236,8 +219,6 @@ class PlayerController: UIViewController{
         }
         audioPlayer?.play()
         startTimer()
-     
-        saveCurrentTrackNumber()
         showMediaInfo()
     }
     
@@ -325,7 +306,9 @@ class PlayerController: UIViewController{
         }
         progressTimerLabel.text = p.currentTime.formattedTime
         playerProgressSlider.value = Float(p.currentTime)
-        UserDefaults.standard.set(playerProgressSlider.value , forKey: AudioTags.playerProgress.rawValue)
+        if var song = music.songName{
+            song.progress = playerProgressSlider.value
+        }
 
         
     }
@@ -338,7 +321,10 @@ class PlayerController: UIViewController{
         guard audioPlayer != nil else {
             return
         }
-        let playerProgressSliderValue =  UserDefaults.standard.float(forKey: AudioTags.playerProgress.rawValue)
+        var playerProgressSliderValue: Float = 0
+        if let song = music.songName{
+            playerProgressSliderValue = song.progress
+        }
         if playerProgressSliderValue == 0 {
             playerProgressSlider.value = 0.0
             audioPlayer?.currentTime = 0.0
@@ -430,6 +416,7 @@ class PlayerController: UIViewController{
        
         if audioPlayer?.isPlaying == false{
             audioPlayer?.play()
+            playButton.setImage( UIImage(named: "pause"), for: UIControl.State.normal)
         }
         startTimer()
     }

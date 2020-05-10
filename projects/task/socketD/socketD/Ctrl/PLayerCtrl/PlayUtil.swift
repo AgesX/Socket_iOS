@@ -23,35 +23,6 @@ extension UIImageView {
 
 
 
-enum AudioTags: String{
-    
-    
-    case currentIndex = "currentAudioIndex"
-    
-    case playerProgress = "playerProgressSliderValue"
-    
-}
-
-
-
-
-extension UserDefaults{
-    
-    
-    func intVal(forKey defaultName: String)->Int{
-        if let val = UserDefaults.standard.object(forKey: AudioTags.currentIndex.rawValue) as? Int{
-            return val
-        }else{
-            return 0
-        }
-    }
-    
-    
-}
-
-
-
-
 
 extension TimeInterval{
     //This returns song length

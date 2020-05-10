@@ -37,3 +37,47 @@ struct UserSetting {
 
 
 }
+
+
+struct PlayerSetting {
+
+    
+    let currentIndex = "currentAudioIndex"
+    
+    let playerProgress = "playerProgressSliderValue"
+    
+    static var std = PlayerSetting()
+
+    var theOne: Int{
+        get {
+            if let year = UserDefaults.standard.value(forKey: currentIndex) as? Int{
+                return year
+            }
+            return 0
+        }
+        set(newVal){
+            UserDefaults.standard.set(newVal, forKey: currentIndex)
+        }
+    }
+
+}
+
+
+
+
+
+
+extension String{
+
+
+    var progress: Float{
+        get {
+            UserDefaults.standard.float(forKey: self)
+        }
+        set(newVal){
+            UserDefaults.standard.set(newVal, forKey: self)
+        }
+    }
+
+}
+
