@@ -55,3 +55,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 //  How to efficiently write large files to disk on background thread (Swift)
+// 可用，看实时内存，理解很清晰
