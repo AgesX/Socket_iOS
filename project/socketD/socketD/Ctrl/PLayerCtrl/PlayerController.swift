@@ -57,7 +57,7 @@ class PlayerController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        becomeFirstResponder()
         previousButton.isHidden = true
         nextButton.isHidden = true
         
@@ -78,7 +78,7 @@ class PlayerController: UIViewController{
             })
         }
         
-        songNameLabel.text = music.songName
+        songNameLabel.text = music.songName?.fileName
 
 
     }
@@ -96,10 +96,15 @@ class PlayerController: UIViewController{
     //MARK:- Lockscreen Media Control
       
       // This shows media info on lock screen - used currently and perform controls
-      func showMediaInfo(){
+    func showMediaInfo(duration total: TimeInterval, current time: TimeInterval){
           
           if let songName = music.songName{
-              MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyTitle : songName]
+            let info: [String : Any]? = [MPMediaItemPropertyTitle : songName.fileName,
+                                         MPMediaItemPropertyAlbumTitle: "邓",
+                                         MPMediaItemPropertyPlaybackDuration: total,
+                                         MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
+                                         MPNowPlayingInfoPropertyPlaybackRate: 1]
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = info
           }
           
       }
@@ -219,7 +224,10 @@ class PlayerController: UIViewController{
         }
         audioPlayer?.play()
         startTimer()
-        showMediaInfo()
+        guard let duration = audioPlayer?.duration, let current = audioPlayer?.currentTime else {
+            return
+        }
+        showMediaInfo(duration: duration, current: current)
     }
     
     
@@ -356,14 +364,12 @@ class PlayerController: UIViewController{
         if shuffleState == true {
             shuffleArray.removeAll()
         }
-        let play = UIImage(named: "play")
-        let pause = UIImage(named: "pause")
         if p.isPlaying{
             pauseAudioPlayer()
-            playButton.setImage(play , for: UIControl.State.normal)
+            playButton.setImage(UIImage(named: "play") , for: UIControl.State.normal)
         }else{
             playAudio()
-            playButton.setImage( pause, for: UIControl.State.normal)
+            playButton.setImage( UIImage(named: "pause"), for: UIControl.State.normal)
         }
     }
     
@@ -456,6 +462,10 @@ class PlayerController: UIViewController{
         
     }
     
+    
+    override var canBecomeFirstResponder: Bool{
+        return true
+    }
     
 }
 

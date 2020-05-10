@@ -62,3 +62,14 @@ extension String{
 }
 
 
+
+
+extension String {
+    var fileName: String {
+        URL(fileURLWithPath: self).deletingPathExtension().lastPathComponent
+    }
+
+    var fileExtension: String{
+        URL(fileURLWithPath: self).pathExtension
+    }
+}
