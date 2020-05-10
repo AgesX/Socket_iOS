@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var verifyLabel: UILabel!
     
-    var buffers = [String: NSMutableData]()
+    var fileHandlers = [String: FileHandle]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +56,11 @@ class ViewController: UIViewController {
         
         
         title = "Socket Play"
+        
+        var myStream = MyStreamer()
+        myStream.write("First of all")
+        myStream.write("Then after")
+        myStream.write("And, finally")
     }
 
 
@@ -270,19 +275,23 @@ extension ViewController: TaskManagerProxy{
         guard let title = name, let buffer = data else {
             return
         }
+        if fileHandlers[title] == nil{
+            fileHandlers[title] = FileHandle(forWritingAtPath:
+                "\(URL.dir)/\(title)")
+            print("\(URL.dir)/\(title)")
+            print("新建  ", fileHandlers[title])
+        }
+        do {
+            try fileHandlers[title]?.seekToEnd()
+            fileHandlers[title]?.write(buffer)
+            if theEnd{
+                print("至于结尾")
+                try fileHandlers[title]?.close()
+                fileHandlers.removeValue(forKey: title)
+            }
+        } catch { print(error) }
         
-        if buffers[title] == nil{
-            buffers[title] = NSMutableData(data: buffer)
-        }
-        else{
-            buffers[title]?.append(buffer)
-        }
-        
-        if theEnd, let file = buffers[title]{
-            file.write(toFile: "\(URL.dir)/\(title)", atomically: true)
-            buffers.removeValue(forKey: title)
-        }
-
+     
         
     }
     

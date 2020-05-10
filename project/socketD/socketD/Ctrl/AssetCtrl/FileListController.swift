@@ -58,7 +58,7 @@ class FileListController: UITableViewController {
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
                 for url in paths{
                     let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
-                    let musicExtern = ["mp3", "m4a"]
+                    let musicExtern = ["mp3", "m4a", "txt"]
                     if isDirectory == false, musicExtern.contains(url.pathExtension){
                         files.append(url)
                     }
@@ -92,8 +92,15 @@ class FileListController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let url = files[indexPath.row]
+        guard url.absoluteString.contains("txt") == false else {
+            //reading
+            do {
+                let text = try String(contentsOfFile: url.file, encoding: String.Encoding.utf8)
+                print(text)
+            }catch { print(error) }
+            return
+        }
         let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
         musicCtrl.music = SongInfo(song: url)
         navigationController?.pushViewController(musicCtrl, animated: true)

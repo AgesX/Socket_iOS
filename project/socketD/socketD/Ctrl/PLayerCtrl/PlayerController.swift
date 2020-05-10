@@ -79,7 +79,7 @@ class PlayerController: UIViewController{
         }
         
         songNameLabel.text = music.songName?.fileName
-
+        play(self)
 
     }
     
