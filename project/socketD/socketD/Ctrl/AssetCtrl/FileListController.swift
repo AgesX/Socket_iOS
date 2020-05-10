@@ -96,7 +96,7 @@ class FileListController: UITableViewController {
         guard url.absoluteString.contains("txt") == false else {
             //reading
             do {
-                let text = try String(contentsOfFile: url.file, encoding: String.Encoding.utf8)
+                let text = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
                 print(text)
             }catch { print(error) }
             return
@@ -113,8 +113,8 @@ class FileListController: UITableViewController {
         let url = files[indexPath.row]
         let contextItem = UIContextualAction(style: .destructive, title: "删文件") {  (contextualAction, view, boolValue) in
             do {
-                if FileManager.default.fileExists(atPath: url.file){
-                    try FileManager.default.removeItem(atPath: url.file)
+                if FileManager.default.fileExists(atPath: url.path){
+                    try FileManager.default.removeItem(atPath: url.path)
                 }
                 self.refreshData()
             } catch {

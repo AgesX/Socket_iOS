@@ -47,11 +47,7 @@ extension URL{
         return NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
     }
         
-        
-    var file: String{
-        absoluteString.replacingOccurrences(of: "file://", with: "")
-        // 就是 path
-    }
+    
 }
 
 
