@@ -79,6 +79,7 @@ class PlayerController: UIViewController{
         }
         
         songNameLabel.text = music.songName?.fileName
+        title = music.songName?.fileName
         play(self)
 
     }
