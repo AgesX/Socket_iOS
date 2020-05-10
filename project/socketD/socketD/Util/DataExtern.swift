@@ -50,6 +50,7 @@ extension URL{
         
     var file: String{
         absoluteString.replacingOccurrences(of: "file://", with: "")
+        // 就是 path
     }
 }
 
