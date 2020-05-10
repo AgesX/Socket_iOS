@@ -57,10 +57,6 @@ class ViewController: UIViewController {
         
         title = "Socket Play"
         
-        var myStream = MyStreamer()
-        myStream.write("First of all")
-        myStream.write("Then after")
-        myStream.write("And, finally")
     }
 
 
@@ -277,12 +273,13 @@ extension ViewController: TaskManagerProxy{
         }
         if fileHandlers[title] == nil{
             fileHandlers[title] = FileHandle(forWritingAtPath:
-                "\(URL.dir)/\(title)")
-            print("\(URL.dir)/\(title)")
-            print("新建  ", fileHandlers[title])
+                title.write)
+            print(title.write)
+            print("新建  ", fileHandlers[title]?.description ?? "")
         }
+ 
         do {
-            try fileHandlers[title]?.seekToEnd()
+            fileHandlers[title]?.seekToEndOfFile()
             fileHandlers[title]?.write(buffer)
             if theEnd{
                 print("至于结尾")
@@ -290,8 +287,6 @@ extension ViewController: TaskManagerProxy{
                 fileHandlers.removeValue(forKey: title)
             }
         } catch { print(error) }
-        
-     
         
     }
     
