@@ -29,21 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch _ { }
         
-        /*
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(AVAudioSession.Category.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
-            
-            audioSession.requestRecordPermission({ (isGranted: Bool) in  })
-            
-            try AVAudioSession.sharedInstance().setActive(true, options: AVAudioSession.SetActiveOptions.notifyOthersOnDeactivation)
-            
-        } catch  {
-            
-        }
- 
- 
-        */
+   
         return true
     }
 

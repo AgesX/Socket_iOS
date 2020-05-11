@@ -64,16 +64,6 @@ class PlayerController: UIViewController{
         shuffleButton.isHidden = true
         repeatButton.isHidden = true
         
-        
-//        do {
-//            //keep alive audio at background
-//            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-//        } catch _ { }
-//        
-//        do {
-//            try AVAudioSession.sharedInstance().setActive(true)
-//        } catch _ { }
-        
         //this sets last listened trach number as current
         prepareAudio()
       
