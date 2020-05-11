@@ -65,6 +65,14 @@ class PlayerController: UIViewController{
         repeatButton.isHidden = true
         
         
+//        do {
+//            //keep alive audio at background
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+//        } catch _ { }
+//        
+//        do {
+//            try AVAudioSession.sharedInstance().setActive(true)
+//        } catch _ { }
         
         //this sets last listened trach number as current
         prepareAudio()
@@ -101,18 +109,15 @@ class PlayerController: UIViewController{
           
           if let songName = music.songName{
             let info: [String : Any]? = [MPMediaItemPropertyTitle : songName.fileName,
-                                         MPMediaItemPropertyAlbumTitle: "邓",
-                                         MPMediaItemPropertyPlaybackDuration: total,
-                                         MPNowPlayingInfoPropertyElapsedPlaybackTime: time,
-                                         MPNowPlayingInfoPropertyPlaybackRate: 1]
+                                         MPMediaItemPropertyArtist: "邓"]
             MPNowPlayingInfoCenter.default().nowPlayingInfo = info
           }
           
       }
       
       override func remoteControlReceived(with event: UIEvent?) {
-          if event!.type == UIEvent.EventType.remoteControl{
-              switch event!.subtype{
+          if let e = event, e.type == UIEvent.EventType.remoteControl{
+              switch e.subtype{
               case UIEventSubtype.remoteControlPlay:
                   play(self)
               case UIEventSubtype.remoteControlPause:
@@ -167,6 +172,7 @@ class PlayerController: UIViewController{
             return
         }
 
+        
         
         UIApplication.shared.beginReceivingRemoteControlEvents()
      
@@ -377,12 +383,13 @@ class PlayerController: UIViewController{
     
     
     @IBAction func next(_ sender : AnyObject) {
-        playNextAudio()
+        
+        //  playNextAudio()
     }
     
     
     @IBAction func previous(_ sender : AnyObject) {
-        playPreviousAudio()
+        //  playPreviousAudio()
     }
     
     

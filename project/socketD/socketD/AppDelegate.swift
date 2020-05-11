@@ -19,19 +19,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+     
+        do {
+            //keep alive audio at background
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+        } catch _ { }
+
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch _ { }
         
+        /*
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(AVAudioSession.Category.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
             
-            audioSession.requestRecordPermission({ (isGranted: Bool) in
-            })
+            audioSession.requestRecordPermission({ (isGranted: Bool) in  })
             
             try AVAudioSession.sharedInstance().setActive(true, options: AVAudioSession.SetActiveOptions.notifyOthersOnDeactivation)
             
         } catch  {
             
         }
+ 
+ 
+        */
         return true
     }
 
