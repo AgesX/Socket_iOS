@@ -99,7 +99,9 @@ class PlayerController: UIViewController{
           
           if let songName = music.songName{
             let info: [String : Any]? = [MPMediaItemPropertyTitle : songName.fileName,
-                                         MPMediaItemPropertyArtist: "邓"]
+                                         MPMediaItemPropertyArtist: "邓",
+                                         MPMediaItemPropertyPlaybackDuration: total,
+                                         MPNowPlayingInfoPropertyElapsedPlaybackTime: time]
             MPNowPlayingInfoCenter.default().nowPlayingInfo = info
           }
           
