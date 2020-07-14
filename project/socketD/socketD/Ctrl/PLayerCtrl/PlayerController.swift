@@ -114,7 +114,7 @@ class PlayerController: UIViewController{
         stopTimer()
         stopTimerBack()
         audioPlayer?.stop()
-        
+        playButton(isPlay: false)
     }
     
     
@@ -209,8 +209,8 @@ class PlayerController: UIViewController{
             audioPlayer?.delegate = self
             audioPlayer?.volume = 1
             audioPlayer?.prepareToPlay()
-            audioPlayer?.enableRate = true
-            audioPlayer?.rate = 2
+           // audioPlayer?.enableRate = true
+           // audioPlayer?.rate = 2
             
         } catch{
             print(error)
@@ -405,10 +405,10 @@ class PlayerController: UIViewController{
         }
         if p.isPlaying{
             pauseAudioPlayer()
-            playButton.setImage(UIImage(named: "play") , for: UIControl.State.normal)
+            playButton(isPlay: false)
         }else{
             playAudio()
-            playButton.setImage( UIImage(named: "pause"), for: UIControl.State.normal)
+            playButton(isPlay: true)
         }
     }
     
@@ -462,7 +462,7 @@ class PlayerController: UIViewController{
        
         if audioPlayer?.isPlaying == false{
             audioPlayer?.play()
-            playButton.setImage( UIImage(named: "pause"), for: UIControl.State.normal)
+            playButton(isPlay: true)
         }
         startTimer()
     }
@@ -532,7 +532,7 @@ extension PlayerController: AVAudioPlayerDelegate{
             
             if shuffleState == false && repeatState == false {
                 // do nothing
-                playButton.setImage( UIImage(named: "play"), for: UIControl.State.normal)
+                playButton(isPlay: false)
                 return
                 
             } else if shuffleState == false && repeatState == true {
@@ -545,7 +545,7 @@ extension PlayerController: AVAudioPlayerDelegate{
                 //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
                 shuffleArray.append(currentAudioIndex)
                 if shuffleArray.count >= audioList.count {
-                    playButton.setImage( UIImage(named: "play"), for: UIControl.State.normal)
+                    playButton(isPlay: false)
                     return
                     
                 }
@@ -607,8 +607,10 @@ extension PlayerController: BackPlayDelegate{
     func learn(byRepeat material: MusicItem?) {
         guard let music = material else {
             audioPlayer?.pause()
+            playButton(isPlay: false)
             return
         }
+        playButton(isPlay: true)
         backLearn = music
         playAudioTwo(begin: music.start)
         
@@ -655,5 +657,14 @@ extension PlayerController: BackPlayDelegate{
         timerBack?.invalidate()
         timerBack = nil
     
+    }
+    
+    func playButton(isPlay toPlay: Bool){
+        if toPlay{
+            playButton.setImage(UIImage(named: "pause") , for: UIControl.State.normal)
+        }
+        else{
+            playButton.setImage(UIImage(named: "play") , for: UIControl.State.normal)
+        }
     }
 }
