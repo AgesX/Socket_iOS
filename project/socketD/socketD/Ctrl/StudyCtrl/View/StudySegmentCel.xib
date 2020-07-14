@@ -10,14 +10,33 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StudySegmentCel" id="gTV-IL-0wX" customClass="StudySegmentCel" customModule="长连玩具" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="361" height="70"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="361" height="70"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIr-Fp-PTN">
+                        <rect key="frame" x="0.0" y="0.0" width="361" height="70"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
             </view>
+            <constraints>
+                <constraint firstItem="CIr-Fp-PTN" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="QJE-3F-ayI"/>
+                <constraint firstItem="CIr-Fp-PTN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="ZzZ-0S-4uC"/>
+                <constraint firstAttribute="bottom" secondItem="CIr-Fp-PTN" secondAttribute="bottom" id="brF-SW-9wR"/>
+                <constraint firstAttribute="trailing" secondItem="CIr-Fp-PTN" secondAttribute="trailing" id="fsK-vt-9ig"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <point key="canvasLocation" x="139" y="145"/>
+            <size key="customSize" width="361" height="70"/>
+            <connections>
+                <outlet property="txt" destination="CIr-Fp-PTN" id="VLp-f7-tjV"/>
+            </connections>
+            <point key="canvasLocation" x="363.04347826086962" y="151.33928571428569"/>
         </collectionViewCell>
     </objects>
 </document>

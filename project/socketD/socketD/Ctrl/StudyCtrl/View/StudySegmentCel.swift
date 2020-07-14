@@ -10,6 +10,16 @@ import UIKit
 
 class StudySegmentCel: UICollectionViewCell {
 
+    
+    @IBOutlet weak var txt: UILabel!
+    
+    
+    func config(segments t: String){
+        txt.text = t
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

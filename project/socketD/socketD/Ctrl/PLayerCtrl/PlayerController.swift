@@ -50,9 +50,13 @@ class PlayerController: UIViewController{
     @IBOutlet weak var repeatButton: UIButton!
 
     
+    let src: URL
     let music: SongInfo
+    var lasting: TimeInterval?
+    
     
     init(music url: URL) {
+        src = url
         music = SongInfo(song: url)
         super.init(nibName: "PlayerController", bundle: nil)
     }
@@ -86,9 +90,18 @@ class PlayerController: UIViewController{
         
         songNameLabel.text = music.songName?.fileName
         title = music.songName?.fileName
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.toStudy))
+        
+        
         play(self)
+        
+        
 
     }
+    
+    
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -98,6 +111,13 @@ class PlayerController: UIViewController{
         
     }
     
+    
+    @objc func toStudy(){
+        if let t = lasting{
+            navigationController?.pushViewController(StudyC(duration: t), animated: true)
+        }
+        
+    }
     
     
     //MARK:- Lockscreen Media Control
@@ -199,8 +219,9 @@ class PlayerController: UIViewController{
                     let duration = audioAsset.duration
                     let durationInSec = CMTimeGetSeconds(duration)
                     DispatchQueue.main.async {
+                        self.lasting = durationInSec
                         self.playerProgressSlider.maximumValue = Float(durationInSec)
-                        self.totalLengthOfAudioLabel.text = Double(durationInSec).formattedTime
+                        self.totalLengthOfAudioLabel.text = Double(durationInSec).formatted
                     }
                     break
                 case .failed: break // Handle error
@@ -211,8 +232,9 @@ class PlayerController: UIViewController{
         }
         else{
             let t = audioPlayer?.duration ?? 0
+            lasting = t
             playerProgressSlider.maximumValue = Float(t)
-            totalLengthOfAudioLabel.text = t.formattedTime
+            totalLengthOfAudioLabel.text = t.formatted
         }
         
         playerProgressSlider.minimumValue = 0.0
@@ -319,7 +341,7 @@ class PlayerController: UIViewController{
         guard let p = audioPlayer, p.isPlaying else {
             return
         }
-        progressTimerLabel.text = p.currentTime.formattedTime
+        progressTimerLabel.text = p.currentTime.formatted
         playerProgressSlider.value = Float(p.currentTime)
         if var song = music.songName{
             song.progress = playerProgressSlider.value
@@ -355,7 +377,7 @@ class PlayerController: UIViewController{
             
             audioPlayer?.currentTime = TimeInterval(playerProgressSliderValue)
             
-            progressTimerLabel.text = p.currentTime.formattedTime
+            progressTimerLabel.text = p.currentTime.formatted
             playerProgressSlider.value = Float(p.currentTime)
         }
     }
@@ -417,7 +439,7 @@ class PlayerController: UIViewController{
             return
         }
         
-        progressTimerLabel.text = TimeInterval(sender.value).formattedTime
+        progressTimerLabel.text = TimeInterval(sender.value).formatted
     }
     
     
