@@ -8,6 +8,13 @@
 
 import UIKit
 
+
+protocol BackPlayDelegate: class {
+    func learn(byRepeat material: MusicItem?)
+}
+
+
+
 class StudyC: UIViewController {
     
     lazy var contentCollcection: UICollectionView = {
@@ -50,11 +57,10 @@ class StudyC: UIViewController {
    
     
     var ipSelected: IndexPath?
-    let music: SongInfo
+    weak var delegate: BackPlayDelegate?
     
-    
-    init(source src: URL, duration total: TimeInterval) {
-        music = SongInfo(song: src)
+    init(delegate proxy: BackPlayDelegate, duration total: TimeInterval) {
+        delegate = proxy
         duration = total
         super.init(nibName: nil, bundle: nil)
     }
@@ -90,8 +96,12 @@ extension StudyC: UICollectionViewDelegateFlowLayout{
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let wid = desp[indexPath.item].desp.count * 13
-        return CGSize(width: wid + 8, height: 80)
+        var word = desp[indexPath.item].desp
+        if indexPath.item == desp.count - 1{
+            word = word + " 结束"
+        }
+        let wid = word.count * 13
+        return CGSize(width: wid + 13, height: 80)
     }
     
     
@@ -130,9 +140,17 @@ extension StudyC: UICollectionViewDelegateFlowLayout{
             cel.config(selected: false)
         }
         if let cel = collectionView.cellForItem(at: indexPath) as? StudySegmentCel{
-            cel.config(selected: true)
+            cel.config(selected: ipSelected != indexPath)
+            if ipSelected == indexPath{
+                delegate?.learn(byRepeat: nil)
+                ipSelected = nil
+            }
+            else{
+                delegate?.learn(byRepeat: desp[indexPath.item])
+                ipSelected = indexPath
+            }
         }
-        ipSelected = indexPath
+        
         
     }
     

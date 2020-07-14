@@ -27,6 +27,8 @@ class PlayerController: UIViewController{
     var currentAudioIndex = 0
     var timer: Timer?
 
+    
+    var timerBack: Timer?
 
     var shuffleState = false
     var repeatState = false
@@ -54,6 +56,8 @@ class PlayerController: UIViewController{
     let music: SongInfo
     var lasting: TimeInterval?
     
+    
+    var backLearn: MusicItem?
     
     init(music url: URL) {
         src = url
@@ -106,7 +110,9 @@ class PlayerController: UIViewController{
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        backLearn = nil
         stopTimer()
+        stopTimerBack()
         audioPlayer?.stop()
         
     }
@@ -114,7 +120,7 @@ class PlayerController: UIViewController{
     
     @objc func toStudy(){
         if let t = lasting{
-            let learn = StudyC(source: src, duration: t)
+            let learn = StudyC(delegate: self, duration: t)
             navigationController?.pushViewController(learn, animated: true)
         }
         
@@ -324,6 +330,7 @@ class PlayerController: UIViewController{
     //MARK:- Timer
     
     func startTimer(){
+        stopTimerBack()
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(PlayerController.update(_:)), userInfo: nil,repeats: true)
             timer?.fire()
@@ -575,3 +582,61 @@ extension PlayerController: AVAudioPlayerDelegate{
 
 }
 
+
+
+
+
+
+extension PlayerController: BackPlayDelegate{
+    func learn(byRepeat material: MusicItem?) {
+        guard let music = material else {
+            audioPlayer?.pause()
+            return
+        }
+        backLearn = music
+        playAudioTwo(begin: music.start)
+        
+    }
+    
+    
+    func playAudioTwo(begin start: TimeInterval){
+        guard audioPlayer != nil else {
+            return
+        }
+        audioPlayer?.currentTime = start
+        audioPlayer?.play()
+        startTimerTwo()
+        guard let duration = audioPlayer?.duration, let current = audioPlayer?.currentTime else {
+            return
+        }
+        showMediaInfo(duration: duration, current: current)
+    }
+    
+    
+    func startTimerTwo(){
+        if timerBack == nil {
+            timerBack = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(PlayerController.record), userInfo: nil,repeats: true)
+            timerBack?.fire()
+        }
+    }
+    
+    
+    @objc func record(){
+        guard let p = audioPlayer, p.isPlaying else {
+            return
+        }
+        if let segment = backLearn, segment.end <= p.currentTime{
+            audioPlayer?.currentTime = segment.start
+            audioPlayer?.play()
+        }
+    }
+    
+    
+    
+    func stopTimerBack(){
+        
+        timerBack?.invalidate()
+        timerBack = nil
+    
+    }
+}
