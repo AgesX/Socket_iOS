@@ -208,8 +208,9 @@ class PlayerController: UIViewController{
             audioPlayer = try AVAudioPlayer(data: data)
             audioPlayer?.delegate = self
             audioPlayer?.volume = 1
-            audioPlayer?.numberOfLoops = 5
             audioPlayer?.prepareToPlay()
+            audioPlayer?.enableRate = true
+            audioPlayer?.rate = 2
             
         } catch{
             print(error)
@@ -258,6 +259,7 @@ class PlayerController: UIViewController{
         guard audioPlayer != nil else {
             return
         }
+        audioPlayer?.numberOfLoops = 5
         audioPlayer?.play()
         startTimer()
         guard let duration = audioPlayer?.duration, let current = audioPlayer?.currentTime else {
@@ -510,8 +512,22 @@ class PlayerController: UIViewController{
 extension PlayerController: AVAudioPlayerDelegate{
 
 
-    // MARK:- AVAudioPlayer Delegate's Callback method
+    // MARK:- AVAudioPlayer Delegate's Callback method, 完结
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool){
+        
+        var conditionOne = true
+        if let segment = backLearn{
+            audioPlayer?.currentTime = segment.start
+            audioPlayer?.play()
+            conditionOne = false
+        }
+        guard conditionOne else {
+            return
+        }
+        
+        
+        
+        
         if flag == true {
             
             if shuffleState == false && repeatState == false {
@@ -604,6 +620,7 @@ extension PlayerController: BackPlayDelegate{
             return
         }
         audioPlayer?.currentTime = start
+        audioPlayer?.numberOfLoops = 0
         audioPlayer?.play()
         startTimerTwo()
         guard let duration = audioPlayer?.duration, let current = audioPlayer?.currentTime else {
