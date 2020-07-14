@@ -25,11 +25,7 @@ class StudyC: UIViewController {
     
     let duration: TimeInterval
     
-    init(duration total: TimeInterval) {
-        
-        duration = total
-        super.init(nibName: nil, bundle: nil)
-    }
+    
     
     
     var desp: [String]{
@@ -57,7 +53,15 @@ class StudyC: UIViewController {
     }
    
     
+    var ipSelected: IndexPath?
     
+    
+    
+    init(duration total: TimeInterval) {
+        
+        duration = total
+        super.init(nibName: nil, bundle: nil)
+    }
     
     
     
@@ -125,8 +129,15 @@ extension StudyC: UICollectionViewDelegateFlowLayout{
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        if let last = ipSelected, let cel = collectionView.cellForItem(at: last) as? StudySegmentCel{
+            cel.config(selected: false)
+        }
+        if let cel = collectionView.cellForItem(at: indexPath) as? StudySegmentCel{
+            cel.config(selected: true)
+        }
+        ipSelected = indexPath
+        
     }
     
 }
@@ -142,6 +153,12 @@ extension StudyC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cel = collectionView.dequeue(cell: StudySegmentCel.self, ip: indexPath)
+        if let last = ipSelected, last == indexPath{
+            cel.config(selected: true)
+        }
+        else{
+            cel.config(selected: false)
+        }
         cel.config(segments: desp[indexPath.item])
         return cel
     }

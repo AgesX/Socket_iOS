@@ -45,6 +45,7 @@
 		26ECE3CB24BD529B001862A8 /* Constrainable+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3BF24BD529B001862A8 /* Constrainable+UIView.swift */; };
 		26ECE3CC24BD529B001862A8 /* ConstraintRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3C024BD529B001862A8 /* ConstraintRelation.swift */; };
 		26ECE3CD24BD529B001862A8 /* Constrainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3C124BD529B001862A8 /* Constrainable.swift */; };
+		26ECE3CF24BD8285001862A8 /* LayerMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3CE24BD8285001862A8 /* LayerMore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		26ECE3BF24BD529B001862A8 /* Constrainable+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Constrainable+UIView.swift"; sourceTree = "<group>"; };
 		26ECE3C024BD529B001862A8 /* ConstraintRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintRelation.swift; sourceTree = "<group>"; };
 		26ECE3C124BD529B001862A8 /* Constrainable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constrainable.swift; sourceTree = "<group>"; };
+		26ECE3CE24BD8285001862A8 /* LayerMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +261,7 @@
 				264497D124624ADC008E17D0 /* CtrlExtern.swift */,
 				26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */,
 				26ECE3B124BD4E36001862A8 /* ColorMore.swift */,
+				26ECE3CE24BD8285001862A8 /* LayerMore.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				2693BBA624519490006933A6 /* DataExtern.swift in Sources */,
 				26ECE3C924BD529B001862A8 /* Extensions+UIView.swift in Sources */,
 				26ECE3A524BD4C27001862A8 /* PlayUtil.swift in Sources */,
+				26ECE3CF24BD8285001862A8 /* LayerMore.swift in Sources */,
 				26ECE3C524BD529B001862A8 /* Extensions+NSLayoutYAxisAnchor.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,

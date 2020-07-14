@@ -20,6 +20,17 @@ class StudySegmentCel: UICollectionViewCell {
     
     
     
+    func config(selected isS: Bool){
+        if isS{
+            txt.layer.decorate()
+        }
+        else{
+            txt.layer.unDecorate()
+        }
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
