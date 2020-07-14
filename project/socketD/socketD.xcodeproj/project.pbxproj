@@ -11,9 +11,6 @@
 		264497D224624ADC008E17D0 /* CtrlExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264497D124624ADC008E17D0 /* CtrlExtern.swift */; };
 		264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF81D2461AD8F002AED20 /* FileAdminister.swift */; };
 		2669B5FF2464F55000E3231C /* FileListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B5FD2464F55000E3231C /* FileListController.swift */; };
-		2669B6052464F67500E3231C /* PlayUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B6042464F67500E3231C /* PlayUtil.swift */; };
-		2669B6082464FE2E00E3231C /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B6062464FE2E00E3231C /* PlayerController.swift */; };
-		2669B6092464FE2E00E3231C /* PlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2669B6072464FE2E00E3231C /* PlayerController.xib */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
 		267C05472447389C00BAF530 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05462447389C00BAF530 /* SceneDelegate.swift */; };
@@ -28,6 +25,14 @@
 		2693BBA624519490006933A6 /* DataExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA524519490006933A6 /* DataExtern.swift */; };
 		26CDDECE24480A1800E7ED8D /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* Package.swift */; };
 		26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECF24480DAF00E7ED8D /* GameManager.swift */; };
+		26ECE3A524BD4C27001862A8 /* PlayUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3A124BD4C27001862A8 /* PlayUtil.swift */; };
+		26ECE3A624BD4C27001862A8 /* PlayerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26ECE3A224BD4C27001862A8 /* PlayerController.xib */; };
+		26ECE3A724BD4C27001862A8 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3A324BD4C27001862A8 /* PlayerController.swift */; };
+		26ECE3A924BD4C45001862A8 /* StudyC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3A824BD4C45001862A8 /* StudyC.swift */; };
+		26ECE3AD24BD4D40001862A8 /* StudySegmentCel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3AB24BD4D40001862A8 /* StudySegmentCel.swift */; };
+		26ECE3AE24BD4D40001862A8 /* StudySegmentCel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26ECE3AC24BD4D40001862A8 /* StudySegmentCel.xib */; };
+		26ECE3B024BD4D81001862A8 /* CollectionViewMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */; };
+		26ECE3B224BD4E36001862A8 /* ColorMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3B124BD4E36001862A8 /* ColorMore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,11 +57,8 @@
 		264497D124624ADC008E17D0 /* CtrlExtern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlExtern.swift; sourceTree = "<group>"; };
 		264CF81D2461AD8F002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
 		2669B5FD2464F55000E3231C /* FileListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileListController.swift; sourceTree = "<group>"; };
-		2669B6042464F67500E3231C /* PlayUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayUtil.swift; sourceTree = "<group>"; };
-		2669B6062464FE2E00E3231C /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
-		2669B6072464FE2E00E3231C /* PlayerController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerController.xib; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
-		267C05412447389C00BAF530 /* socketD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketD.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		267C05412447389C00BAF530 /* 长连玩具.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "长连玩具.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C05442447389C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		267C05462447389C00BAF530 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		267C05482447389C00BAF530 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,14 @@
 		2693BBA524519490006933A6 /* DataExtern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtern.swift; sourceTree = "<group>"; };
 		26CDDECD24480A1800E7ED8D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		26CDDECF24480DAF00E7ED8D /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		26ECE3A124BD4C27001862A8 /* PlayUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayUtil.swift; sourceTree = "<group>"; };
+		26ECE3A224BD4C27001862A8 /* PlayerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerController.xib; sourceTree = "<group>"; };
+		26ECE3A324BD4C27001862A8 /* PlayerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
+		26ECE3A824BD4C45001862A8 /* StudyC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyC.swift; sourceTree = "<group>"; };
+		26ECE3AB24BD4D40001862A8 /* StudySegmentCel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySegmentCel.swift; sourceTree = "<group>"; };
+		26ECE3AC24BD4D40001862A8 /* StudySegmentCel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudySegmentCel.xib; sourceTree = "<group>"; };
+		26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewMore.swift; sourceTree = "<group>"; };
+		26ECE3B124BD4E36001862A8 /* ColorMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,21 +122,12 @@
 			path = AssetCtrl;
 			sourceTree = "<group>";
 		};
-		2669B5FE2464F55000E3231C /* PLayerCtrl */ = {
-			isa = PBXGroup;
-			children = (
-				2669B6042464F67500E3231C /* PlayUtil.swift */,
-				2669B6062464FE2E00E3231C /* PlayerController.swift */,
-				2669B6072464FE2E00E3231C /* PlayerController.xib */,
-			);
-			path = PLayerCtrl;
-			sourceTree = "<group>";
-		};
 		266B384424507E5300204C56 /* Ctrl */ = {
 			isa = PBXGroup;
 			children = (
+				26ECE3A024BD4C27001862A8 /* PlayerCtrl */,
+				26ECE3A424BD4C27001862A8 /* StudyCtrl */,
 				2669B5FC2464F55000E3231C /* AssetCtrl */,
-				2669B5FE2464F55000E3231C /* PLayerCtrl */,
 				267C054F2447389E00BAF530 /* LaunchScreen.storyboard */,
 				266B384D24507E7D00204C56 /* HostViewCtrl.swift */,
 				2693BBA224513612006933A6 /* JoinListCtrl.swift */,
@@ -147,7 +148,7 @@
 		267C05422447389C00BAF530 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				267C05412447389C00BAF530 /* socketD.app */,
+				267C05412447389C00BAF530 /* 长连玩具.app */,
 				267C05572447389E00BAF530 /* socketDTests.xctest */,
 				267C05622447389E00BAF530 /* socketDUITests.xctest */,
 			);
@@ -231,8 +232,38 @@
 			children = (
 				2693BBA524519490006933A6 /* DataExtern.swift */,
 				264497D124624ADC008E17D0 /* CtrlExtern.swift */,
+				26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */,
+				26ECE3B124BD4E36001862A8 /* ColorMore.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		26ECE3A024BD4C27001862A8 /* PlayerCtrl */ = {
+			isa = PBXGroup;
+			children = (
+				26ECE3A124BD4C27001862A8 /* PlayUtil.swift */,
+				26ECE3A224BD4C27001862A8 /* PlayerController.xib */,
+				26ECE3A324BD4C27001862A8 /* PlayerController.swift */,
+			);
+			path = PlayerCtrl;
+			sourceTree = "<group>";
+		};
+		26ECE3A424BD4C27001862A8 /* StudyCtrl */ = {
+			isa = PBXGroup;
+			children = (
+				26ECE3AA24BD4D06001862A8 /* View */,
+				26ECE3A824BD4C45001862A8 /* StudyC.swift */,
+			);
+			path = StudyCtrl;
+			sourceTree = "<group>";
+		};
+		26ECE3AA24BD4D06001862A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				26ECE3AB24BD4D40001862A8 /* StudySegmentCel.swift */,
+				26ECE3AC24BD4D40001862A8 /* StudySegmentCel.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,7 +283,7 @@
 			);
 			name = socketD;
 			productName = socketD;
-			productReference = 267C05412447389C00BAF530 /* socketD.app */;
+			productReference = 267C05412447389C00BAF530 /* 长连玩具.app */;
 			productType = "com.apple.product-type.application";
 		};
 		267C05562447389E00BAF530 /* socketDTests */ = {
@@ -339,10 +370,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26ECE3AE24BD4D40001862A8 /* StudySegmentCel.xib in Resources */,
 				267C05512447389E00BAF530 /* LaunchScreen.storyboard in Resources */,
 				267C054E2447389E00BAF530 /* Assets.xcassets in Resources */,
+				26ECE3A624BD4C27001862A8 /* PlayerController.xib in Resources */,
 				267C054C2447389C00BAF530 /* Main.storyboard in Resources */,
-				2669B6092464FE2E00E3231C /* PlayerController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,15 +401,19 @@
 			files = (
 				26CDDECE24480A1800E7ED8D /* Package.swift in Sources */,
 				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
-				2669B6082464FE2E00E3231C /* PlayerController.swift in Sources */,
 				264497D224624ADC008E17D0 /* CtrlExtern.swift in Sources */,
+				26ECE3B224BD4E36001862A8 /* ColorMore.swift in Sources */,
+				26ECE3A924BD4C45001862A8 /* StudyC.swift in Sources */,
 				267C05492447389C00BAF530 /* ViewController.swift in Sources */,
 				261FA7C9245F387F00B4B555 /* UserSetting.swift in Sources */,
 				266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */,
+				26ECE3B024BD4D81001862A8 /* CollectionViewMore.swift in Sources */,
 				264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */,
 				2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */,
+				26ECE3A724BD4C27001862A8 /* PlayerController.swift in Sources */,
+				26ECE3AD24BD4D40001862A8 /* StudySegmentCel.swift in Sources */,
 				2693BBA624519490006933A6 /* DataExtern.swift in Sources */,
-				2669B6052464F67500E3231C /* PlayUtil.swift in Sources */,
+				26ECE3A524BD4C27001862A8 /* PlayUtil.swift in Sources */,
 				267C05452447389C00BAF530 /* AppDelegate.swift in Sources */,
 				267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */,
 				2669B5FF2464F55000E3231C /* FileListController.swift in Sources */,
@@ -563,7 +599,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.photod.mnc.socketD;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "长连玩具";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/socketD/ObjC_Bridge.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -583,7 +619,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.photod.mnc.socketD;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "长连玩具";
 				SWIFT_OBJC_BRIDGING_HEADER = "${SRCROOT}/socketD/ObjC_Bridge.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

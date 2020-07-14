@@ -101,9 +101,7 @@ class FileListController: UITableViewController {
             }catch { print(error) }
             return
         }
-        let musicCtrl = PlayerController(nibName: "PlayerController", bundle: nil)
-        musicCtrl.music = SongInfo(song: url)
-        navigationController?.pushViewController(musicCtrl, animated: true)
+        navigationController?.pushViewController(PlayerController(music: url), animated: true)
     }
     
     

@@ -50,9 +50,17 @@ class PlayerController: UIViewController{
     @IBOutlet weak var repeatButton: UIButton!
 
     
-    var music = SongInfo()
+    let music: SongInfo
+    
+    init(music url: URL) {
+        music = SongInfo(song: url)
+        super.init(nibName: "PlayerController", bundle: nil)
+    }
     
     
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
   
     
     override func viewDidLoad() {
