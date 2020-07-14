@@ -114,7 +114,8 @@ class PlayerController: UIViewController{
     
     @objc func toStudy(){
         if let t = lasting{
-            navigationController?.pushViewController(StudyC(duration: t), animated: true)
+            let learn = StudyC(source: src, duration: t)
+            navigationController?.pushViewController(learn, animated: true)
         }
         
     }
@@ -126,11 +127,11 @@ class PlayerController: UIViewController{
     func showMediaInfo(duration total: TimeInterval, current time: TimeInterval){
           
           if let songName = music.songName{
-            let info: [String : Any]? = [MPMediaItemPropertyTitle : songName.fileName,
-                                         MPMediaItemPropertyArtist: "邓",
-                                         MPMediaItemPropertyPlaybackDuration: total,
-                                         MPNowPlayingInfoPropertyElapsedPlaybackTime: time]
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+                let info: [String : Any]? = [MPMediaItemPropertyTitle : songName.fileName,
+                                             MPMediaItemPropertyArtist: "邓",
+                                             MPMediaItemPropertyPlaybackDuration: total,
+                                             MPNowPlayingInfoPropertyElapsedPlaybackTime: time]
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = info
           }
           
       }

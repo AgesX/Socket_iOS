@@ -46,6 +46,7 @@
 		26ECE3CC24BD529B001862A8 /* ConstraintRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3C024BD529B001862A8 /* ConstraintRelation.swift */; };
 		26ECE3CD24BD529B001862A8 /* Constrainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3C124BD529B001862A8 /* Constrainable.swift */; };
 		26ECE3CF24BD8285001862A8 /* LayerMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3CE24BD8285001862A8 /* LayerMore.swift */; };
+		26ECE3D224BD86FD001862A8 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3D124BD86FD001862A8 /* MusicItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		26ECE3C024BD529B001862A8 /* ConstraintRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintRelation.swift; sourceTree = "<group>"; };
 		26ECE3C124BD529B001862A8 /* Constrainable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constrainable.swift; sourceTree = "<group>"; };
 		26ECE3CE24BD8285001862A8 /* LayerMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMore.swift; sourceTree = "<group>"; };
+		26ECE3D124BD86FD001862A8 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +281,7 @@
 		26ECE3A424BD4C27001862A8 /* StudyCtrl */ = {
 			isa = PBXGroup;
 			children = (
+				26ECE3D024BD86E5001862A8 /* Model */,
 				26ECE3AA24BD4D06001862A8 /* View */,
 				26ECE3A824BD4C45001862A8 /* StudyC.swift */,
 			);
@@ -327,6 +330,14 @@
 				26ECE3C124BD529B001862A8 /* Constrainable.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		26ECE3D024BD86E5001862A8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				26ECE3D124BD86FD001862A8 /* MusicItem.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -462,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26ECE3D224BD86FD001862A8 /* MusicItem.swift in Sources */,
 				26CDDECE24480A1800E7ED8D /* Package.swift in Sources */,
 				26ECE3C824BD529B001862A8 /* Extensions+NSLayoutDimension.swift in Sources */,
 				26ECE3CD24BD529B001862A8 /* Constrainable.swift in Sources */,

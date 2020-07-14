@@ -28,37 +28,33 @@ class StudyC: UIViewController {
     
     
     
-    var desp: [String]{
+    var desp: [MusicItem]{
         let const = 5 * 60
         let count = Int(duration) / const
-        var array = ["开始 -> \(duration.formatted) 结束"]
+        var array = [MusicItem(start: 0, end: duration)]
         guard count > 0 else {
             return array
         }
         array.removeAll()
         for i in 1...count{
-            array.append("\((const * (i-1)).formatted) -> \((const * i).formatted)")
+            array.append(MusicItem(start: const * (i-1), end: const * i))
         }
         if (duration - TimeInterval(count*const)) > 0.1 * 60{
-            array.append("\((const * count).formatted) -> \(duration.formatted)")
+            array.append(MusicItem(start: const * count, end: duration))
         }
         else{
-            array[count-1] = "\((const * (count-1)).formatted) ->  \(duration.formatted)"
+            array[count-1] = MusicItem(start: const * (count-1), end: duration)
         }
-        let first = array[0]
-        array[0] = "开始 " + first
-        let last = array[array.count - 1]
-        array[array.count - 1] = last + "结束"
         return array
     }
    
     
     var ipSelected: IndexPath?
+    let music: SongInfo
     
     
-    
-    init(duration total: TimeInterval) {
-        
+    init(source src: URL, duration total: TimeInterval) {
+        music = SongInfo(song: src)
         duration = total
         super.init(nibName: nil, bundle: nil)
     }
@@ -94,7 +90,7 @@ extension StudyC: UICollectionViewDelegateFlowLayout{
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let wid = desp[indexPath.item].count * 13
+        let wid = desp[indexPath.item].desp.count * 13
         return CGSize(width: wid + 8, height: 80)
     }
     
@@ -159,7 +155,11 @@ extension StudyC: UICollectionViewDataSource{
         else{
             cel.config(selected: false)
         }
-        cel.config(segments: desp[indexPath.item])
+        var word = desp[indexPath.item].desp
+        if indexPath.item == desp.count - 1{
+            word = word + " 结束"
+        }
+        cel.config(segments: word)
         return cel
     }
     
