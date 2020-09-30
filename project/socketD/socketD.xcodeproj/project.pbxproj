@@ -10,6 +10,7 @@
 		261FA7C9245F387F00B4B555 /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 261FA7C8245F387F00B4B555 /* UserSetting.swift */; };
 		264497D224624ADC008E17D0 /* CtrlExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264497D124624ADC008E17D0 /* CtrlExtern.swift */; };
 		264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF81D2461AD8F002AED20 /* FileAdminister.swift */; };
+		26622B7925247856000DAD27 /* ViewControllerAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26622B7825247856000DAD27 /* ViewControllerAdd.swift */; };
 		2669B5FF2464F55000E3231C /* FileListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B5FD2464F55000E3231C /* FileListController.swift */; };
 		266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266B384D24507E7D00204C56 /* HostViewCtrl.swift */; };
 		267C05452447389C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05442447389C00BAF530 /* AppDelegate.swift */; };
@@ -70,6 +71,7 @@
 		261FA7C8245F387F00B4B555 /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		264497D124624ADC008E17D0 /* CtrlExtern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CtrlExtern.swift; sourceTree = "<group>"; };
 		264CF81D2461AD8F002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
+		26622B7825247856000DAD27 /* ViewControllerAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAdd.swift; sourceTree = "<group>"; };
 		2669B5FD2464F55000E3231C /* FileListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileListController.swift; sourceTree = "<group>"; };
 		266B384D24507E7D00204C56 /* HostViewCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostViewCtrl.swift; sourceTree = "<group>"; };
 		267C05412447389C00BAF530 /* 长连玩具.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "长连玩具.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +202,7 @@
 				2693BBA42451947C006933A6 /* Util */,
 				267C05742447391C00BAF530 /* View */,
 				267C05482447389C00BAF530 /* ViewController.swift */,
+				26622B7825247856000DAD27 /* ViewControllerAdd.swift */,
 			);
 			path = socketD;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */,
 				26ECE3CC24BD529B001862A8 /* ConstraintRelation.swift in Sources */,
 				26ECE3B024BD4D81001862A8 /* CollectionViewMore.swift in Sources */,
+				26622B7925247856000DAD27 /* ViewControllerAdd.swift in Sources */,
 				264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */,
 				2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */,
 				26ECE3A724BD4C27001862A8 /* PlayerController.swift in Sources */,
