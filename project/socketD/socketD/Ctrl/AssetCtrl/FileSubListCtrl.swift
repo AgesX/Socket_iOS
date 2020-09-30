@@ -13,8 +13,8 @@ import AVFoundation
 class FileSubListCtrl: UITableViewController {
     
     let cellID = "cellID"
+    var url: URL?
     var files = [URL]()
-    var folders = [URL]()
 
     
     private lazy var refresh: UIRefreshControl = {
@@ -52,7 +52,7 @@ class FileSubListCtrl: UITableViewController {
     
     func refreshData(){
         files.removeAll()
-        if let src = URL(string: URL.dir){
+        if let src = url{
             do {
                 let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
@@ -74,99 +74,56 @@ class FileSubListCtrl: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        var count = 0
-        if folders.count > 1{
-            count += 1
-        }
-        if files.count > 1{
-            count += 1
-        }
-        return count
-    }
-    
+
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return folders.count
-        case 1:
-            return files.count
-        default:
-            return 0
-        }
+        return files.count
         
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-            
-            let attribute = [NSAttributedString.Key.foregroundColor: UIColor.green, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28)]
-            let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
-            cell.textLabel?.attributedText = attrString
-            return cell
-        default:
-            //  1
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-            
-            let attribute = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25)]
-            let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
-            cell.textLabel?.attributedText = attrString
-            return cell
-        }
+        //  1
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        
+        let attribute = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25)]
+        let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
+        cell.textLabel?.attributedText = attrString
+        return cell
     }
     
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            ()
-        case 1:
-        
-            let url = files[indexPath.row]
-            guard url.absoluteString.contains("txt") == false else {
-                //reading
-                do {
-                    let text = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
-                    print(text)
-                }catch { print(error) }
-                return
-            }
-            navigationController?.pushViewController(PlayerController(music: url), animated: true)
-        default:
-            ()
+        let url = files[indexPath.row]
+        guard url.absoluteString.contains("txt") == false else {
+            //reading
+            do {
+                let text = try String(contentsOfFile: url.path, encoding: String.Encoding.utf8)
+                print(text)
+            }catch { print(error) }
+            return
         }
+        navigationController?.pushViewController(PlayerController(music: url), animated: true)
     }
     
     
     
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        switch indexPath.section {
-        case 1:
-            let url = files[indexPath.row]
-            let contextItem = UIContextualAction(style: .destructive, title: "删文件") {  (contextualAction, view, boolValue) in
-                do {
-                    if FileManager.default.fileExists(atPath: url.path){
-                        try FileManager.default.removeItem(atPath: url.path)
-                    }
-                    self.refreshData()
-                } catch {
-                    print(error)
+        let url = files[indexPath.row]
+        let contextItem = UIContextualAction(style: .destructive, title: "删文件") {  (contextualAction, view, boolValue) in
+            do {
+                if FileManager.default.fileExists(atPath: url.path){
+                    try FileManager.default.removeItem(atPath: url.path)
                 }
+                self.refreshData()
+            } catch {
+                print(error)
             }
-
-            return UISwipeActionsConfiguration(actions: [contextItem])
-        default:
-            return nil
         }
-        
-        
+        return UISwipeActionsConfiguration(actions: [contextItem])
         
     }
     

@@ -52,6 +52,7 @@ class FileListController: UITableViewController {
     
     func refreshData(){
         files.removeAll()
+        folders.removeAll()
         if let src = URL(string: URL.dir){
             do {
                 let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
@@ -122,7 +123,7 @@ class FileListController: UITableViewController {
         switch indexPath.section {
         case 0:
             let itemListCtrl = FileSubListCtrl()
-
+            itemListCtrl.url = folders[indexPath.row]
             navigationController?.pushViewController(itemListCtrl, animated: true)
             
 
