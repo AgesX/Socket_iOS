@@ -51,6 +51,7 @@
 		26ECE3D224BD86FD001862A8 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3D124BD86FD001862A8 /* MusicItem.swift */; };
 		26F23A762524F02B00619D8F /* StringAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A742524F02A00619D8F /* StringAdd.swift */; };
 		26F23A772524F02B00619D8F /* FontAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A752524F02A00619D8F /* FontAdd.swift */; };
+		26F23A792524F3C500619D8F /* URL_Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A782524F3C500619D8F /* URL_Add.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		26ECE3D124BD86FD001862A8 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
 		26F23A742524F02A00619D8F /* StringAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringAdd.swift; sourceTree = "<group>"; };
 		26F23A752524F02A00619D8F /* FontAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAdd.swift; sourceTree = "<group>"; };
+		26F23A782524F3C500619D8F /* URL_Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL_Add.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +278,7 @@
 				26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */,
 				26ECE3B124BD4E36001862A8 /* ColorMore.swift */,
 				26ECE3CE24BD8285001862A8 /* LayerMore.swift */,
+				26F23A782524F3C500619D8F /* URL_Add.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				261FA7C9245F387F00B4B555 /* UserSetting.swift in Sources */,
 				26ECE3C724BD529B001862A8 /* Extensions+NSLayoutConstraint.swift in Sources */,
 				266B384E24507E7D00204C56 /* HostViewCtrl.swift in Sources */,
+				26F23A792524F3C500619D8F /* URL_Add.swift in Sources */,
 				26ECE3CC24BD529B001862A8 /* ConstraintRelation.swift in Sources */,
 				26ECE3B024BD4D81001862A8 /* CollectionViewMore.swift in Sources */,
 				26622B7925247856000DAD27 /* ViewControllerAdd.swift in Sources */,

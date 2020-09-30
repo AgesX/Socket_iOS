@@ -63,6 +63,9 @@ class FileSubListCtrl: UITableViewController {
                         files.append(url)
                     }
                 }
+                files.sort { (lhs, rhs) -> Bool in
+                    lhs.val < rhs.val
+                }
                 tableView.reloadData()
             } catch let error{
                 print("error: \(error.localizedDescription)")
@@ -105,7 +108,11 @@ class FileSubListCtrl: UITableViewController {
         let lightRange = source.range(light)
         yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
         yes.setAttributes(lightAttributes, range: lightRange)
-        let suffix = ".m4a"
+        var suffix = ".m4a"
+        if source.contains(suffix) == false{
+            suffix = ".mp3"
+        }
+        
         if source.contains(suffix){
             let suffixRange = source.range(suffix)
             let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
