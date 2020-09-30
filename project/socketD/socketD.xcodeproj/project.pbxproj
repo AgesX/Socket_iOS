@@ -49,6 +49,8 @@
 		26ECE3CD24BD529B001862A8 /* Constrainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3C124BD529B001862A8 /* Constrainable.swift */; };
 		26ECE3CF24BD8285001862A8 /* LayerMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3CE24BD8285001862A8 /* LayerMore.swift */; };
 		26ECE3D224BD86FD001862A8 /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ECE3D124BD86FD001862A8 /* MusicItem.swift */; };
+		26F23A762524F02B00619D8F /* StringAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A742524F02A00619D8F /* StringAdd.swift */; };
+		26F23A772524F02B00619D8F /* FontAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A752524F02A00619D8F /* FontAdd.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +121,8 @@
 		26ECE3C124BD529B001862A8 /* Constrainable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constrainable.swift; sourceTree = "<group>"; };
 		26ECE3CE24BD8285001862A8 /* LayerMore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMore.swift; sourceTree = "<group>"; };
 		26ECE3D124BD86FD001862A8 /* MusicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
+		26F23A742524F02A00619D8F /* StringAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringAdd.swift; sourceTree = "<group>"; };
+		26F23A752524F02A00619D8F /* FontAdd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontAdd.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +269,8 @@
 		2693BBA42451947C006933A6 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				26F23A752524F02A00619D8F /* FontAdd.swift */,
+				26F23A742524F02A00619D8F /* StringAdd.swift */,
 				2693BBA524519490006933A6 /* DataExtern.swift */,
 				264497D124624ADC008E17D0 /* CtrlExtern.swift */,
 				26ECE3AF24BD4D81001862A8 /* CollectionViewMore.swift */,
@@ -501,10 +507,12 @@
 				26ECE3CC24BD529B001862A8 /* ConstraintRelation.swift in Sources */,
 				26ECE3B024BD4D81001862A8 /* CollectionViewMore.swift in Sources */,
 				26622B7925247856000DAD27 /* ViewControllerAdd.swift in Sources */,
+				26F23A762524F02B00619D8F /* StringAdd.swift in Sources */,
 				264CF81E2461AD8F002AED20 /* FileAdminister.swift in Sources */,
 				2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */,
 				26ECE3A724BD4C27001862A8 /* PlayerController.swift in Sources */,
 				26ECE3AD24BD4D40001862A8 /* StudySegmentCel.swift in Sources */,
+				26F23A772524F02B00619D8F /* FontAdd.swift in Sources */,
 				2693BBA624519490006933A6 /* DataExtern.swift in Sources */,
 				26ECE3C924BD529B001862A8 /* Extensions+UIView.swift in Sources */,
 				26ECE3A524BD4C27001862A8 /* PlayUtil.swift in Sources */,

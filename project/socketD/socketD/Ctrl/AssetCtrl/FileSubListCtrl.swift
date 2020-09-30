@@ -84,12 +84,35 @@ class FileSubListCtrl: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //  1
+        
+        let light = "\(indexPath.row)  ->"
+
+        let lightAttributes = [
+            NSAttributedString.Key.font: UIFont.regular(ofSize: 15),
+            NSAttributedString.Key.foregroundColor: UIColor.gray
+        ]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         
-        let attribute = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25)]
-        let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
-        cell.textLabel?.attributedText = attrString
+        let source = "\(light)  \(files[indexPath.row].lastPathComponent)"
+        
+        let yes = NSMutableAttributedString(string: source)
+        let wholeAttributes = [
+            NSAttributedString.Key.font: UIFont.medium(ofSize: 18),
+            NSAttributedString.Key.foregroundColor: UIColor.red
+        ]
+        
+        
+        let lightRange = source.range(light)
+        yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
+        yes.setAttributes(lightAttributes, range: lightRange)
+        let suffix = ".m4a"
+        if source.contains(suffix){
+            let suffixRange = source.range(suffix)
+            let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
+                             NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+            yes.setAttributes(notMatter, range: suffixRange)
+        }
+        cell.textLabel?.attributedText = yes.cp
         return cell
     }
     

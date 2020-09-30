@@ -98,24 +98,53 @@ class FileListController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let light = "\(indexPath.row)  ->"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        let lightAttributes = [
+            NSAttributedString.Key.font: UIFont.regular(ofSize: 15),
+            NSAttributedString.Key.foregroundColor: UIColor.gray
+        ]
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             
-            let attribute = [NSAttributedString.Key.foregroundColor: UIColor.green, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28)]
             
-            let source = "\(indexPath.row)  ->  \(folders[indexPath.row].lastPathComponent)"
-            let attrString = NSAttributedString(string: source, attributes: attribute)
-            cell.textLabel?.attributedText = attrString
+            let source = "\(light)  \(folders[indexPath.row].lastPathComponent)"
+            
+            let yes = NSMutableAttributedString(string: source)
+            let wholeAttributes = [
+                NSAttributedString.Key.font: UIFont.medium(ofSize: 18),
+                NSAttributedString.Key.foregroundColor: UIColor.green
+            ]
+            
+            let lightRange = source.range(light)
+            yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
+            yes.setAttributes(lightAttributes, range: lightRange)
+            
+            cell.textLabel?.attributedText = yes.cp
             return cell
         default:
             //  1
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             
-            let attribute = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25)]
-            let source = "\(indexPath.row)  ->  \(files[indexPath.row].lastPathComponent)"
-            let attrString = NSAttributedString(string: source, attributes: attribute)
-            cell.textLabel?.attributedText = attrString
+            let source = "\(light)  \(files[indexPath.row].lastPathComponent)"
+            
+            let yes = NSMutableAttributedString(string: source)
+            let wholeAttributes = [
+                NSAttributedString.Key.font: UIFont.medium(ofSize: 18),
+                NSAttributedString.Key.foregroundColor: UIColor.red
+            ]
+            
+            
+            let lightRange = source.range(light)
+            yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
+            yes.setAttributes(lightAttributes, range: lightRange)
+            let suffix = ".m4a"
+            if source.contains(suffix){
+                let suffixRange = source.range(suffix)
+                let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
+                                 NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+                yes.setAttributes(notMatter, range: suffixRange)
+            }
+            cell.textLabel?.attributedText = yes.cp
             return cell
         }
     }
