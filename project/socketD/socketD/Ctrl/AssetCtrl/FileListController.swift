@@ -59,11 +59,10 @@ class FileListController: UITableViewController {
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
                 for url in paths{
                     let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
-                    let musicExtern = ["mp3", "m4a", "txt"]
                     if isDirectory{
                         folders.append(url)
                     }
-                    else if musicExtern.contains(url.pathExtension){
+                    else if SoundSrc.kinds.contains(url.pathExtension){
                         files.append(url)
                     }
                 }
@@ -137,9 +136,12 @@ class FileListController: UITableViewController {
             let lightRange = source.range(light)
             yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
             yes.setAttributes(lightAttributes, range: lightRange)
-            let suffix = ".m4a"
-            if source.contains(suffix){
-                let suffixRange = source.range(suffix)
+            let suffix = SoundSrc.kinds.filter { (src) -> Bool in
+                source.contains(".\(src)")
+            }
+            
+            if suffix.isEmpty == false{
+                let suffixRange = source.range(suffix[0])
                 let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
                                  NSAttributedString.Key.foregroundColor: UIColor.lightGray]
                 yes.setAttributes(notMatter, range: suffixRange)
@@ -192,6 +194,15 @@ class FileListController: UITableViewController {
                 } catch {
                     print(error)
                 }
+            }
+
+            return UISwipeActionsConfiguration(actions: [contextItem])
+        case 2:
+            let url = folders[indexPath.row]
+            let contextItem = UIContextualAction(style: .destructive, title: "删文件夹") {  (contextualAction, view, boolValue) in
+                FileManager.default.clearAllFile(at: url.path)
+                self.refreshData()
+                
             }
 
             return UISwipeActionsConfiguration(actions: [contextItem])

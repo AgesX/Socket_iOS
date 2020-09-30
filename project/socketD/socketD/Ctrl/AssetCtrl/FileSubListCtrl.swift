@@ -10,6 +10,14 @@ import UIKit
 
 import AVFoundation
 
+
+
+struct SoundSrc {
+    static let kinds = ["mp3", "m4a", "txt", "wav"]
+}
+
+
+
 class FileSubListCtrl: UITableViewController {
     
     let cellID = "cellID"
@@ -58,8 +66,7 @@ class FileSubListCtrl: UITableViewController {
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
                 for url in paths{
                     let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
-                    let musicExtern = ["mp3", "m4a", "txt"]
-                    if isDirectory == false, musicExtern.contains(url.pathExtension){
+                    if isDirectory == false, SoundSrc.kinds.contains(url.pathExtension){
                         files.append(url)
                     }
                 }
@@ -108,13 +115,13 @@ class FileSubListCtrl: UITableViewController {
         let lightRange = source.range(light)
         yes.setAttributes(wholeAttributes, range: NSRange(location: 0, length: source.count))
         yes.setAttributes(lightAttributes, range: lightRange)
-        var suffix = ".m4a"
-        if source.contains(suffix) == false{
-            suffix = ".mp3"
+    
+        let suffix = SoundSrc.kinds.filter { (src) -> Bool in
+            source.contains(".\(src)")
         }
         
-        if source.contains(suffix){
-            let suffixRange = source.range(suffix)
+        if suffix.isEmpty == false{
+            let suffixRange = source.range(suffix[0])
             let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
                              NSAttributedString.Key.foregroundColor: UIColor.lightGray]
             yes.setAttributes(notMatter, range: suffixRange)
