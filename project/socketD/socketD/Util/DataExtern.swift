@@ -81,6 +81,15 @@ extension String {
     }
     
     
+    
+    func taskWrite(folder p: String, suffix name: String) -> String{
+        let path = "\(URL.dir)/\(p)/\(name)"
+        
+        if FileManager.default.fileExists(atPath: path) == false{
+            FileManager.default.createFile(atPath: path, contents: nil, attributes: nil)
+        }
+        return path
+    }
 }
 
 

@@ -89,18 +89,6 @@ class Package: NSObject{
     }
     
     
-    init(folder info: String){
-        data = nil
-        type = PacketType.sendData
-        word = info
-        
-        name = nil
-        toTheEnd = false
-        kind = 5
-        super.init()
-    }
-    
-    
     required init?(coder: NSCoder) {
         data = coder.decodeObject(forKey: PacketKey.data) as? Data
         type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.default
