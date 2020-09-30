@@ -103,7 +103,9 @@ class FileListController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             
             let attribute = [NSAttributedString.Key.foregroundColor: UIColor.green, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28)]
-            let attrString = NSAttributedString(string: folders[indexPath.row].lastPathComponent, attributes: attribute)
+            
+            let source = "\(indexPath.row)  ->  \(folders[indexPath.row].lastPathComponent)"
+            let attrString = NSAttributedString(string: source, attributes: attribute)
             cell.textLabel?.attributedText = attrString
             return cell
         default:
@@ -111,7 +113,8 @@ class FileListController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             
             let attribute = [NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 25)]
-            let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
+            let source = "\(indexPath.row)  ->  \(files[indexPath.row].lastPathComponent)"
+            let attrString = NSAttributedString(string: source, attributes: attribute)
             cell.textLabel?.attributedText = attrString
             return cell
         }
