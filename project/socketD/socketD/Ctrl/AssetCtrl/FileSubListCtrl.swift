@@ -10,7 +10,7 @@ import UIKit
 
 import AVFoundation
 
-class FileListController: UITableViewController {
+class FileSubListCtrl: UITableViewController {
     
     let cellID = "cellID"
     var files = [URL]()
@@ -59,10 +59,7 @@ class FileListController: UITableViewController {
                 for url in paths{
                     let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
                     let musicExtern = ["mp3", "m4a", "txt"]
-                    if isDirectory{
-                        folders.append(url)
-                    }
-                    else if musicExtern.contains(url.pathExtension){
+                    if isDirectory == false, musicExtern.contains(url.pathExtension){
                         files.append(url)
                     }
                 }
@@ -78,7 +75,14 @@ class FileListController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        var count = 0
+        if folders.count > 1{
+            count += 1
+        }
+        if files.count > 1{
+            count += 1
+        }
+        return count
     }
     
     
@@ -102,7 +106,7 @@ class FileListController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             
             let attribute = [NSAttributedString.Key.foregroundColor: UIColor.green, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28)]
-            let attrString = NSAttributedString(string: folders[indexPath.row].lastPathComponent, attributes: attribute)
+            let attrString = NSAttributedString(string: files[indexPath.row].lastPathComponent, attributes: attribute)
             cell.textLabel?.attributedText = attrString
             return cell
         default:
@@ -121,11 +125,7 @@ class FileListController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 0:
-            let itemListCtrl = FileSubListCtrl()
-
-            navigationController?.pushViewController(itemListCtrl, animated: true)
-            
-
+            ()
         case 1:
         
             let url = files[indexPath.row]

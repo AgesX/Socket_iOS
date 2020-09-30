@@ -22,6 +22,7 @@
 		267C055C2447389E00BAF530 /* socketDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C055B2447389E00BAF530 /* socketDTests.swift */; };
 		267C05672447389E00BAF530 /* socketDUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C05662447389E00BAF530 /* socketDUITests.swift */; };
 		267C05842447391C00BAF530 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 267C057F2447391C00BAF530 /* GCDAsyncSocket.m */; };
+		2692C593252485C100C65D05 /* FileSubListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2692C592252485C100C65D05 /* FileSubListCtrl.swift */; };
 		2693BBA324513612006933A6 /* JoinListCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA224513612006933A6 /* JoinListCtrl.swift */; };
 		2693BBA624519490006933A6 /* DataExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2693BBA524519490006933A6 /* DataExtern.swift */; };
 		26CDDECE24480A1800E7ED8D /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CDDECD24480A1800E7ED8D /* Package.swift */; };
@@ -91,6 +92,7 @@
 		267C057F2447391C00BAF530 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		267C05802447391C00BAF530 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		267C05852447399B00BAF530 /* ObjC_Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC_Bridge.h; sourceTree = "<group>"; };
+		2692C592252485C100C65D05 /* FileSubListCtrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSubListCtrl.swift; sourceTree = "<group>"; };
 		2693BBA224513612006933A6 /* JoinListCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinListCtrl.swift; sourceTree = "<group>"; };
 		2693BBA524519490006933A6 /* DataExtern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtern.swift; sourceTree = "<group>"; };
 		26CDDECD24480A1800E7ED8D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 		2669B5FC2464F55000E3231C /* AssetCtrl */ = {
 			isa = PBXGroup;
 			children = (
+				2692C592252485C100C65D05 /* FileSubListCtrl.swift */,
 				2669B5FD2464F55000E3231C /* FileListController.swift */,
 			);
 			path = AssetCtrl;
@@ -480,6 +483,7 @@
 				26CDDECE24480A1800E7ED8D /* Package.swift in Sources */,
 				26ECE3C824BD529B001862A8 /* Extensions+NSLayoutDimension.swift in Sources */,
 				26ECE3CD24BD529B001862A8 /* Constrainable.swift in Sources */,
+				2692C593252485C100C65D05 /* FileSubListCtrl.swift in Sources */,
 				26CDDED024480DAF00E7ED8D /* GameManager.swift in Sources */,
 				26ECE3CB24BD529B001862A8 /* Constrainable+UIView.swift in Sources */,
 				264497D224624ADC008E17D0 /* CtrlExtern.swift in Sources */,

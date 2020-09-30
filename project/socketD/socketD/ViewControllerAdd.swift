@@ -20,7 +20,7 @@ extension ViewController{
         if fileHandlers[title] == nil{
             let path = title.taskWrite(folder: dir, suffix: title)
             fileHandlers[title] = FileHandle(forWritingAtPath: path)
-            print(title.write)
+            print(path)
             print("新建  ", fileHandlers[title]?.description ?? "")
         }
 
