@@ -173,7 +173,7 @@ class FileListController: UITableViewController {
                 }catch { print(error) }
                 return
             }
-            guard item < files.count, item > 0 else {
+            guard item < files.count, item >= 0 else {
                 return
             }
             navigationController?.pushViewController(PlayerController(music: files, item: item), animated: true)

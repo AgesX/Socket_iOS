@@ -54,7 +54,10 @@ class PlayerController: UIViewController{
     let source: [URL]
     let initial: Int
     
-    let music: SongInfo
+    var music: SongInfo{
+        SongInfo(song: source[currentAudioIndex])
+    }
+    
     var lasting: TimeInterval?
     
     
@@ -63,8 +66,6 @@ class PlayerController: UIViewController{
     init(music src: [URL], item row: Int) {
         source = src
         initial = row
-        
-        music = SongInfo(song: src[row])
         super.init(nibName: "PlayerController", bundle: nil)
     }
     
@@ -206,7 +207,7 @@ class PlayerController: UIViewController{
             return
         }
 
-        
+        configName()
         
         UIApplication.shared.beginReceivingRemoteControlEvents()
      
@@ -284,17 +285,13 @@ class PlayerController: UIViewController{
             return
         }
         currentAudioIndex += 1
-        if currentAudioIndex > source.count-1{
+        if currentAudioIndex >= source.count{
             currentAudioIndex -= 1
-            
             return
         }
-        
+        prepareAudio()
         if p.isPlaying{
-            prepareAudio()
             playAudio()
-        }else{
-            prepareAudio()
         }
         
     }
@@ -314,12 +311,9 @@ class PlayerController: UIViewController{
             return
         }
         
-        
+        prepareAudio()
         if p.isPlaying{
-            prepareAudio()
             playAudio()
-        }else{
-            prepareAudio()
         }
         
     }
@@ -385,7 +379,8 @@ class PlayerController: UIViewController{
             progressTimerLabel.text = "00:00:00"
             
             
-        }else{
+        }
+        else{
             guard let p = audioPlayer else{
                 alertSongExsit()
                 return
@@ -521,33 +516,34 @@ extension PlayerController: AVAudioPlayerDelegate{
 
     // MARK:- AVAudioPlayer Delegate's Callback method, 完结
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool){
-        
+        if var song = music.songName{
+            playerProgressSlider.value = 0
+            song.progress = playerProgressSlider.value
+        }
         var conditionOne = true
         if let segment = backLearn{
             audioPlayer?.currentTime = segment.start
             audioPlayer?.play()
             conditionOne = false
         }
-        guard conditionOne else {
+        guard conditionOne, flag else {
             return
         }
         
         
-        
-        
-        if flag == true {
             
-            if shuffleState == false, repeatState == false {
-                // do nothing
-                playButton(isPlay: false)
-                return
-                
-            } else if shuffleState == false, repeatState {
+        if shuffleState == false, repeatState == false {
+            // do nothing
+            playButton(isPlay: false)
+
+        }
+        else if shuffleState == false, repeatState {
                 //repeat same song
                 prepareAudio()
                 playAudio()
                 
-            } else if shuffleState, repeatState == false {
+        }
+        else if shuffleState, repeatState == false {
                 //shuffle songs but do not repeat at the end
                 //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
                 shuffleArray.append(currentAudioIndex)
@@ -572,7 +568,8 @@ extension PlayerController: AVAudioPlayerDelegate{
                 prepareAudio()
                 playAudio()
                 
-            } else if shuffleState, repeatState {
+        }
+        else if shuffleState, repeatState {
                 //shuffle song endlessly
                 shuffleArray.append(currentAudioIndex)
                 if shuffleArray.count >= source.count {
@@ -595,9 +592,9 @@ extension PlayerController: AVAudioPlayerDelegate{
                 playAudio()
                 
                 
-            }
-            
         }
+            
+        
     }
 
 
