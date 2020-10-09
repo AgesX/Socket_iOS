@@ -23,7 +23,6 @@ class PlayerController: UIViewController{
 
     var audioPlayer: AVAudioPlayer?
     
-    var audioList:NSArray!
     var currentAudioIndex = 0
     var timer: Timer?
 
@@ -52,16 +51,20 @@ class PlayerController: UIViewController{
     @IBOutlet weak var repeatButton: UIButton!
 
     
-    let src: URL
+    let source: [URL]
+    let initial: Int
+    
     let music: SongInfo
     var lasting: TimeInterval?
     
     
     var backLearn: MusicItem?
     
-    init(music url: URL) {
-        src = url
-        music = SongInfo(song: url)
+    init(music src: [URL], item row: Int) {
+        source = src
+        initial = row
+        
+        music = SongInfo(song: src[row])
         super.init(nibName: "PlayerController", bundle: nil)
     }
     
@@ -74,12 +77,9 @@ class PlayerController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         becomeFirstResponder()
-        previousButton.isHidden = true
-        nextButton.isHidden = true
         
-        shuffleButton.isHidden = true
-        repeatButton.isHidden = true
         
+        currentAudioIndex = initial
         //this sets last listened trach number as current
         prepareAudio()
       
@@ -92,8 +92,7 @@ class PlayerController: UIViewController{
             })
         }
         
-        songNameLabel.text = music.songName?.fileName
-        title = music.songName?.fileName
+        configName()
         
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .play, target: self, action: #selector(self.toStudy))
@@ -107,6 +106,11 @@ class PlayerController: UIViewController{
     
     
     
+    func configName(){
+        songNameLabel.text = music.songName?.fileName
+        title = music.songName?.fileName
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -116,6 +120,9 @@ class PlayerController: UIViewController{
         audioPlayer?.stop()
         playButton(isPlay: false)
     }
+    
+    
+    
     
     
     @objc func toStudy(){
@@ -277,7 +284,7 @@ class PlayerController: UIViewController{
             return
         }
         currentAudioIndex += 1
-        if currentAudioIndex>audioList.count-1{
+        if currentAudioIndex > source.count-1{
             currentAudioIndex -= 1
             
             return
@@ -416,12 +423,12 @@ class PlayerController: UIViewController{
     
     @IBAction func next(_ sender : AnyObject) {
         
-        //  playNextAudio()
+        playNextAudio()
     }
     
     
     @IBAction func previous(_ sender : AnyObject) {
-        //  playPreviousAudio()
+        playPreviousAudio()
     }
     
     
@@ -530,21 +537,21 @@ extension PlayerController: AVAudioPlayerDelegate{
         
         if flag == true {
             
-            if shuffleState == false && repeatState == false {
+            if shuffleState == false, repeatState == false {
                 // do nothing
                 playButton(isPlay: false)
                 return
                 
-            } else if shuffleState == false && repeatState == true {
+            } else if shuffleState == false, repeatState {
                 //repeat same song
                 prepareAudio()
                 playAudio()
                 
-            } else if shuffleState == true && repeatState == false {
+            } else if shuffleState, repeatState == false {
                 //shuffle songs but do not repeat at the end
                 //Shuffle Logic : Create an array and put current song into the array then when next song come randomly choose song from available song and check against the array it is in the array try until you find one if the array and number of songs are same then stop playing as all songs are already played.
                 shuffleArray.append(currentAudioIndex)
-                if shuffleArray.count >= audioList.count {
+                if shuffleArray.count >= source.count {
                     playButton(isPlay: false)
                     return
                     
@@ -554,7 +561,7 @@ extension PlayerController: AVAudioPlayerDelegate{
                 var randomIndex = 0
                 var newIndex = false
                 while newIndex == false {
-                    randomIndex =  Int(arc4random_uniform(UInt32(audioList.count)))
+                    randomIndex = Int(arc4random_uniform(UInt32(source.count)))
                     if shuffleArray.contains(randomIndex) {
                         newIndex = false
                     }else{
@@ -565,10 +572,10 @@ extension PlayerController: AVAudioPlayerDelegate{
                 prepareAudio()
                 playAudio()
                 
-            } else if shuffleState == true && repeatState == true {
+            } else if shuffleState, repeatState {
                 //shuffle song endlessly
                 shuffleArray.append(currentAudioIndex)
-                if shuffleArray.count >= audioList.count {
+                if shuffleArray.count >= source.count {
                     shuffleArray.removeAll()
                 }
                 
@@ -576,7 +583,7 @@ extension PlayerController: AVAudioPlayerDelegate{
                 var randomIndex = 0
                 var newIndex = false
                 while newIndex == false {
-                    randomIndex =  Int(arc4random_uniform(UInt32(audioList.count)))
+                    randomIndex =  Int(arc4random_uniform(UInt32(source.count)))
                     if shuffleArray.contains(randomIndex) {
                         newIndex = false
                     }else{

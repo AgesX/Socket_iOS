@@ -121,7 +121,8 @@ class FileSubListCtrl: UITableViewController {
         }
         
         if suffix.isEmpty == false{
-            let suffixRange = source.range(suffix[0])
+            let last = ".\(suffix[0])"
+            let suffixRange = source.range(last)
             let notMatter = [NSAttributedString.Key.font: UIFont.regular(ofSize: 8),
                              NSAttributedString.Key.foregroundColor: UIColor.lightGray]
             yes.setAttributes(notMatter, range: suffixRange)
@@ -133,7 +134,8 @@ class FileSubListCtrl: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let url = files[indexPath.row]
+        let item = indexPath.row
+        let url = files[item]
         guard url.absoluteString.contains("txt") == false else {
             //reading
             do {
@@ -142,7 +144,10 @@ class FileSubListCtrl: UITableViewController {
             }catch { print(error) }
             return
         }
-        navigationController?.pushViewController(PlayerController(music: url), animated: true)
+        guard item < files.count, item > 0 else {
+            return
+        }
+        navigationController?.pushViewController(PlayerController(music: files, item: item), animated: true)
     }
     
     
