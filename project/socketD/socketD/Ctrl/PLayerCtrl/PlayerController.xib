@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -15,15 +15,14 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerController" customModule="socketD" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerController" customModule="长连玩具" customModuleProvider="target">
             <connections>
                 <outlet property="nextButton" destination="5mn-np-yAF" id="wO4-Cy-K6K"/>
                 <outlet property="playButton" destination="Akr-El-KqJ" id="5af-ll-KV8"/>
                 <outlet property="playerProgressSlider" destination="Hes-c0-bD7" id="WPq-dg-3mW"/>
                 <outlet property="previousButton" destination="84i-4n-gty" id="zXs-2k-laZ"/>
                 <outlet property="progressTimerLabel" destination="mAF-HR-n1W" id="qF7-IL-Ee9"/>
-                <outlet property="repeatButton" destination="LYS-Cs-DOx" id="WHj-CQ-DTj"/>
-                <outlet property="shuffleButton" destination="bMt-qA-9h9" id="UUz-ne-dHj"/>
+                <outlet property="repeatButton" destination="bMt-qA-9h9" id="rcn-CY-Eja"/>
                 <outlet property="songNameLabel" destination="EMB-AX-qVZ" id="BEK-YH-188"/>
                 <outlet property="totalLengthOfAudioLabel" destination="aml-bA-EdN" id="5b5-6k-4Nn"/>
                 <outlet property="view" destination="G89-my-HFA" id="BTC-K0-1ww"/>
@@ -116,27 +115,15 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMt-qA-9h9">
-                    <rect key="frame" x="287" y="583" width="29" height="23"/>
+                    <rect key="frame" x="341" y="583.5" width="29" height="23"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="23" id="YEt-4A-HRo"/>
                         <constraint firstAttribute="width" constant="29" id="uAt-LA-8rk"/>
                     </constraints>
-                    <state key="normal" image="shuffle"/>
-                    <state key="selected" image="shuffle_s"/>
-                    <connections>
-                        <action selector="shuffleButtonTapped:" destination="-1" eventType="touchUpInside" id="gg8-aK-B7Z"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYS-Cs-DOx">
-                    <rect key="frame" x="346" y="582.5" width="24" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="XCF-HB-MKW"/>
-                        <constraint firstAttribute="width" constant="24" id="y5j-zF-i6u"/>
-                    </constraints>
                     <state key="normal" image="repeat"/>
                     <state key="selected" image="repeat_s"/>
                     <connections>
-                        <action selector="repeatButtonTapped:" destination="-1" eventType="touchUpInside" id="pqG-87-OMH"/>
+                        <action selector="repeatButtonTapped:" destination="-1" eventType="touchUpInside" id="csA-Xf-Q8r"/>
                     </connections>
                 </button>
             </subviews>
@@ -150,17 +137,15 @@
                 <constraint firstItem="Akr-El-KqJ" firstAttribute="centerX" secondItem="tM9-zd-pAz" secondAttribute="centerX" id="BRc-VI-V81"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="top" secondItem="84i-4n-gty" secondAttribute="top" id="DQl-c5-6R0"/>
                 <constraint firstItem="cnU-uZ-XAf" firstAttribute="top" secondItem="G89-my-HFA" secondAttribute="top" id="Jx5-hR-vlX"/>
-                <constraint firstItem="LYS-Cs-DOx" firstAttribute="trailing" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="-7" id="Mhp-xD-LNO"/>
                 <constraint firstItem="5mn-np-yAF" firstAttribute="leading" secondItem="Akr-El-KqJ" secondAttribute="trailing" constant="26" id="NjP-hd-KEX"/>
-                <constraint firstItem="LYS-Cs-DOx" firstAttribute="leading" secondItem="bMt-qA-9h9" secondAttribute="trailing" constant="30" id="O5e-3b-j1P"/>
                 <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="EMB-AX-qVZ" secondAttribute="bottom" constant="40" id="OSF-uL-loT"/>
                 <constraint firstItem="aml-bA-EdN" firstAttribute="top" secondItem="mAF-HR-n1W" secondAttribute="top" id="bo7-PB-1BT"/>
-                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="LYS-Cs-DOx" secondAttribute="bottom" constant="10" id="cEX-To-QWc"/>
                 <constraint firstItem="cnU-uZ-XAf" firstAttribute="trailing" secondItem="tM9-zd-pAz" secondAttribute="trailing" id="dd4-6o-cbS"/>
-                <constraint firstItem="bMt-qA-9h9" firstAttribute="centerY" secondItem="LYS-Cs-DOx" secondAttribute="centerY" id="dkV-oB-aC4"/>
                 <constraint firstItem="Akr-El-KqJ" firstAttribute="leading" secondItem="84i-4n-gty" secondAttribute="trailing" constant="29" id="dpP-BI-4rU"/>
                 <constraint firstAttribute="trailingMargin" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="17" id="ewQ-jn-HW4"/>
                 <constraint firstItem="EMB-AX-qVZ" firstAttribute="leading" secondItem="G89-my-HFA" secondAttribute="leadingMargin" constant="6" id="jQm-Md-eCC"/>
+                <constraint firstItem="Hes-c0-bD7" firstAttribute="top" secondItem="bMt-qA-9h9" secondAttribute="bottom" constant="10" id="lOw-HJ-Zvs"/>
+                <constraint firstItem="bMt-qA-9h9" firstAttribute="trailing" secondItem="Hes-c0-bD7" secondAttribute="trailing" constant="-7" id="p4b-jj-NiN"/>
                 <constraint firstItem="cnU-uZ-XAf" firstAttribute="leading" secondItem="tM9-zd-pAz" secondAttribute="leading" id="r3A-RQ-a8d"/>
                 <constraint firstItem="tM9-zd-pAz" firstAttribute="bottom" secondItem="cnU-uZ-XAf" secondAttribute="bottom" id="sxu-me-Kbx"/>
                 <constraint firstItem="Hes-c0-bD7" firstAttribute="leading" secondItem="G89-my-HFA" secondAttribute="leadingMargin" constant="17" id="uWN-6b-Xfb"/>
@@ -177,7 +162,5 @@
         <image name="previous" width="129" height="129"/>
         <image name="repeat" width="28" height="29"/>
         <image name="repeat_s" width="28" height="29"/>
-        <image name="shuffle" width="32" height="26"/>
-        <image name="shuffle_s" width="32" height="26"/>
     </resources>
 </document>
